@@ -1,0 +1,172 @@
+/* ******************************************************************
+* Sparen's Queue Library
+* For use with Touhou Danmakufu ph3
+* (C) Sparen of Iria 2018
+*
+* Code in this library is under the MIT License and may be 
+* redistributed/modified without express permission
+****************************************************************** */
+
+/* ******************************************************************
+* This library is meant to implement a basic FIFO queue
+****************************************************************** */
+
+/* ******************************************************************
+* Methods:
+* ObjQueue_Create()
+* ObjQueue_Add()
+* ObjQueue_Element()
+* ObjQueue_Remove()
+* ObjQueue_Size()
+* ObjQueue_Empty()
+* ObjQueue_Contains()
+************************************************************************* */
+
+/* *************************************************************************
+* ObjQueue_Create() -- Creates a new Queue Object using ObjPrim as a wrapper.
+* Return: New Queue Object
+************************************************************************* */
+function ObjQueue_Create() {
+    // Create a new Queue Object using a primitive object as a wrapper
+    let objQueue = ObjPrim_Create(OBJ_SPRITE_2D);
+    // Create a field storing the container
+    Obj_SetValue(objQueue, "dnh_queue_container", []);
+    return objQueue;
+}
+
+/* *************************************************************************
+* ObjQueue_Add(obj, e) -- Adds an element to the end of a Queue Object.
+* Param: obj (obj) - Queue Object to add element to
+* Param: e (free) - Element to add to end of queue
+* Return: True on success
+* Exception: 
+*   - If obj does not refer to a Queue Object
+*   - If e is not the same type as other elements in Queue
+************************************************************************* */
+function ObjQueue_Add(obj, e) {
+    // If the object is not a queue, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_queue_container")) {
+        RaiseError("ObjQueue_Add: Provided Object ID did not refer to a Queue Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_queue_container");
+    // Append the new element to the end of the queue
+    c = c ~ [e];
+    // Set the container to the new updated version
+    Obj_SetValue(obj, "dnh_queue_container", c);
+    return true;
+}
+
+/* *************************************************************************
+* ObjQueue_Element(obj) -- Retrieves the element at the head of a Queue Object.
+* Param: obj (obj) - Queue Object to access elements from
+* Return: Element at head of queue
+* Exception: 
+*   - If obj does not refer to a Queue Object
+*   - If the queue is empty
+************************************************************************* */
+function ObjQueue_Element(obj) {
+    // If the object is not a queue, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_queue_container")) {
+        RaiseError("ObjQueue_Element: Provided Object ID did not refer to a Queue Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_queue_container");
+    // If the queue is empty, raise an exception
+    if (length(c) == 0) {
+        RaiseError("ObjQueue_Element: Cannot access elements of empty Queue Object.");
+    }
+    //Return the head of the queue
+    return c[0];
+}
+
+/* *************************************************************************
+* ObjQueue_Remove(obj) -- Removes and returns the element at the head of a Queue Object.
+* Param: obj (obj) - Queue Object to remove head from
+* Return: Element at head of queue
+* Exception: 
+*   - If obj does not refer to a Queue Object
+*   - If the queue is empty
+************************************************************************* */
+function ObjQueue_Remove(obj) {
+    // If the object is not a queue, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_queue_container")) {
+        RaiseError("ObjQueue_Remove: Provided Object ID did not refer to a Queue Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_queue_container");
+    // If the queue is empty, raise an exception
+    if (length(c) == 0) {
+        RaiseError("ObjQueue_Remove: Cannot access elements of empty Queue Object.");
+    }
+    // Access head of queue
+    let head = c[0];
+    // Delete head of queue
+    c = erase(c, 0);
+    // Set the container to the new updated version
+    Obj_SetValue(obj, "dnh_queue_container", c);
+    //Return the head of the queue
+    return head;
+}
+
+/* *************************************************************************
+* ObjQueue_Size(obj) -- Returns the size of a Queue Object.
+* Param: obj (obj) - Queue Object to get size of
+* Return: Size of queue
+* Exception: 
+*   - If obj does not refer to a Queue Object
+************************************************************************* */
+function ObjQueue_Size(obj) {
+    // If the object is not a queue, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_queue_container")) {
+        RaiseError("ObjQueue_Size: Provided Object ID did not refer to a Queue Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_queue_container");
+    // Return length of array
+    return length(c);
+}
+
+/* *************************************************************************
+* ObjQueue_Empty(obj) -- Returns if the Queue Object is empty.
+* Param: obj (obj) - Queue Object to get status of
+* Return: True if empty, false otherwise
+* Exception: 
+*   - If obj does not refer to a Queue Object
+************************************************************************* */
+function ObjQueue_Empty(obj) {
+    // If the object is not a queue, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_queue_container")) {
+        RaiseError("ObjQueue_Empty: Provided Object ID did not refer to a Queue Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_queue_container");
+    // Return length of array
+    return (length(c) == 0);
+}
+
+/* *************************************************************************
+* ObjQueue_Contains(obj, e) -- Returns true if the Queue Object contains the specified element.
+* Param: obj (obj) - Queue Object to check occurrences in
+* Param: e (free) - Element to check occurrences of 
+* Return: True if queue contains element, false otherwise
+* Exception: 
+*   - If obj does not refer to a Queue Object
+*   - If e is not the same type as other elements in Queue
+************************************************************************* */
+function ObjQueue_Contains(obj, e) {
+    // If the object is not a queue, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_queue_container")) {
+        RaiseError("ObjQueue_Contains: Provided Object ID did not refer to a Queue Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_queue_container");
+    // Iterate through queue to check if element exists
+    ascent(i in 0..length(c)) {
+        if (c[i] == e) {
+            return true;
+        }
+    }
+    //Return false if not found
+    return false;
+}

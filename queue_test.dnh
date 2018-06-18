@@ -1,0 +1,54 @@
+#TouhouDanmakufu[Stage]
+#Title["Queue Test"]
+#Text["Unit Testing for Queue.dnh"]
+#ScriptVersion[3]
+
+#include "./queue.dnh"
+    
+@Initialize {
+    ObjQueue_Test;
+}
+
+@MainLoop {
+    yield;
+}
+
+task ObjQueue_Test {
+    WriteLog("ObjQueue_Test: Initializing");
+    let objQueue = ObjQueue_Create();
+    WriteLog("ObjQueue_Test: Part 1");
+    assert(ObjQueue_Size(objQueue) == 0, "Assertion Failed (1) - Expected 0 but got " ~ IntToString(ObjQueue_Size(objQueue)));
+    assert(ObjQueue_Empty(objQueue), "Assertion Failed (2)");
+    assert(!ObjQueue_Contains(objQueue, 0), "Assertion Failed (3)");
+    ObjQueue_Add(objQueue, 0);
+    assert(ObjQueue_Size(objQueue) == 1, "Assertion Failed (4) - Expected 0 but got " ~ IntToString(ObjQueue_Size(objQueue)));
+    assert(!ObjQueue_Empty(objQueue), "Assertion Failed (5)");
+    assert(ObjQueue_Contains(objQueue, 0), "Assertion Failed (6)");
+    assert(!ObjQueue_Contains(objQueue, 1), "Assertion Failed (7)");
+    assert(ObjQueue_Element(objQueue) == 0, "Assertion Failed (8)");
+    assert(ObjQueue_Remove(objQueue) == 0, "Assertion Failed (9)");
+    assert(ObjQueue_Size(objQueue) == 0, "Assertion Failed (10) - Expected 0 but got " ~ IntToString(ObjQueue_Size(objQueue)));
+    assert(ObjQueue_Empty(objQueue), "Assertion Failed (11)");
+    assert(!ObjQueue_Contains(objQueue, 0), "Assertion Failed (12)");
+
+    WriteLog("ObjQueue_Test: Part 2");
+    ascent(i in 0..100) {
+        ObjQueue_Add(objQueue, i);
+        assert(ObjQueue_Size(objQueue) == i + 1, "Assertion Failed (B1) - Expected " ~ IntToString(i + 1) ~ " but got " ~ IntToString(ObjQueue_Size(objQueue)));
+        assert(!ObjQueue_Empty(objQueue), "Assertion Failed (B2)");
+        assert(ObjQueue_Element(objQueue) == 0, "Assertion Failed (B3)");
+        ascent(j in 0..i) {
+            assert(ObjQueue_Contains(objQueue, j), "Assertion Failed (B4)");
+        }
+    }
+    WriteLog("ObjQueue_Test: Part 3");
+    descent(i in 0..100) {
+        ObjQueue_Remove(objQueue);
+    }
+    assert(ObjQueue_Size(objQueue) == 0, "Assertion Failed (C1) - Expected 0 but got " ~ IntToString(ObjQueue_Size(objQueue)));
+    assert(ObjQueue_Empty(objQueue), "Assertion Failed (C2)");
+    ascent(i in 0..100) {
+        assert(!ObjQueue_Contains(objQueue, i), "Assertion Failed (C3)");
+    }
+    WriteLog("ObjQueue_Test: All Tests Passed");
+}

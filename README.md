@@ -14,6 +14,12 @@ Each library must be included individually.
 
 The libraries in this repository are all standalone and have no dependencies.
 
+### Libraries
+
+The following libraries are provided in this distribution:
+
+* `queue.dnh`
+
 ### Running Unit Tests
 
 Each of the unit tests (*_test.dnh) are Stage scripts that can be run by Danmakufu.

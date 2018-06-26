@@ -133,7 +133,7 @@ function stl_lshift_s(e, n) {
 * Param: n (int) - Number of times to right shift
 * Return: e << n
 * Notes:
-*   -- Use stl_lshift_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+*   -- Use stl_rshift_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
 ************************************************************************* */
 function stl_rshift(e, n) {
     let x = e;

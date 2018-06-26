@@ -10,13 +10,46 @@
 /* ******************************************************************
 * This library contains a variety of mathematical operators and functions
 * For speed, this library typically contains 'safe' (_s) and 'unsafe' versions of each function
+* Functions in this library work on Integers (e.g. -1) and String forms of Integers (e.g. "-1")
 ****************************************************************** */
 
 /* ******************************************************************
-* Methods:
+* Functions:
 * stl_onescomplement(), stl_onescomplement_s()
 * stl_bit_not(), stl_bit_not_s()
+* stl_lshift(), stl_lshift_s()
+* stl_rshift(), stl_rshift_s()
 ************************************************************************* */
+
+/* *************************************************************************
+* stl_parseInt() -- Helper function that checks input typing, raising an exception under failure.
+* Param: e (free) - Value (parsable to Integer) to check type of
+* Param: fxn (string) - Name of function, for error handling
+* Return: e as an Integer
+* Notes:
+*   -- Floats are truncated
+*   -- Strings raise an error if they are not of the form (-)[0..9]*.[*]*
+************************************************************************* */
+function stl_parseInt(e, fxn) {
+    // Forcefully parse out the integer component
+    // Note that ToString(int) will provide a decimal point and trailing 0s
+    // Unable to use atoi in this case because when you run it on a String without numbers it returns 0.0
+    let x = SplitString(ToString(e), ".");
+    // Length must be exactly two
+    if (length(x) != 2) {
+        RaiseError(fxn ~ ": Provided value not parsable to an Integer.");
+    }
+    // e2 is a string containing the Integer portion of the input
+    let e2 = x[0];
+    // Ensure every character in the string is one of '0'..'9' ('-' allowed for first character) using character comparison
+    // The "" vs '' distinction is important here
+    ascent(i in 0..length(e2)) {
+        if((e2[i] < '0' || e2[i] > '9') && !(i == 0 && e2[i] == '-')) {
+            RaiseError(fxn ~ ": Provided value not parsable to an Integer.");
+        }
+    }
+    return ator(e2);
+}
 
 /* *************************************************************************
 * stl_onescomplement() -- Return the one's complement of the input as an Integer.
@@ -24,7 +57,6 @@
 * Return: One's complement of e
 * Notes:
 *   -- Use stl_onescomplement_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
-*   -- This function works on Integers and String forms of Integers.
 *   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
 ************************************************************************* */
 function stl_onescomplement(e) {
@@ -38,28 +70,10 @@ function stl_onescomplement(e) {
 * Exception:
 *   -- If e is not parsable to an Integer
 * Notes:
-*   -- This function works on Integers and String forms of Integers and Floats.
 *   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
 ************************************************************************* */
 function stl_onescomplement_s(e) {
-    // Forcefully parse out the integer component
-    // Note that ToString(int) will provide a decimal point and trailing 0s
-    // Unable to use atoi in this case because when you run it on a String without numbers it returns 0.0
-    let x = SplitString(ToString(e), ".");
-    // Length must be exactly two
-    if (length(x) != 2) {
-        RaiseError("stl_onescomplement_s: Provided value not parsable to an Integer.");
-    }
-    // int_0 is a string containing the Integer portion of the input
-    let int_0 = x[0];
-    // Ensure every character in the string is one of '0'..'9' ('-' allowed for first character) using character comparison
-    // The "" vs '' distinction is important here
-    ascent(i in 0..length(int_0)) {
-        if((int_0[i] < '0' || int_0[i] > '9') && !(i == 0 && int_0[i] == '-')) {
-            RaiseError("stl_onescomplement_s: Provided value not parsable to an Integer.");
-        }
-    }
-    return -1 - int_0;
+    return stl_onescomplement(stl_parseInt(e, "stl_onescomplement_s"));
 }
 
 /* *************************************************************************
@@ -68,7 +82,6 @@ function stl_onescomplement_s(e) {
 * Return: Bitwise NOT of e
 * Notes:
 *   -- Use stl_bit_not_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
-*   -- This function works on Integers and String forms of Integers.
 *   -- This function is a wrapper for stl_onescomplement()
 ************************************************************************* */
 function stl_bit_not(e) {
@@ -82,9 +95,66 @@ function stl_bit_not(e) {
 * Exception:
 *   -- If e is not parsable to an Integer
 * Notes:
-*   -- This function works on Integers and String forms of Integers and Floats.
 *   -- This function is a wrapper for stl_onescomplement()
 ************************************************************************* */
 function stl_bit_not_s(e) {
     return stl_onescomplement_s(e);
+}
+
+/* *************************************************************************
+* stl_lshift() -- Return the input left shifted n times.
+* Param: e (free) - Value (parsable to Integer) to left shift
+* Param: n (int) - Number of times to left shift
+* Return: e << n
+* Notes:
+*   -- Use stl_lshift_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+************************************************************************* */
+function stl_lshift(e, n) {
+    let x = e;
+    ascent(i in 0..n) {
+        x *= 2;
+    }
+    return x;
+}
+
+/* *************************************************************************
+* stl_lshift_s() -- Return the input left shifted n times.
+* Param: e (free) - Value (parsable to Integer) to left shift
+* Param: n (int) - Number of times to left shift
+* Return: e << n
+************************************************************************* */
+function stl_lshift_s(e, n) {
+    return stl_lshift(stl_parseInt(e, "stl_lshift_s"), n);
+}
+
+/* *************************************************************************
+* stl_rshift() -- Return the input right shifted n times.
+* Param: e (free) - Value (parsable to Integer) to right shift
+* Param: n (int) - Number of times to right shift
+* Return: e << n
+* Notes:
+*   -- Use stl_lshift_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+************************************************************************* */
+function stl_rshift(e, n) {
+    let x = e;
+    ascent(i in 0..n) {
+        x /= 2;
+        //Ceiling for negatives, Floor/Truncate for positives
+        if (e >= 0) {
+            x = floor(x);
+        } else {
+            x = ceil(x);
+        }
+    }
+    return x;
+}
+
+/* *************************************************************************
+* stl_rshift_s() -- Return the input right shifted n times.
+* Param: e (free) - Value (parsable to Integer) to right shift
+* Param: n (int) - Number of times to right shift
+* Return: e << n
+************************************************************************* */
+function stl_rshift_s(e, n) {
+    return stl_rshift(stl_parseInt(e, "stl_rshift_s"), n);
 }

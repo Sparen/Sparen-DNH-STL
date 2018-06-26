@@ -22,6 +22,8 @@ The following general libraries are provided in this distribution:
 * `stl_math.dnh`
     - `stl_complement()`: Return the one's complement of the input as an Integer.
     - `stl_bit_not()`: Return the bitwise NOT of the input as an Integer.
+    - `stl_lshift()`: Return the input left shifted n times.
+    - `stl_rshift()`: Return the input right shifted n times.
 
 The following data structure libraries are provided in this distribution:
 

@@ -8,6 +8,8 @@
 @Initialize {
     ComplementTest;
     //Bitwise NOT is not tested, as it is a wrapper for One's Complement, tested in ComplementTest
+    LShiftTest;
+    RShiftTest;
 }
 
 @MainLoop {
@@ -43,4 +45,76 @@ task ComplementTest {
     }
 
     WriteLog("ComplementTest: All Tests Passed");
+}
+
+task LShiftTest {
+    WriteLog("LShiftTest: Initializing");
+
+    WriteLog("LShiftTest: Part 1");
+    let x = 1; //Left shift by 1 per loop
+    let y = 1; //Set to 1 left shifted by i per loop
+    ascent(i in 0..64) {
+        WriteLog("LShiftTest: i, x, y: " ~ ToString(i) ~ "; " ~ ToString(x) ~ "; " ~ ToString(y));
+        assert(x == 1 * 2^i, "Assertion Failed (A1X) - Expected " ~ IntToString(1 * 2^i) ~ " but got " ~ IntToString(x));
+        assert(y == 1 * 2^i, "Assertion Failed (A1Y) - Expected " ~ IntToString(1 * 2^i) ~ " but got " ~ IntToString(y));
+        x = stl_lshift(x, 1);
+        y = stl_lshift(1, i + 1);
+    }
+
+    let x2 = 1; //Left shift by 1 per loop
+    let y2 = 1; //Set to 1 left shifted by j per loop
+    ascent(j in 0..64) {
+        WriteLog("LShiftTest: j, x2, y2: " ~ ToString(j) ~ "; " ~ ToString(x2) ~ "; " ~ ToString(y2));
+        assert(x2 == 1 * 2^j, "Assertion Failed (A2X) - Expected " ~ IntToString(1 * 2^j) ~ " but got " ~ IntToString(x2));
+        assert(y2 == 1 * 2^j, "Assertion Failed (A2Y) - Expected " ~ IntToString(1 * 2^j) ~ " but got " ~ IntToString(y2));
+        x2 = stl_lshift_s(x2, 1);
+        y2 = stl_lshift_s(1, j + 1);
+    }
+
+    WriteLog("LShiftTest: All Tests Passed");
+}
+
+task RShiftTest {
+    WriteLog("RShiftTest: Initializing");
+
+    WriteLog("RShiftTest: Part 1");
+    let x = 1024; //Right shift by 1 per loop
+    let y = 1024; //Set to 1 right shifted by i per loop
+    ascent(i in 0..10) {
+        WriteLog("RShiftTest: i, x, y: " ~ ToString(i) ~ "; " ~ ToString(x) ~ "; " ~ ToString(y));
+        assert(x == 1024 / 2^i, "Assertion Failed (A1X) - Expected " ~ IntToString(1024 / 2^i) ~ " but got " ~ IntToString(x));
+        assert(y == 1024 / 2^i, "Assertion Failed (A1Y) - Expected " ~ IntToString(1024 / 2^i) ~ " but got " ~ IntToString(y));
+        x = stl_rshift(x, 1);
+        y = stl_rshift(1024, i + 1);
+    }
+
+    let x2 = 1024; //Right shift by 1 per loop
+    let y2 = 1024; //Set to 1 right shifted by j per loop
+    ascent(j in 0..10) {
+        WriteLog("RShiftTest: j, x2, y2: " ~ ToString(j) ~ "; " ~ ToString(x2) ~ "; " ~ ToString(y2));
+        assert(x2 == 1024 / 2^j, "Assertion Failed (A2X) - Expected " ~ IntToString(1024 / 2^j) ~ " but got " ~ IntToString(x2));
+        assert(y2 == 1024 / 2^j, "Assertion Failed (A2Y) - Expected " ~ IntToString(1024 / 2^j) ~ " but got " ~ IntToString(y2));
+        x2 = stl_rshift_s(x2, 1);
+        y2 = stl_rshift_s(1024, j + 1);
+    }
+
+    WriteLog("RShiftTest: Part 2");
+    //1, 3, 7, 15, 31, 63, etc. should right shift to each other to mimic behavior of python 3
+    let x3 = 63; //Right shift by 1 per loop
+    let y3 = 63; //Set to 1 right shifted by j per loop
+    ascent(k in 0..6) {
+        WriteLog("RShiftTest: k, x3, y3: " ~ ToString(k) ~ "; " ~ ToString(x3) ~ "; " ~ ToString(y3));
+        assert(x3 == 64 / 2^k - 1, "Assertion Failed (B1X) - Expected " ~ IntToString(64 / 2^k) ~ " but got " ~ IntToString(x3));
+        assert(y3 == 64 / 2^k - 1, "Assertion Failed (B1Y) - Expected " ~ IntToString(64 / 2^k) ~ " but got " ~ IntToString(y3));
+        x3 = stl_rshift_s(x3, 1);
+        y3 = stl_rshift_s(63, k + 1);
+    }
+
+    WriteLog("RShiftTest: Part 3");
+    ascent(l in -30..0) {
+        assert(stl_rshift_s(l, 1) == ceil(l/2), "Assertion Failed (C1X) - Expected " ~ IntToString(ceil(l/2)) ~ " but got " ~ IntToString(stl_rshift_s(l, 1)));
+        assert(stl_rshift(l, 1) == ceil(l/2), "Assertion Failed (C1Y) - Expected " ~ IntToString(ceil(l/2)) ~ " but got " ~ IntToString(stl_rshift(l, 1)));
+    }
+
+    WriteLog("RShiftTest: All Tests Passed");
 }

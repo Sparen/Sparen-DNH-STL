@@ -14,24 +14,25 @@
 
 /* ******************************************************************
 * Methods:
-* stl_complement(), stl_complement_s()
+* stl_onescomplement(), stl_onescomplement_s()
+* stl_bit_not(), stl_bit_not_s()
 ************************************************************************* */
 
 /* *************************************************************************
-* stl_complement() -- Return the one's complement of the input as an Integer.
+* stl_onescomplement() -- Return the one's complement of the input as an Integer.
 * Param: e (free) - Value (parsable to Integer) to obtain one's complement of
 * Return: One's complement of e
 * Notes:
-*   -- Use stl_complement_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+*   -- Use stl_onescomplement_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
 *   -- This function works on Integers and String forms of Integers.
 *   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
 ************************************************************************* */
-function stl_complement(e) {
+function stl_onescomplement(e) {
     return -1 - e;
 }
 
 /* *************************************************************************
-* stl_complement_s() [SAFE] -- Return the one's complement of the input as an Integer.
+* stl_onescomplement_s() [SAFE] -- Return the one's complement of the input as an Integer.
 * Param: e (free) - Value (parsable to Integer) to obtain one's complement of
 * Return: One's complement of e
 * Exception:
@@ -40,14 +41,14 @@ function stl_complement(e) {
 *   -- This function works on Integers and String forms of Integers and Floats.
 *   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
 ************************************************************************* */
-function stl_complement_s(e) {
+function stl_onescomplement_s(e) {
     // Forcefully parse out the integer component
     // Note that ToString(int) will provide a decimal point and trailing 0s
     // Unable to use atoi in this case because when you run it on a String without numbers it returns 0.0
     let x = SplitString(ToString(e), ".");
     // Length must be exactly two
     if (length(x) != 2) {
-        RaiseError("stl_complement_s: Provided value not parsable to an Integer.");
+        RaiseError("stl_onescomplement_s: Provided value not parsable to an Integer.");
     }
     // int_0 is a string containing the Integer portion of the input
     let int_0 = x[0];
@@ -55,8 +56,35 @@ function stl_complement_s(e) {
     // The "" vs '' distinction is important here
     ascent(i in 0..length(int_0)) {
         if((int_0[i] < '0' || int_0[i] > '9') && !(i == 0 && int_0[i] == '-')) {
-            RaiseError("stl_complement_s: Provided value not parsable to an Integer.");
+            RaiseError("stl_onescomplement_s: Provided value not parsable to an Integer.");
         }
     }
     return -1 - int_0;
+}
+
+/* *************************************************************************
+* stl_bit_not() -- Return the bitwise NOT of the input as an Integer.
+* Param: e (free) - Value (parsable to Integer) to obtain bitwise NOT of
+* Return: Bitwise NOT of e
+* Notes:
+*   -- Use stl_bit_not_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+*   -- This function works on Integers and String forms of Integers.
+*   -- This function is a wrapper for stl_onescomplement()
+************************************************************************* */
+function stl_bit_not(e) {
+    return stl_onescomplement(e);
+}
+
+/* *************************************************************************
+* stl_bit_not_s() [SAFE] -- Return the bitwise NOT of the input as an Integer.
+* Param: e (free) - Value (parsable to Integer) to obtain bitwise NOT of
+* Return: Bitwise NOT of e
+* Exception:
+*   -- If e is not parsable to an Integer
+* Notes:
+*   -- This function works on Integers and String forms of Integers and Floats.
+*   -- This function is a wrapper for stl_onescomplement()
+************************************************************************* */
+function stl_bit_not_s(e) {
+    return stl_onescomplement_s(e);
 }

@@ -1,0 +1,172 @@
+/* ******************************************************************
+* Sparen's Stack Library
+* For use with Touhou Danmakufu ph3
+* (C) Sparen of Iria 2018
+*
+* Code in this library is under the MIT License and may be 
+* redistributed/modified without express permission
+****************************************************************** */
+
+/* ******************************************************************
+* This library is meant to implement a basic LIFO stack
+****************************************************************** */
+
+/* ******************************************************************
+* Methods:
+* ObjStack_Create()
+* ObjStack_Push()
+* ObjStack_Peek()
+* ObjStack_Pop()
+* ObjStack_Size()
+* ObjStack_Empty()
+* ObjStack_Contains()
+************************************************************************* */
+
+/* *************************************************************************
+* ObjStack_Create() -- Creates a new Stack Object using ObjPrim as a wrapper.
+* Return: New Stack Object
+************************************************************************* */
+function ObjStack_Create() {
+    // Create a new Stack Object using a primitive object as a wrapper
+    let objStack = ObjPrim_Create(OBJ_SPRITE_2D);
+    // Create a field storing the container
+    Obj_SetValue(objStack, "dnh_stack_container", []);
+    return objStack;
+}
+
+/* *************************************************************************
+* ObjStack_Push(obj, e) -- Adds an element to the end of a Stack Object.
+* Param: obj (obj) - Stack Object to add element to
+* Param: e (free) - Element to add to end of stack
+* Return: True on success
+* Exception: 
+*   - If obj does not refer to a Stack Object
+*   - If e is not the same type as other elements in Stack
+************************************************************************* */
+function ObjStack_Push(obj, e) {
+    // If the object is not a stack, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_stack_container")) {
+        RaiseError("ObjStack_Push: Provided Object ID did not refer to a Stack Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_stack_container");
+    // Append the new element to the end of the stack
+    c = c ~ [e];
+    // Set the container to the new updated version
+    Obj_SetValue(obj, "dnh_stack_container", c);
+    return true;
+}
+
+/* *************************************************************************
+* ObjStack_Peek(obj) -- Retrieves the element at the top of a Stack Object.
+* Param: obj (obj) - Stack Object to access elements from
+* Return: Element at top of stack
+* Exception: 
+*   - If obj does not refer to a Stack Object
+*   - If the stack is empty
+************************************************************************* */
+function ObjStack_Peek(obj) {
+    // If the object is not a stack, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_stack_container")) {
+        RaiseError("ObjStack_Peek: Provided Object ID did not refer to a Stack Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_stack_container");
+    // If the stack is empty, raise an exception
+    if (length(c) == 0) {
+        RaiseError("ObjStack_Peek: Cannot access elements of empty Stack Object.");
+    }
+    //Return the top of the stack
+    return c[length(c) - 1];
+}
+
+/* *************************************************************************
+* ObjStack_Pop(obj) -- Removes and returns the element at the top of a Stack Object.
+* Param: obj (obj) - Stack Object to remove top from
+* Return: Element at top of stack
+* Exception: 
+*   - If obj does not refer to a Stack Object
+*   - If the stack is empty
+************************************************************************* */
+function ObjStack_Pop(obj) {
+    // If the object is not a stack, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_stack_container")) {
+        RaiseError("ObjStack_Pop: Provided Object ID did not refer to a Stack Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_stack_container");
+    // If the stack is empty, raise an exception
+    if (length(c) == 0) {
+        RaiseError("ObjStack_Pop: Cannot access elements of empty Stack Object.");
+    }
+    // Access top of stack
+    let head = c[length(c) - 1];
+    // Delete top of stack
+    c = erase(c, length(c) - 1);
+    // Set the container to the new updated version
+    Obj_SetValue(obj, "dnh_stack_container", c);
+    //Return the head of the stack
+    return head;
+}
+
+/* *************************************************************************
+* ObjStack_Size(obj) -- Returns the size of a Stack Object.
+* Param: obj (obj) - Stack Object to get size of
+* Return: Size of stack
+* Exception: 
+*   - If obj does not refer to a Stack Object
+************************************************************************* */
+function ObjStack_Size(obj) {
+    // If the object is not a stack, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_stack_container")) {
+        RaiseError("ObjStack_Size: Provided Object ID did not refer to a Stack Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_stack_container");
+    // Return length of array
+    return length(c);
+}
+
+/* *************************************************************************
+* ObjStack_Empty(obj) -- Returns if the Stack Object is empty.
+* Param: obj (obj) - Stack Object to get status of
+* Return: True if empty, false otherwise
+* Exception: 
+*   - If obj does not refer to a Stack Object
+************************************************************************* */
+function ObjStack_Empty(obj) {
+    // If the object is not a stack, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_stack_container")) {
+        RaiseError("ObjStack_Empty: Provided Object ID did not refer to a Stack Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_stack_container");
+    // Return length of array
+    return (length(c) == 0);
+}
+
+/* *************************************************************************
+* ObjStack_Contains(obj, e) -- Returns true if the Stack Object contains the specified element.
+* Param: obj (obj) - Stack Object to check occurrences in
+* Param: e (free) - Element to check occurrences of 
+* Return: True if stack contains element, false otherwise
+* Exception: 
+*   - If obj does not refer to a Stack Object
+*   - If e is not the same type as other elements in Stack
+************************************************************************* */
+function ObjStack_Contains(obj, e) {
+    // If the object is not a stack, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_stack_container")) {
+        RaiseError("ObjStack_Contains: Provided Object ID did not refer to a Stack Object.");
+    }
+    // Get the container array
+    let c = Obj_GetValue(obj, "dnh_stack_container");
+    // Iterate through stack to check if element exists
+    ascent(i in 0..length(c)) {
+        if (c[i] == e) {
+            return true;
+        }
+    }
+    //Return false if not found
+    return false;
+}

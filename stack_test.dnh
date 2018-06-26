@@ -1,0 +1,54 @@
+#TouhouDanmakufu[Stage]
+#Title["Stack Test"]
+#Text["Unit Testing for Stack.dnh"]
+#ScriptVersion[3]
+
+#include "./stack.dnh"
+    
+@Initialize {
+    ObjStack_Test;
+}
+
+@MainLoop {
+    yield;
+}
+
+task ObjStack_Test {
+    WriteLog("ObjStack_Test: Initializing");
+    let objStack = ObjStack_Create();
+    WriteLog("ObjStack_Test: Part 1");
+    assert(ObjStack_Size(objStack) == 0, "Assertion Failed (1) - Expected 0 but got " ~ IntToString(ObjStack_Size(objStack)));
+    assert(ObjStack_Empty(objStack), "Assertion Failed (2)");
+    assert(!ObjStack_Contains(objStack, 0), "Assertion Failed (3)");
+    ObjStack_Push(objStack, 0);
+    assert(ObjStack_Size(objStack) == 1, "Assertion Failed (4) - Expected 0 but got " ~ IntToString(ObjStack_Size(objStack)));
+    assert(!ObjStack_Empty(objStack), "Assertion Failed (5)");
+    assert(ObjStack_Contains(objStack, 0), "Assertion Failed (6)");
+    assert(!ObjStack_Contains(objStack, 1), "Assertion Failed (7)");
+    assert(ObjStack_Peek(objStack) == 0, "Assertion Failed (8)");
+    assert(ObjStack_Pop(objStack) == 0, "Assertion Failed (9)");
+    assert(ObjStack_Size(objStack) == 0, "Assertion Failed (10) - Expected 0 but got " ~ IntToString(ObjStack_Size(objStack)));
+    assert(ObjStack_Empty(objStack), "Assertion Failed (11)");
+    assert(!ObjStack_Contains(objStack, 0), "Assertion Failed (12)");
+
+    WriteLog("ObjStack_Test: Part 2");
+    ascent(i in 0..100) {
+        ObjStack_Push(objStack, i);
+        assert(ObjStack_Size(objStack) == i + 1, "Assertion Failed (B1) - Expected " ~ IntToString(i + 1) ~ " but got " ~ IntToString(ObjStack_Size(objStack)));
+        assert(!ObjStack_Empty(objStack), "Assertion Failed (B2)");
+        assert(ObjStack_Peek(objStack) == i, "Assertion Failed (B3)");
+        ascent(j in 0..i) {
+            assert(ObjStack_Contains(objStack, j), "Assertion Failed (B4)");
+        }
+    }
+    WriteLog("ObjStack_Test: Part 3");
+    descent(i in 0..100) {
+        ObjStack_Pop(objStack);
+    }
+    assert(ObjStack_Size(objStack) == 0, "Assertion Failed (C1) - Expected 0 but got " ~ IntToString(ObjStack_Size(objStack)));
+    assert(ObjStack_Empty(objStack), "Assertion Failed (C2)");
+    ascent(i in 0..100) {
+        assert(!ObjStack_Contains(objStack, i), "Assertion Failed (C3)");
+    }
+    WriteLog("ObjStack_Test: All Tests Passed");
+}

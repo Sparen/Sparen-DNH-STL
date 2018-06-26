@@ -19,6 +19,7 @@ The libraries in this repository are all standalone and have no dependencies.
 The following libraries are provided in this distribution:
 
 * `queue.dnh`
+* `stack.dnh`
 
 ### Running Unit Tests
 

@@ -1,0 +1,62 @@
+/* ******************************************************************
+* Sparen's Math Library
+* For use with Touhou Danmakufu ph3
+* (C) Sparen of Iria 2018
+*
+* Code in this library is under the MIT License and may be 
+* redistributed/modified without express permission
+****************************************************************** */
+
+/* ******************************************************************
+* This library contains a variety of mathematical operators and functions
+* For speed, this library typically contains 'safe' (_s) and 'unsafe' versions of each function
+****************************************************************** */
+
+/* ******************************************************************
+* Methods:
+* stl_complement(), stl_complement_s()
+************************************************************************* */
+
+/* *************************************************************************
+* stl_complement() -- Return the one's complement of the input as an Integer.
+* Param: e (free) - Value (parsable to Integer) to obtain one's complement of
+* Return: One's complement of e
+* Notes:
+*   -- Use stl_complement_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+*   -- This function works on Integers and String forms of Integers.
+*   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
+************************************************************************* */
+function stl_complement(e) {
+    return -1 - e;
+}
+
+/* *************************************************************************
+* stl_complement_s() [SAFE] -- Return the one's complement of the input as an Integer.
+* Param: e (free) - Value (parsable to Integer) to obtain one's complement of
+* Return: One's complement of e
+* Exception:
+*   -- If e is not parsable to an Integer
+* Notes:
+*   -- This function works on Integers and String forms of Integers and Floats.
+*   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
+************************************************************************* */
+function stl_complement_s(e) {
+    // Forcefully parse out the integer component
+    // Note that ToString(int) will provide a decimal point and trailing 0s
+    // Unable to use atoi in this case because when you run it on a String without numbers it returns 0.0
+    let x = SplitString(ToString(e), ".");
+    // Length must be exactly two
+    if (length(x) != 2) {
+        RaiseError("stl_complement_s: Provided value not parsable to an Integer.");
+    }
+    // int_0 is a string containing the Integer portion of the input
+    let int_0 = x[0];
+    // Ensure every character in the string is one of '0'..'9' ('-' allowed for first character) using character comparison
+    // The "" vs '' distinction is important here
+    ascent(i in 0..length(int_0)) {
+        if((int_0[i] < '0' || int_0[i] > '9') && !(i == 0 && int_0[i] == '-')) {
+            RaiseError("stl_complement_s: Provided value not parsable to an Integer.");
+        }
+    }
+    return -1 - int_0;
+}

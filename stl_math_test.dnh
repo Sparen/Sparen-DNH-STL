@@ -1,0 +1,45 @@
+#TouhouDanmakufu[Stage]
+#Title["STL Math Test"]
+#Text["Unit Testing for stl_math.dnh"]
+#ScriptVersion[3]
+
+#include "./stl_math.dnh"
+    
+@Initialize {
+    ComplementTest;
+}
+
+@MainLoop {
+    yield;
+}
+
+task ComplementTest {
+    WriteLog("ComplementTest: Initializing");
+
+    WriteLog("ComplementTest: Part 1");
+    ascent(i in -32..32) {
+        assert(stl_complement_s(i) == (-1 - i), "Assertion Failed (A1) - Expected " ~ IntToString(-1 - i) ~ " but got " ~ IntToString(stl_complement_s(i)));
+    }
+    ascent(i in -32..32) {
+        assert(stl_complement(i) == (-1 - i), "Assertion Failed (A2) - Expected " ~ IntToString(-1 - i) ~ " but got " ~ IntToString(stl_complement(i)));
+    }
+
+    ascent(i in -32..32) {
+        assert(stl_complement_s(ToString(i)) == (-1 - i), "Assertion Failed (A3) - Expected " ~ IntToString(-1 - i) ~ " but got " ~ IntToString(stl_complement_s(ToString(i))));
+    }
+    ascent(i in -32..32) {
+        assert(stl_complement(ToString(i)) == (-1 - i), "Assertion Failed (A4) - Expected " ~ IntToString(-1 - i) ~ " but got " ~ IntToString(stl_complement(ToString(i))));
+    }
+
+    //Following line should crash Danmakufu with the library's error
+    //Comment out when not testing exception handler
+    //assert(stl_complement_s("TEST"), "Assertion Failed (B1) - Expected exception");
+
+    WriteLog("ComplementTest: Part 2");
+    // When we add the floating point component, ensure that the sign of the floating point component is maintained as well
+    ascent(i in -32..32) {
+        assert(stl_complement_s(i + 0.001 * i) == (-1 - i), "Assertion Failed (C1) - Expected " ~ IntToString(-1 - i) ~ " but got " ~ IntToString(stl_complement_s(i + 0.001 * i)));
+    }
+
+    WriteLog("ComplementTest: All Tests Passed");
+}

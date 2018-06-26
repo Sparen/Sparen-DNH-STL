@@ -7,7 +7,8 @@ This is a library of various data structures and other utilities for use in the 
 To utilize these libraries, include them using the standard Danmakufu ph3 `#include` like so:
 
 ```
-#include "./queue.dnh"
+#include "./stl_math.dnh"
+#include "./stl_queue.dnh"
 ```
 
 Each library must be included individually.
@@ -16,10 +17,15 @@ The libraries in this repository are all standalone and have no dependencies.
 
 ### Libraries
 
-The following libraries are provided in this distribution:
+The following general libraries are provided in this distribution:
 
-* `queue.dnh`
-* `stack.dnh`
+* `stl_math.dnh`
+    - `stl_complement()`: Return the one's complement of the input as an Integer.
+
+The following data structure libraries are provided in this distribution:
+
+* `stl_queue.dnh`
+* `stl_stack.dnh`
 
 ### Running Unit Tests
 

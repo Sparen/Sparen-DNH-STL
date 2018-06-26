@@ -131,7 +131,7 @@ function stl_lshift_s(e, n) {
 * stl_rshift() -- Return the input right shifted n times.
 * Param: e (free) - Value (parsable to Integer) to right shift
 * Param: n (int) - Number of times to right shift
-* Return: e << n
+* Return: e >> n
 * Notes:
 *   -- Use stl_rshift_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
 ************************************************************************* */
@@ -153,7 +153,7 @@ function stl_rshift(e, n) {
 * stl_rshift_s() -- Return the input right shifted n times.
 * Param: e (free) - Value (parsable to Integer) to right shift
 * Param: n (int) - Number of times to right shift
-* Return: e << n
+* Return: e >> n
 ************************************************************************* */
 function stl_rshift_s(e, n) {
     return stl_rshift(stl_parseInt(e, "stl_rshift_s"), n);

@@ -19,6 +19,7 @@
 * stl_bit_not(), stl_bit_not_s()
 * stl_lshift(), stl_lshift_s()
 * stl_rshift(), stl_rshift_s()
+* stl_tobinary(), stl_tobinary_s()
 ************************************************************************* */
 
 /* *************************************************************************
@@ -57,7 +58,6 @@ function stl_parseInt(e, fxn) {
 * Return: One's complement of e
 * Notes:
 *   -- Use stl_onescomplement_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
-*   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
 ************************************************************************* */
 function stl_onescomplement(e) {
     return -1 - e;
@@ -70,7 +70,6 @@ function stl_onescomplement(e) {
 * Exception:
 *   -- If e is not parsable to an Integer
 * Notes:
-*   -- This function utilizes the built in Danmakufu +/- string to int conversion (IE 1 - "2" -> -1)
 ************************************************************************* */
 function stl_onescomplement_s(e) {
     return stl_onescomplement(stl_parseInt(e, "stl_onescomplement_s"));
@@ -139,7 +138,7 @@ function stl_rshift(e, n) {
     let x = e;
     ascent(i in 0..n) {
         x /= 2;
-        //Ceiling for negatives, Floor/Truncate for positives
+        // Ceiling for negatives, Floor/Truncate for positives
         if (e >= 0) {
             x = floor(x);
         } else {
@@ -157,4 +156,50 @@ function stl_rshift(e, n) {
 ************************************************************************* */
 function stl_rshift_s(e, n) {
     return stl_rshift(stl_parseInt(e, "stl_rshift_s"), n);
+}
+
+/* *************************************************************************
+* stl_tobinary() -- Return the input as a binary string.
+* Param: e (free) - Value (parsable to Integer) to return as binary string
+* Return: e as a binary string
+* Notes:
+*   -- Use stl_tobinary_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+*   -- This function stops working correctly past 9999999999999998? due to Danmakufu's internals defaulting to scientific notation? (verification needed)
+************************************************************************* */
+function stl_tobinary(e) {
+    if (e < 0) {
+        RaiseError("stl_tobinary: Negative values are not supported.");
+    }
+    // This case tends to mess things up
+    if (e == 0) {
+        return "0";
+    }
+    let strlen = 0;
+    // First, we must determine how many digits are in the binary string. 
+    while(e >= 2^strlen) {
+        strlen += 1;
+    }
+    // Now we form the string.
+    let output = "";
+    let x = e;
+    while (strlen > 0) {
+        let component = 2^(strlen-1);
+        if (x >= component) {
+            output = output ~ "1";
+            x -= component;
+        } else {
+            output = output ~ "0";
+        }
+        strlen -= 1;
+    }
+    return output;
+}
+
+/* *************************************************************************
+* stl_tobinary_s() -- Return the input as a binary string.
+* Param: e (free) - Value (parsable to Integer) to return as binary string
+* Return: e as a binary string
+************************************************************************* */
+function stl_tobinary_s(e) {
+    return stl_tobinary(stl_parseInt(e, "stl_tobinary_s"));
 }

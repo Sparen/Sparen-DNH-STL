@@ -10,6 +10,8 @@
     //Bitwise NOT is not tested, as it is a wrapper for One's Complement, tested in ComplementTest
     LShiftTest;
     RShiftTest;
+
+    ToBinaryTest;
 }
 
 @MainLoop {
@@ -117,4 +119,54 @@ task RShiftTest {
     }
 
     WriteLog("RShiftTest: All Tests Passed");
+}
+
+task ToBinaryTest {
+    WriteLog("ToBinaryTest: Initializing");
+
+    /*ascent(i in 0..32) {
+        WriteLog("ToBinaryTest: " ~ IntToString(i) ~ " -> " ~ stl_tobinary(i));
+    }*/
+
+    WriteLog("ToBinaryTest: Part 1");
+    assert(stl_tobinary(0) == "0", "Assertion Failed (A0) - Expected 0 but got " ~ stl_tobinary(0));
+    assert(stl_tobinary(1) == "1", "Assertion Failed (A1) - Expected 1 but got " ~ stl_tobinary(1));
+    assert(stl_tobinary(2) == "10", "Assertion Failed (A2) - Expected 10 but got " ~ stl_tobinary(2));
+    assert(stl_tobinary(3) == "11", "Assertion Failed (A3) - Expected 11 but got " ~ stl_tobinary(3));
+    assert(stl_tobinary(4) == "100", "Assertion Failed (A4) - Expected 100 but got " ~ stl_tobinary(4));
+    assert(stl_tobinary(5) == "101", "Assertion Failed (A5) - Expected 101 but got " ~ stl_tobinary(5));
+    assert(stl_tobinary(6) == "110", "Assertion Failed (A6) - Expected 110 but got " ~ stl_tobinary(6));
+    assert(stl_tobinary(7) == "111", "Assertion Failed (A7) - Expected 111 but got " ~ stl_tobinary(7));
+    assert(stl_tobinary(8) == "1000", "Assertion Failed (A8) - Expected 1000 but got " ~ stl_tobinary(8));
+    assert(stl_tobinary(9) == "1001", "Assertion Failed (A9) - Expected 1001 but got " ~ stl_tobinary(9));
+    assert(stl_tobinary(10) == "1010", "Assertion Failed (A10) - Expected 1010 but got " ~ stl_tobinary(10));
+    assert(stl_tobinary(11) == "1011", "Assertion Failed (A11) - Expected 1011 but got " ~ stl_tobinary(11));
+    assert(stl_tobinary(12) == "1100", "Assertion Failed (A12) - Expected 1100 but got " ~ stl_tobinary(12));
+    assert(stl_tobinary(13) == "1101", "Assertion Failed (A13) - Expected 1101 but got " ~ stl_tobinary(13));
+    assert(stl_tobinary(14) == "1110", "Assertion Failed (A14) - Expected 1110 but got " ~ stl_tobinary(14));
+    assert(stl_tobinary(15) == "1111", "Assertion Failed (A15) - Expected 1111 but got " ~ stl_tobinary(15));
+    assert(stl_tobinary(16) == "10000", "Assertion Failed (A16) - Expected 10000 but got " ~ stl_tobinary(16));
+    assert(stl_tobinary(2147483647) == "1111111111111111111111111111111", "Assertion Failed (A1X) - Expected 1111111111111111111111111111111 but got " ~ stl_tobinary(2147483647)); // max int32
+    assert(stl_tobinary(281474976710655) == "111111111111111111111111111111111111111111111111", "Assertion Failed (A2X) - Expected 111111111111111111111111111111111111111111111111 but got " ~ stl_tobinary(281474976710655)); // max int48
+    assert(stl_tobinary(9007199254740991) == "11111111111111111111111111111111111111111111111111111", "Assertion Failed (A3X) - Expected 11111111111111111111111111111111111111111111111111111 but got " ~ stl_tobinary(9007199254740991)); // 2^53 - 1
+    assert(stl_tobinary(9999999999999998) == "100011100001101111001001101111110000001111111111111110", "Assertion Failed (A4X) - Expected 100011100001101111001001101111110000001111111111111110 but got " ~ stl_tobinary(9999999999999998));
+
+    WriteLog("ToBinaryTest: Part 2");
+    assert(stl_tobinary_s(0) == "0", "Assertion Failed (A0) - Expected 0 but got " ~ stl_tobinary_s(0));
+    assert(stl_tobinary_s(1) == "1", "Assertion Failed (A1) - Expected 1 but got " ~ stl_tobinary_s(1));
+    assert(stl_tobinary_s(2) == "10", "Assertion Failed (A2) - Expected 10 but got " ~ stl_tobinary_s(2));
+    assert(stl_tobinary_s(3) == "11", "Assertion Failed (A3) - Expected 11 but got " ~ stl_tobinary_s(3));
+    assert(stl_tobinary_s(4) == "100", "Assertion Failed (A4) - Expected 100 but got " ~ stl_tobinary_s(4));
+    assert(stl_tobinary_s(5) == "101", "Assertion Failed (A5) - Expected 101 but got " ~ stl_tobinary_s(5));
+    assert(stl_tobinary_s(6) == "110", "Assertion Failed (A6) - Expected 110 but got " ~ stl_tobinary_s(6));
+    assert(stl_tobinary_s(7) == "111", "Assertion Failed (A7) - Expected 111 but got " ~ stl_tobinary_s(7));
+    assert(stl_tobinary_s(8) == "1000", "Assertion Failed (A8) - Expected 1000 but got " ~ stl_tobinary_s(8));
+    assert(stl_tobinary_s(9) == "1001", "Assertion Failed (A9) - Expected 1001 but got " ~ stl_tobinary_s(9));
+    assert(stl_tobinary_s(10) == "1010", "Assertion Failed (A10) - Expected 1010 but got " ~ stl_tobinary_s(10));
+    assert(stl_tobinary_s(11) == "1011", "Assertion Failed (A11) - Expected 1011 but got " ~ stl_tobinary_s(11));
+    assert(stl_tobinary_s(12) == "1100", "Assertion Failed (A12) - Expected 1100 but got " ~ stl_tobinary_s(12));
+    assert(stl_tobinary_s(13) == "1101", "Assertion Failed (A13) - Expected 1101 but got " ~ stl_tobinary_s(13));
+    assert(stl_tobinary_s(14) == "1110", "Assertion Failed (A14) - Expected 1110 but got " ~ stl_tobinary_s(14));
+    assert(stl_tobinary_s(15) == "1111", "Assertion Failed (A15) - Expected 1111 but got " ~ stl_tobinary_s(15));
+    assert(stl_tobinary_s(16) == "10000", "Assertion Failed (A16) - Expected 10000 but got " ~ stl_tobinary_s(16));
 }

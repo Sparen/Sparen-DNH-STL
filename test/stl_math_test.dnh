@@ -3,7 +3,7 @@
 #Text["Unit Testing for stl_math.dnh"]
 #ScriptVersion[3]
 
-#include "./stl_math.dnh"
+#include "./../stl_math.dnh"
     
 @Initialize {
     ComplementTest;

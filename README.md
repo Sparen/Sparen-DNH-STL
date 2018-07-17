@@ -17,7 +17,7 @@ The libraries in this repository are all standalone and have no dependencies.
 
 ### Libraries
 
-The following general libraries are provided in this distribution:
+The following general libraries are provided in this distribution. These are libraries custom-made for the STL distribution.
 
 * `stl_math.dnh`
     - `stl_complement()`: Return the one's complement of the input as an Integer.
@@ -26,10 +26,13 @@ The following general libraries are provided in this distribution:
     - `stl_rshift()`: Return the input right shifted n times.
     - `stl_tobinary()`: Return the input as a binary string.
 
-The following data structure libraries are provided in this distribution:
+The following data structure libraries are provided in this distribution. These are data structure libraries custom-made for the STL distribution.
 
 * `stl_queue.dnh`
 * `stl_stack.dnh`
+
+The following miscellaneous libraries are provided in this distribution. These are libraries for specific tasks that were typically made independently of the STL distribution.
+* `lib_autoformat.dnh`: Provides automatic line breaking in text based on render width.
 
 ### Running Unit Tests
 

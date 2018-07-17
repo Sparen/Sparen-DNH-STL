@@ -3,7 +3,7 @@
 #Text["Unit Testing for stl_stack.dnh"]
 #ScriptVersion[3]
 
-#include "./stl_stack.dnh"
+#include "./../stl_stack.dnh"
     
 @Initialize {
     ObjStack_Test;

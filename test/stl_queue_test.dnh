@@ -3,7 +3,7 @@
 #Text["Unit Testing for stl_queue.dnh"]
 #ScriptVersion[3]
 
-#include "./stl_queue.dnh"
+#include "./../stl_queue.dnh"
     
 @Initialize {
     ObjQueue_Test;

@@ -24,8 +24,9 @@ The following general libraries are provided in this distribution. These are lib
     - `stl_bit_not()`: Return the bitwise NOT of the input as an Integer.
     - `stl_lshift()`: Return the input left shifted n times.
     - `stl_rshift()`: Return the input right shifted n times.
-    - `stl_tobinary()`: Return the input as a binary string.
-    - `stl_todecimal()`: Return the input binary string as an integer.
+    - `stl_dectobin()`: Return the input as a binary string.
+    - `stl_bintodec()`: Return the input binary string as an Integer.
+    - `stl_bit_and()`: Return the bitwise AND of the inputs as an Integer.
 
 The following data structure libraries are provided in this distribution. These are data structure libraries custom-made for the STL distribution.
 

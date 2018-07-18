@@ -11,8 +11,10 @@
     LShiftTest;
     RShiftTest;
 
-    ToBinaryTest;
-    ToDecimalTest;
+    DecimalToBinaryTest;
+    BinaryToDecimalTest;
+
+    BitAndTest;
 }
 
 @MainLoop {
@@ -122,96 +124,233 @@ task RShiftTest {
     WriteLog("RShiftTest: All Tests Passed");
 }
 
-task ToBinaryTest {
-    WriteLog("ToBinaryTest: Initializing");
+task DecimalToBinaryTest {
+    WriteLog("DecimalToBinaryTest: Initializing");
 
     /*ascent(i in 0..32) {
-        WriteLog("ToBinaryTest: " ~ IntToString(i) ~ " -> " ~ stl_tobinary(i));
+        WriteLog("DecimalToBinaryTest: " ~ IntToString(i) ~ " -> " ~ stl_tobinary(i));
     }*/
 
-    WriteLog("ToBinaryTest: Part 1");
-    assert(stl_tobinary(0) == "0", "Assertion Failed (A0) - Expected 0 but got " ~ stl_tobinary(0));
-    assert(stl_tobinary(1) == "1", "Assertion Failed (A1) - Expected 1 but got " ~ stl_tobinary(1));
-    assert(stl_tobinary(2) == "10", "Assertion Failed (A2) - Expected 10 but got " ~ stl_tobinary(2));
-    assert(stl_tobinary(3) == "11", "Assertion Failed (A3) - Expected 11 but got " ~ stl_tobinary(3));
-    assert(stl_tobinary(4) == "100", "Assertion Failed (A4) - Expected 100 but got " ~ stl_tobinary(4));
-    assert(stl_tobinary(5) == "101", "Assertion Failed (A5) - Expected 101 but got " ~ stl_tobinary(5));
-    assert(stl_tobinary(6) == "110", "Assertion Failed (A6) - Expected 110 but got " ~ stl_tobinary(6));
-    assert(stl_tobinary(7) == "111", "Assertion Failed (A7) - Expected 111 but got " ~ stl_tobinary(7));
-    assert(stl_tobinary(8) == "1000", "Assertion Failed (A8) - Expected 1000 but got " ~ stl_tobinary(8));
-    assert(stl_tobinary(9) == "1001", "Assertion Failed (A9) - Expected 1001 but got " ~ stl_tobinary(9));
-    assert(stl_tobinary(10) == "1010", "Assertion Failed (A10) - Expected 1010 but got " ~ stl_tobinary(10));
-    assert(stl_tobinary(11) == "1011", "Assertion Failed (A11) - Expected 1011 but got " ~ stl_tobinary(11));
-    assert(stl_tobinary(12) == "1100", "Assertion Failed (A12) - Expected 1100 but got " ~ stl_tobinary(12));
-    assert(stl_tobinary(13) == "1101", "Assertion Failed (A13) - Expected 1101 but got " ~ stl_tobinary(13));
-    assert(stl_tobinary(14) == "1110", "Assertion Failed (A14) - Expected 1110 but got " ~ stl_tobinary(14));
-    assert(stl_tobinary(15) == "1111", "Assertion Failed (A15) - Expected 1111 but got " ~ stl_tobinary(15));
-    assert(stl_tobinary(16) == "10000", "Assertion Failed (A16) - Expected 10000 but got " ~ stl_tobinary(16));
-    assert(stl_tobinary(2147483647) == "1111111111111111111111111111111", "Assertion Failed (A1X) - Expected 1111111111111111111111111111111 but got " ~ stl_tobinary(2147483647)); // max int32
-    assert(stl_tobinary(281474976710655) == "111111111111111111111111111111111111111111111111", "Assertion Failed (A2X) - Expected 111111111111111111111111111111111111111111111111 but got " ~ stl_tobinary(281474976710655)); // max int48
-    assert(stl_tobinary(9007199254740991) == "11111111111111111111111111111111111111111111111111111", "Assertion Failed (A3X) - Expected 11111111111111111111111111111111111111111111111111111 but got " ~ stl_tobinary(9007199254740991)); // 2^53 - 1
-    assert(stl_tobinary(9999999999999998) == "100011100001101111001001101111110000001111111111111110", "Assertion Failed (A4X) - Expected 100011100001101111001001101111110000001111111111111110 but got " ~ stl_tobinary(9999999999999998));
+    WriteLog("DecimalToBinaryTest: Part 1");
+    assert(stl_dectobin(0) == "0", "Assertion Failed (A0) - Expected 0 but got " ~ stl_dectobin(0));
+    assert(stl_dectobin(1) == "1", "Assertion Failed (A1) - Expected 1 but got " ~ stl_dectobin(1));
+    assert(stl_dectobin(2) == "10", "Assertion Failed (A2) - Expected 10 but got " ~ stl_dectobin(2));
+    assert(stl_dectobin(3) == "11", "Assertion Failed (A3) - Expected 11 but got " ~ stl_dectobin(3));
+    assert(stl_dectobin(4) == "100", "Assertion Failed (A4) - Expected 100 but got " ~ stl_dectobin(4));
+    assert(stl_dectobin(5) == "101", "Assertion Failed (A5) - Expected 101 but got " ~ stl_dectobin(5));
+    assert(stl_dectobin(6) == "110", "Assertion Failed (A6) - Expected 110 but got " ~ stl_dectobin(6));
+    assert(stl_dectobin(7) == "111", "Assertion Failed (A7) - Expected 111 but got " ~ stl_dectobin(7));
+    assert(stl_dectobin(8) == "1000", "Assertion Failed (A8) - Expected 1000 but got " ~ stl_dectobin(8));
+    assert(stl_dectobin(9) == "1001", "Assertion Failed (A9) - Expected 1001 but got " ~ stl_dectobin(9));
+    assert(stl_dectobin(10) == "1010", "Assertion Failed (A10) - Expected 1010 but got " ~ stl_dectobin(10));
+    assert(stl_dectobin(11) == "1011", "Assertion Failed (A11) - Expected 1011 but got " ~ stl_dectobin(11));
+    assert(stl_dectobin(12) == "1100", "Assertion Failed (A12) - Expected 1100 but got " ~ stl_dectobin(12));
+    assert(stl_dectobin(13) == "1101", "Assertion Failed (A13) - Expected 1101 but got " ~ stl_dectobin(13));
+    assert(stl_dectobin(14) == "1110", "Assertion Failed (A14) - Expected 1110 but got " ~ stl_dectobin(14));
+    assert(stl_dectobin(15) == "1111", "Assertion Failed (A15) - Expected 1111 but got " ~ stl_dectobin(15));
+    assert(stl_dectobin(16) == "10000", "Assertion Failed (A16) - Expected 10000 but got " ~ stl_dectobin(16));
+    assert(stl_dectobin(2147483647) == "1111111111111111111111111111111", "Assertion Failed (A1X) - Expected 1111111111111111111111111111111 but got " ~ stl_dectobin(2147483647)); // max int32
+    assert(stl_dectobin(281474976710655) == "111111111111111111111111111111111111111111111111", "Assertion Failed (A2X) - Expected 111111111111111111111111111111111111111111111111 but got " ~ stl_dectobin(281474976710655)); // max int48
+    assert(stl_dectobin(9007199254740991) == "11111111111111111111111111111111111111111111111111111", "Assertion Failed (A3X) - Expected 11111111111111111111111111111111111111111111111111111 but got " ~ stl_dectobin(9007199254740991)); // 2^53 - 1
+    assert(stl_dectobin(9999999999999998) == "100011100001101111001001101111110000001111111111111110", "Assertion Failed (A4X) - Expected 100011100001101111001001101111110000001111111111111110 but got " ~ stl_dectobin(9999999999999998));
 
-    WriteLog("ToBinaryTest: Part 2");
-    assert(stl_tobinary_s(0) == "0", "Assertion Failed (B0) - Expected 0 but got " ~ stl_tobinary_s(0));
-    assert(stl_tobinary_s(1) == "1", "Assertion Failed (B1) - Expected 1 but got " ~ stl_tobinary_s(1));
-    assert(stl_tobinary_s(2) == "10", "Assertion Failed (B2) - Expected 10 but got " ~ stl_tobinary_s(2));
-    assert(stl_tobinary_s(3) == "11", "Assertion Failed (B3) - Expected 11 but got " ~ stl_tobinary_s(3));
-    assert(stl_tobinary_s(4) == "100", "Assertion Failed (B4) - Expected 100 but got " ~ stl_tobinary_s(4));
-    assert(stl_tobinary_s(5) == "101", "Assertion Failed (B5) - Expected 101 but got " ~ stl_tobinary_s(5));
-    assert(stl_tobinary_s(6) == "110", "Assertion Failed (B6) - Expected 110 but got " ~ stl_tobinary_s(6));
-    assert(stl_tobinary_s(7) == "111", "Assertion Failed (B7) - Expected 111 but got " ~ stl_tobinary_s(7));
-    assert(stl_tobinary_s(8) == "1000", "Assertion Failed (B8) - Expected 1000 but got " ~ stl_tobinary_s(8));
-    assert(stl_tobinary_s(9) == "1001", "Assertion Failed (B9) - Expected 1001 but got " ~ stl_tobinary_s(9));
-    assert(stl_tobinary_s(10) == "1010", "Assertion Failed (B10) - Expected 1010 but got " ~ stl_tobinary_s(10));
-    assert(stl_tobinary_s(11) == "1011", "Assertion Failed (B11) - Expected 1011 but got " ~ stl_tobinary_s(11));
-    assert(stl_tobinary_s(12) == "1100", "Assertion Failed (B12) - Expected 1100 but got " ~ stl_tobinary_s(12));
-    assert(stl_tobinary_s(13) == "1101", "Assertion Failed (B13) - Expected 1101 but got " ~ stl_tobinary_s(13));
-    assert(stl_tobinary_s(14) == "1110", "Assertion Failed (B14) - Expected 1110 but got " ~ stl_tobinary_s(14));
-    assert(stl_tobinary_s(15) == "1111", "Assertion Failed (B15) - Expected 1111 but got " ~ stl_tobinary_s(15));
-    assert(stl_tobinary_s(16) == "10000", "Assertion Failed (B16) - Expected 10000 but got " ~ stl_tobinary_s(16));
+    WriteLog("DecimalToBinaryTest: Part 2");
+    assert(stl_dectobin_s(0) == "0", "Assertion Failed (B0) - Expected 0 but got " ~ stl_dectobin_s(0));
+    assert(stl_dectobin_s(1) == "1", "Assertion Failed (B1) - Expected 1 but got " ~ stl_dectobin_s(1));
+    assert(stl_dectobin_s(2) == "10", "Assertion Failed (B2) - Expected 10 but got " ~ stl_dectobin_s(2));
+    assert(stl_dectobin_s(3) == "11", "Assertion Failed (B3) - Expected 11 but got " ~ stl_dectobin_s(3));
+    assert(stl_dectobin_s(4) == "100", "Assertion Failed (B4) - Expected 100 but got " ~ stl_dectobin_s(4));
+    assert(stl_dectobin_s(5) == "101", "Assertion Failed (B5) - Expected 101 but got " ~ stl_dectobin_s(5));
+    assert(stl_dectobin_s(6) == "110", "Assertion Failed (B6) - Expected 110 but got " ~ stl_dectobin_s(6));
+    assert(stl_dectobin_s(7) == "111", "Assertion Failed (B7) - Expected 111 but got " ~ stl_dectobin_s(7));
+    assert(stl_dectobin_s(8) == "1000", "Assertion Failed (B8) - Expected 1000 but got " ~ stl_dectobin_s(8));
+    assert(stl_dectobin_s(9) == "1001", "Assertion Failed (B9) - Expected 1001 but got " ~ stl_dectobin_s(9));
+    assert(stl_dectobin_s(10) == "1010", "Assertion Failed (B10) - Expected 1010 but got " ~ stl_dectobin_s(10));
+    assert(stl_dectobin_s(11) == "1011", "Assertion Failed (B11) - Expected 1011 but got " ~ stl_dectobin_s(11));
+    assert(stl_dectobin_s(12) == "1100", "Assertion Failed (B12) - Expected 1100 but got " ~ stl_dectobin_s(12));
+    assert(stl_dectobin_s(13) == "1101", "Assertion Failed (B13) - Expected 1101 but got " ~ stl_dectobin_s(13));
+    assert(stl_dectobin_s(14) == "1110", "Assertion Failed (B14) - Expected 1110 but got " ~ stl_dectobin_s(14));
+    assert(stl_dectobin_s(15) == "1111", "Assertion Failed (B15) - Expected 1111 but got " ~ stl_dectobin_s(15));
+    assert(stl_dectobin_s(16) == "10000", "Assertion Failed (B16) - Expected 10000 but got " ~ stl_dectobin_s(16));
 }
 
-task ToDecimalTest {
-    WriteLog("ToDecimalTest: Initializing");
+task BinaryToDecimalTest {
+    WriteLog("BinaryToDecimalTest: Initializing");
 
-    WriteLog("ToDecimalTest: Part 1");
-    assert(stl_todecimal("0") == 0, "Assertion Failed (A0) - Expected 0 but got " ~ IntToString(stl_todecimal("0")));
-    assert(stl_todecimal("1") == 1, "Assertion Failed (A1) - Expected 1 but got " ~ IntToString(stl_todecimal("1")));
-    assert(stl_todecimal("10") == 2, "Assertion Failed (A2) - Expected 2 but got " ~ IntToString(stl_todecimal("10")));
-    assert(stl_todecimal("11") == 3, "Assertion Failed (A3) - Expected 3 but got " ~ IntToString(stl_todecimal("11")));
-    assert(stl_todecimal("100") == 4, "Assertion Failed (A4) - Expected 4 but got " ~ IntToString(stl_todecimal("100")));
-    assert(stl_todecimal("101") == 5, "Assertion Failed (A5) - Expected 5 but got " ~ IntToString(stl_todecimal("101")));
-    assert(stl_todecimal("110") == 6, "Assertion Failed (A6) - Expected 6 but got " ~ IntToString(stl_todecimal("110")));
-    assert(stl_todecimal("111") == 7, "Assertion Failed (A7) - Expected 7 but got " ~ IntToString(stl_todecimal("111")));
-    assert(stl_todecimal("1000") == 8, "Assertion Failed (A8) - Expected 8 but got " ~ IntToString(stl_todecimal("1000")));
-    assert(stl_todecimal("1001") == 9, "Assertion Failed (A9) - Expected 9 but got " ~ IntToString(stl_todecimal("1001")));
-    assert(stl_todecimal("1010") == 10, "Assertion Failed (A10) - Expected 10 but got " ~ IntToString(stl_todecimal("1010")));
-    assert(stl_todecimal("1011") == 11, "Assertion Failed (A11) - Expected 11 but got " ~ IntToString(stl_todecimal("1011")));
-    assert(stl_todecimal("1100") == 12, "Assertion Failed (A12) - Expected 12 but got " ~ IntToString(stl_todecimal("1100")));
-    assert(stl_todecimal("1101") == 13, "Assertion Failed (A13) - Expected 13 but got " ~ IntToString(stl_todecimal("1101")));
-    assert(stl_todecimal("1110") == 14, "Assertion Failed (A14) - Expected 14 but got " ~ IntToString(stl_todecimal("1110")));
-    assert(stl_todecimal("1111") == 15, "Assertion Failed (A15) - Expected 15 but got " ~ IntToString(stl_todecimal("1111")));
-    assert(stl_todecimal("10000") == 16, "Assertion Failed (A16) - Expected 16 but got " ~ IntToString(stl_todecimal("10000")));
-    assert(stl_todecimal("1111111111111111111111111111111") == 2147483647, "Assertion Failed (A1X) - Expected 2147483647 but got " ~ IntToString(stl_todecimal("1111111111111111111111111111111")));
-    assert(stl_todecimal("111111111111111111111111111111111111111111111111") == 281474976710655, "Assertion Failed (AX2) - Expected 281474976710655 but got " ~ IntToString(stl_todecimal("111111111111111111111111111111111111111111111111")));
+    WriteLog("BinaryToDecimalTest: Part 1");
+    assert(stl_bintodec("0") == 0, "Assertion Failed (A0) - Expected 0 but got " ~ IntToString(stl_bintodec("0")));
+    assert(stl_bintodec("1") == 1, "Assertion Failed (A1) - Expected 1 but got " ~ IntToString(stl_bintodec("1")));
+    assert(stl_bintodec("10") == 2, "Assertion Failed (A2) - Expected 2 but got " ~ IntToString(stl_bintodec("10")));
+    assert(stl_bintodec("11") == 3, "Assertion Failed (A3) - Expected 3 but got " ~ IntToString(stl_bintodec("11")));
+    assert(stl_bintodec("100") == 4, "Assertion Failed (A4) - Expected 4 but got " ~ IntToString(stl_bintodec("100")));
+    assert(stl_bintodec("101") == 5, "Assertion Failed (A5) - Expected 5 but got " ~ IntToString(stl_bintodec("101")));
+    assert(stl_bintodec("110") == 6, "Assertion Failed (A6) - Expected 6 but got " ~ IntToString(stl_bintodec("110")));
+    assert(stl_bintodec("111") == 7, "Assertion Failed (A7) - Expected 7 but got " ~ IntToString(stl_bintodec("111")));
+    assert(stl_bintodec("1000") == 8, "Assertion Failed (A8) - Expected 8 but got " ~ IntToString(stl_bintodec("1000")));
+    assert(stl_bintodec("1001") == 9, "Assertion Failed (A9) - Expected 9 but got " ~ IntToString(stl_bintodec("1001")));
+    assert(stl_bintodec("1010") == 10, "Assertion Failed (A10) - Expected 10 but got " ~ IntToString(stl_bintodec("1010")));
+    assert(stl_bintodec("1011") == 11, "Assertion Failed (A11) - Expected 11 but got " ~ IntToString(stl_bintodec("1011")));
+    assert(stl_bintodec("1100") == 12, "Assertion Failed (A12) - Expected 12 but got " ~ IntToString(stl_bintodec("1100")));
+    assert(stl_bintodec("1101") == 13, "Assertion Failed (A13) - Expected 13 but got " ~ IntToString(stl_bintodec("1101")));
+    assert(stl_bintodec("1110") == 14, "Assertion Failed (A14) - Expected 14 but got " ~ IntToString(stl_bintodec("1110")));
+    assert(stl_bintodec("1111") == 15, "Assertion Failed (A15) - Expected 15 but got " ~ IntToString(stl_bintodec("1111")));
+    assert(stl_bintodec("10000") == 16, "Assertion Failed (A16) - Expected 16 but got " ~ IntToString(stl_bintodec("10000")));
+    assert(stl_bintodec("1111111111111111111111111111111") == 2147483647, "Assertion Failed (A1X) - Expected 2147483647 but got " ~ IntToString(stl_bintodec("1111111111111111111111111111111")));
+    assert(stl_bintodec("111111111111111111111111111111111111111111111111") == 281474976710655, "Assertion Failed (AX2) - Expected 281474976710655 but got " ~ IntToString(stl_bintodec("111111111111111111111111111111111111111111111111")));
 
-    WriteLog("ToBinaryTest: Part 2");
-    assert(stl_todecimal_s("0") == 0, "Assertion Failed (B0) - Expected 0 but got " ~ IntToString(stl_todecimal_s("0")));
-    assert(stl_todecimal_s("1") == 1, "Assertion Failed (B1) - Expected 1 but got " ~ IntToString(stl_todecimal_s("1")));
-    assert(stl_todecimal_s("10") == 2, "Assertion Failed (B2) - Expected 2 but got " ~ IntToString(stl_todecimal_s("10")));
-    assert(stl_todecimal_s("11") == 3, "Assertion Failed (B3) - Expected 3 but got " ~ IntToString(stl_todecimal_s("11")));
-    assert(stl_todecimal_s("100") == 4, "Assertion Failed (B4) - Expected 4 but got " ~ IntToString(stl_todecimal_s("100")));
-    assert(stl_todecimal_s("101") == 5, "Assertion Failed (B5) - Expected 5 but got " ~ IntToString(stl_todecimal_s("101")));
-    assert(stl_todecimal_s("110") == 6, "Assertion Failed (B6) - Expected 6 but got " ~ IntToString(stl_todecimal_s("110")));
-    assert(stl_todecimal_s("111") == 7, "Assertion Failed (B7) - Expected 7 but got " ~ IntToString(stl_todecimal_s("111")));
-    assert(stl_todecimal_s("1000") == 8, "Assertion Failed (B8) - Expected 8 but got " ~ IntToString(stl_todecimal_s("1000")));
-    assert(stl_todecimal_s("1001") == 9, "Assertion Failed (B9) - Expected 9 but got " ~ IntToString(stl_todecimal_s("1001")));
-    assert(stl_todecimal_s("1010") == 10, "Assertion Failed (B10) - Expected 10 but got " ~ IntToString(stl_todecimal_s("1010")));
-    assert(stl_todecimal_s("1011") == 11, "Assertion Failed (B11) - Expected 11 but got " ~ IntToString(stl_todecimal_s("1011")));
-    assert(stl_todecimal_s("1100") == 12, "Assertion Failed (B12) - Expected 12 but got " ~ IntToString(stl_todecimal_s("1100")));
-    assert(stl_todecimal_s("1101") == 13, "Assertion Failed (B13) - Expected 13 but got " ~ IntToString(stl_todecimal_s("1101")));
-    assert(stl_todecimal_s("1110") == 14, "Assertion Failed (B14) - Expected 14 but got " ~ IntToString(stl_todecimal_s("1110")));
-    assert(stl_todecimal_s("1111") == 15, "Assertion Failed (B15) - Expected 15 but got " ~ IntToString(stl_todecimal_s("1111")));
-    assert(stl_todecimal_s("10000") == 16, "Assertion Failed (B16) - Expected 16 but got " ~ IntToString(stl_todecimal_s("10000")));
+    WriteLog("BinaryToDecimalTest: Part 2");
+    assert(stl_bintodec_s("0") == 0, "Assertion Failed (B0) - Expected 0 but got " ~ IntToString(stl_bintodec_s("0")));
+    assert(stl_bintodec_s("1") == 1, "Assertion Failed (B1) - Expected 1 but got " ~ IntToString(stl_bintodec_s("1")));
+    assert(stl_bintodec_s("10") == 2, "Assertion Failed (B2) - Expected 2 but got " ~ IntToString(stl_bintodec_s("10")));
+    assert(stl_bintodec_s("11") == 3, "Assertion Failed (B3) - Expected 3 but got " ~ IntToString(stl_bintodec_s("11")));
+    assert(stl_bintodec_s("100") == 4, "Assertion Failed (B4) - Expected 4 but got " ~ IntToString(stl_bintodec_s("100")));
+    assert(stl_bintodec_s("101") == 5, "Assertion Failed (B5) - Expected 5 but got " ~ IntToString(stl_bintodec_s("101")));
+    assert(stl_bintodec_s("110") == 6, "Assertion Failed (B6) - Expected 6 but got " ~ IntToString(stl_bintodec_s("110")));
+    assert(stl_bintodec_s("111") == 7, "Assertion Failed (B7) - Expected 7 but got " ~ IntToString(stl_bintodec_s("111")));
+    assert(stl_bintodec_s("1000") == 8, "Assertion Failed (B8) - Expected 8 but got " ~ IntToString(stl_bintodec_s("1000")));
+    assert(stl_bintodec_s("1001") == 9, "Assertion Failed (B9) - Expected 9 but got " ~ IntToString(stl_bintodec_s("1001")));
+    assert(stl_bintodec_s("1010") == 10, "Assertion Failed (B10) - Expected 10 but got " ~ IntToString(stl_bintodec_s("1010")));
+    assert(stl_bintodec_s("1011") == 11, "Assertion Failed (B11) - Expected 11 but got " ~ IntToString(stl_bintodec_s("1011")));
+    assert(stl_bintodec_s("1100") == 12, "Assertion Failed (B12) - Expected 12 but got " ~ IntToString(stl_bintodec_s("1100")));
+    assert(stl_bintodec_s("1101") == 13, "Assertion Failed (B13) - Expected 13 but got " ~ IntToString(stl_bintodec_s("1101")));
+    assert(stl_bintodec_s("1110") == 14, "Assertion Failed (B14) - Expected 14 but got " ~ IntToString(stl_bintodec_s("1110")));
+    assert(stl_bintodec_s("1111") == 15, "Assertion Failed (B15) - Expected 15 but got " ~ IntToString(stl_bintodec_s("1111")));
+    assert(stl_bintodec_s("10000") == 16, "Assertion Failed (B16) - Expected 16 but got " ~ IntToString(stl_bintodec_s("10000")));
+}
+
+task BitAndTest {
+    WriteLog("BitAndTest: Initializing");
+
+    WriteLog("BitAndTest: Part 1");
+    assert(stl_bit_and(0, 0) == 0, "Assertion Failed (A00) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 0)));
+    assert(stl_bit_and(0, 1) == 0, "Assertion Failed (A01) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 1)));
+    assert(stl_bit_and(0, 2) == 0, "Assertion Failed (A02) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 2)));
+    assert(stl_bit_and(0, 3) == 0, "Assertion Failed (A03) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 3)));
+    assert(stl_bit_and(0, 4) == 0, "Assertion Failed (A04) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 4)));
+    assert(stl_bit_and(0, 5) == 0, "Assertion Failed (A05) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 5)));
+    assert(stl_bit_and(0, 6) == 0, "Assertion Failed (A06) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 6)));
+    assert(stl_bit_and(0, 7) == 0, "Assertion Failed (A07) - Expected 0 but got " ~ IntToString(stl_bit_and(0, 7)));
+    assert(stl_bit_and(1, 0) == 0, "Assertion Failed (A10) - Expected 0 but got " ~ IntToString(stl_bit_and(1, 0)));
+    assert(stl_bit_and(1, 1) == 1, "Assertion Failed (A11) - Expected 1 but got " ~ IntToString(stl_bit_and(1, 1)));
+    assert(stl_bit_and(1, 2) == 0, "Assertion Failed (A12) - Expected 0 but got " ~ IntToString(stl_bit_and(1, 2)));
+    assert(stl_bit_and(1, 3) == 1, "Assertion Failed (A13) - Expected 1 but got " ~ IntToString(stl_bit_and(1, 3)));
+    assert(stl_bit_and(1, 4) == 0, "Assertion Failed (A14) - Expected 0 but got " ~ IntToString(stl_bit_and(1, 4)));
+    assert(stl_bit_and(1, 5) == 1, "Assertion Failed (A15) - Expected 1 but got " ~ IntToString(stl_bit_and(1, 5)));
+    assert(stl_bit_and(1, 6) == 0, "Assertion Failed (A16) - Expected 0 but got " ~ IntToString(stl_bit_and(1, 6)));
+    assert(stl_bit_and(1, 7) == 1, "Assertion Failed (A17) - Expected 1 but got " ~ IntToString(stl_bit_and(1, 7)));
+    assert(stl_bit_and(2, 0) == 0, "Assertion Failed (A20) - Expected 0 but got " ~ IntToString(stl_bit_and(2, 0)));
+    assert(stl_bit_and(2, 1) == 0, "Assertion Failed (A21) - Expected 0 but got " ~ IntToString(stl_bit_and(2, 1)));
+    assert(stl_bit_and(2, 2) == 2, "Assertion Failed (A22) - Expected 2 but got " ~ IntToString(stl_bit_and(2, 2)));
+    assert(stl_bit_and(2, 3) == 2, "Assertion Failed (A23) - Expected 2 but got " ~ IntToString(stl_bit_and(2, 3)));
+    assert(stl_bit_and(2, 4) == 0, "Assertion Failed (A24) - Expected 0 but got " ~ IntToString(stl_bit_and(2, 4)));
+    assert(stl_bit_and(2, 5) == 0, "Assertion Failed (A25) - Expected 0 but got " ~ IntToString(stl_bit_and(2, 5)));
+    assert(stl_bit_and(2, 6) == 2, "Assertion Failed (A26) - Expected 2 but got " ~ IntToString(stl_bit_and(2, 6)));
+    assert(stl_bit_and(2, 7) == 2, "Assertion Failed (A27) - Expected 2 but got " ~ IntToString(stl_bit_and(2, 7)));
+    assert(stl_bit_and(3, 0) == 0, "Assertion Failed (A30) - Expected 0 but got " ~ IntToString(stl_bit_and(3, 0)));
+    assert(stl_bit_and(3, 1) == 1, "Assertion Failed (A31) - Expected 1 but got " ~ IntToString(stl_bit_and(3, 1)));
+    assert(stl_bit_and(3, 2) == 2, "Assertion Failed (A32) - Expected 2 but got " ~ IntToString(stl_bit_and(3, 2)));
+    assert(stl_bit_and(3, 3) == 3, "Assertion Failed (A33) - Expected 3 but got " ~ IntToString(stl_bit_and(3, 3)));
+    assert(stl_bit_and(3, 4) == 0, "Assertion Failed (A34) - Expected 0 but got " ~ IntToString(stl_bit_and(3, 4)));
+    assert(stl_bit_and(3, 5) == 1, "Assertion Failed (A35) - Expected 1 but got " ~ IntToString(stl_bit_and(3, 5)));
+    assert(stl_bit_and(3, 6) == 2, "Assertion Failed (A36) - Expected 2 but got " ~ IntToString(stl_bit_and(3, 6)));
+    assert(stl_bit_and(3, 7) == 3, "Assertion Failed (A37) - Expected 3 but got " ~ IntToString(stl_bit_and(3, 7)));
+    assert(stl_bit_and(4, 0) == 0, "Assertion Failed (A40) - Expected 0 but got " ~ IntToString(stl_bit_and(4, 0)));
+    assert(stl_bit_and(4, 1) == 0, "Assertion Failed (A41) - Expected 0 but got " ~ IntToString(stl_bit_and(4, 1)));
+    assert(stl_bit_and(4, 2) == 0, "Assertion Failed (A42) - Expected 0 but got " ~ IntToString(stl_bit_and(4, 2)));
+    assert(stl_bit_and(4, 3) == 0, "Assertion Failed (A43) - Expected 0 but got " ~ IntToString(stl_bit_and(4, 3)));
+    assert(stl_bit_and(4, 4) == 4, "Assertion Failed (A44) - Expected 4 but got " ~ IntToString(stl_bit_and(4, 4)));
+    assert(stl_bit_and(4, 5) == 4, "Assertion Failed (A45) - Expected 4 but got " ~ IntToString(stl_bit_and(4, 5)));
+    assert(stl_bit_and(4, 6) == 4, "Assertion Failed (A46) - Expected 4 but got " ~ IntToString(stl_bit_and(4, 6)));
+    assert(stl_bit_and(4, 7) == 4, "Assertion Failed (A47) - Expected 4 but got " ~ IntToString(stl_bit_and(4, 7)));
+    assert(stl_bit_and(5, 0) == 0, "Assertion Failed (A50) - Expected 0 but got " ~ IntToString(stl_bit_and(5, 0)));
+    assert(stl_bit_and(5, 1) == 1, "Assertion Failed (A51) - Expected 1 but got " ~ IntToString(stl_bit_and(5, 1)));
+    assert(stl_bit_and(5, 2) == 0, "Assertion Failed (A52) - Expected 0 but got " ~ IntToString(stl_bit_and(5, 2)));
+    assert(stl_bit_and(5, 3) == 1, "Assertion Failed (A53) - Expected 1 but got " ~ IntToString(stl_bit_and(5, 3)));
+    assert(stl_bit_and(5, 4) == 4, "Assertion Failed (A54) - Expected 4 but got " ~ IntToString(stl_bit_and(5, 4)));
+    assert(stl_bit_and(5, 5) == 5, "Assertion Failed (A55) - Expected 5 but got " ~ IntToString(stl_bit_and(5, 5)));
+    assert(stl_bit_and(5, 6) == 4, "Assertion Failed (A56) - Expected 4 but got " ~ IntToString(stl_bit_and(5, 6)));
+    assert(stl_bit_and(5, 7) == 5, "Assertion Failed (A57) - Expected 5 but got " ~ IntToString(stl_bit_and(5, 7)));
+    assert(stl_bit_and(6, 0) == 0, "Assertion Failed (A60) - Expected 0 but got " ~ IntToString(stl_bit_and(6, 0)));
+    assert(stl_bit_and(6, 1) == 0, "Assertion Failed (A61) - Expected 0 but got " ~ IntToString(stl_bit_and(6, 1)));
+    assert(stl_bit_and(6, 2) == 2, "Assertion Failed (A62) - Expected 2 but got " ~ IntToString(stl_bit_and(6, 2)));
+    assert(stl_bit_and(6, 3) == 2, "Assertion Failed (A63) - Expected 2 but got " ~ IntToString(stl_bit_and(6, 3)));
+    assert(stl_bit_and(6, 4) == 4, "Assertion Failed (A64) - Expected 4 but got " ~ IntToString(stl_bit_and(6, 4)));
+    assert(stl_bit_and(6, 5) == 4, "Assertion Failed (A65) - Expected 4 but got " ~ IntToString(stl_bit_and(6, 5)));
+    assert(stl_bit_and(6, 6) == 6, "Assertion Failed (A66) - Expected 6 but got " ~ IntToString(stl_bit_and(6, 6)));
+    assert(stl_bit_and(6, 7) == 6, "Assertion Failed (A67) - Expected 6 but got " ~ IntToString(stl_bit_and(6, 7)));
+    assert(stl_bit_and(7, 0) == 0, "Assertion Failed (A70) - Expected 0 but got " ~ IntToString(stl_bit_and(7, 0)));
+    assert(stl_bit_and(7, 1) == 1, "Assertion Failed (A71) - Expected 1 but got " ~ IntToString(stl_bit_and(7, 1)));
+    assert(stl_bit_and(7, 2) == 2, "Assertion Failed (A72) - Expected 2 but got " ~ IntToString(stl_bit_and(7, 2)));
+    assert(stl_bit_and(7, 3) == 3, "Assertion Failed (A73) - Expected 3 but got " ~ IntToString(stl_bit_and(7, 3)));
+    assert(stl_bit_and(7, 4) == 4, "Assertion Failed (A74) - Expected 4 but got " ~ IntToString(stl_bit_and(7, 4)));
+    assert(stl_bit_and(7, 5) == 5, "Assertion Failed (A75) - Expected 5 but got " ~ IntToString(stl_bit_and(7, 5)));
+    assert(stl_bit_and(7, 6) == 6, "Assertion Failed (A76) - Expected 6 but got " ~ IntToString(stl_bit_and(7, 6)));
+    assert(stl_bit_and(7, 7) == 7, "Assertion Failed (A77) - Expected 7 but got " ~ IntToString(stl_bit_and(7, 7)));
+
+    WriteLog("BitAndTest: Part 2");
+    assert(stl_bit_and_s(0, 0) == 0, "Assertion Failed (B00) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 0)));
+    assert(stl_bit_and_s(0, 1) == 0, "Assertion Failed (B01) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 1)));
+    assert(stl_bit_and_s(0, 2) == 0, "Assertion Failed (B02) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 2)));
+    assert(stl_bit_and_s(0, 3) == 0, "Assertion Failed (B03) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 3)));
+    assert(stl_bit_and_s(0, 4) == 0, "Assertion Failed (B04) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 4)));
+    assert(stl_bit_and_s(0, 5) == 0, "Assertion Failed (B05) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 5)));
+    assert(stl_bit_and_s(0, 6) == 0, "Assertion Failed (B06) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 6)));
+    assert(stl_bit_and_s(0, 7) == 0, "Assertion Failed (B07) - Expected 0 but got " ~ IntToString(stl_bit_and_s(0, 7)));
+    assert(stl_bit_and_s(1, 0) == 0, "Assertion Failed (B10) - Expected 0 but got " ~ IntToString(stl_bit_and_s(1, 0)));
+    assert(stl_bit_and_s(1, 1) == 1, "Assertion Failed (B11) - Expected 1 but got " ~ IntToString(stl_bit_and_s(1, 1)));
+    assert(stl_bit_and_s(1, 2) == 0, "Assertion Failed (B12) - Expected 0 but got " ~ IntToString(stl_bit_and_s(1, 2)));
+    assert(stl_bit_and_s(1, 3) == 1, "Assertion Failed (B13) - Expected 1 but got " ~ IntToString(stl_bit_and_s(1, 3)));
+    assert(stl_bit_and_s(1, 4) == 0, "Assertion Failed (B14) - Expected 0 but got " ~ IntToString(stl_bit_and_s(1, 4)));
+    assert(stl_bit_and_s(1, 5) == 1, "Assertion Failed (B15) - Expected 1 but got " ~ IntToString(stl_bit_and_s(1, 5)));
+    assert(stl_bit_and_s(1, 6) == 0, "Assertion Failed (B16) - Expected 0 but got " ~ IntToString(stl_bit_and_s(1, 6)));
+    assert(stl_bit_and_s(1, 7) == 1, "Assertion Failed (B17) - Expected 1 but got " ~ IntToString(stl_bit_and_s(1, 7)));
+    assert(stl_bit_and_s(2, 0) == 0, "Assertion Failed (B20) - Expected 0 but got " ~ IntToString(stl_bit_and_s(2, 0)));
+    assert(stl_bit_and_s(2, 1) == 0, "Assertion Failed (B21) - Expected 0 but got " ~ IntToString(stl_bit_and_s(2, 1)));
+    assert(stl_bit_and_s(2, 2) == 2, "Assertion Failed (B22) - Expected 2 but got " ~ IntToString(stl_bit_and_s(2, 2)));
+    assert(stl_bit_and_s(2, 3) == 2, "Assertion Failed (B23) - Expected 2 but got " ~ IntToString(stl_bit_and_s(2, 3)));
+    assert(stl_bit_and_s(2, 4) == 0, "Assertion Failed (B24) - Expected 0 but got " ~ IntToString(stl_bit_and_s(2, 4)));
+    assert(stl_bit_and_s(2, 5) == 0, "Assertion Failed (B25) - Expected 0 but got " ~ IntToString(stl_bit_and_s(2, 5)));
+    assert(stl_bit_and_s(2, 6) == 2, "Assertion Failed (B26) - Expected 2 but got " ~ IntToString(stl_bit_and_s(2, 6)));
+    assert(stl_bit_and_s(2, 7) == 2, "Assertion Failed (B27) - Expected 2 but got " ~ IntToString(stl_bit_and_s(2, 7)));
+    assert(stl_bit_and_s(3, 0) == 0, "Assertion Failed (B30) - Expected 0 but got " ~ IntToString(stl_bit_and_s(3, 0)));
+    assert(stl_bit_and_s(3, 1) == 1, "Assertion Failed (B31) - Expected 1 but got " ~ IntToString(stl_bit_and_s(3, 1)));
+    assert(stl_bit_and_s(3, 2) == 2, "Assertion Failed (B32) - Expected 2 but got " ~ IntToString(stl_bit_and_s(3, 2)));
+    assert(stl_bit_and_s(3, 3) == 3, "Assertion Failed (B33) - Expected 3 but got " ~ IntToString(stl_bit_and_s(3, 3)));
+    assert(stl_bit_and_s(3, 4) == 0, "Assertion Failed (B34) - Expected 0 but got " ~ IntToString(stl_bit_and_s(3, 4)));
+    assert(stl_bit_and_s(3, 5) == 1, "Assertion Failed (B35) - Expected 1 but got " ~ IntToString(stl_bit_and_s(3, 5)));
+    assert(stl_bit_and_s(3, 6) == 2, "Assertion Failed (B36) - Expected 2 but got " ~ IntToString(stl_bit_and_s(3, 6)));
+    assert(stl_bit_and_s(3, 7) == 3, "Assertion Failed (B37) - Expected 3 but got " ~ IntToString(stl_bit_and_s(3, 7)));
+    assert(stl_bit_and_s(4, 0) == 0, "Assertion Failed (B40) - Expected 0 but got " ~ IntToString(stl_bit_and_s(4, 0)));
+    assert(stl_bit_and_s(4, 1) == 0, "Assertion Failed (B41) - Expected 0 but got " ~ IntToString(stl_bit_and_s(4, 1)));
+    assert(stl_bit_and_s(4, 2) == 0, "Assertion Failed (B42) - Expected 0 but got " ~ IntToString(stl_bit_and_s(4, 2)));
+    assert(stl_bit_and_s(4, 3) == 0, "Assertion Failed (B43) - Expected 0 but got " ~ IntToString(stl_bit_and_s(4, 3)));
+    assert(stl_bit_and_s(4, 4) == 4, "Assertion Failed (B44) - Expected 4 but got " ~ IntToString(stl_bit_and_s(4, 4)));
+    assert(stl_bit_and_s(4, 5) == 4, "Assertion Failed (B45) - Expected 4 but got " ~ IntToString(stl_bit_and_s(4, 5)));
+    assert(stl_bit_and_s(4, 6) == 4, "Assertion Failed (B46) - Expected 4 but got " ~ IntToString(stl_bit_and_s(4, 6)));
+    assert(stl_bit_and_s(4, 7) == 4, "Assertion Failed (B47) - Expected 4 but got " ~ IntToString(stl_bit_and_s(4, 7)));
+    assert(stl_bit_and_s(5, 0) == 0, "Assertion Failed (B50) - Expected 0 but got " ~ IntToString(stl_bit_and_s(5, 0)));
+    assert(stl_bit_and_s(5, 1) == 1, "Assertion Failed (B51) - Expected 1 but got " ~ IntToString(stl_bit_and_s(5, 1)));
+    assert(stl_bit_and_s(5, 2) == 0, "Assertion Failed (B52) - Expected 0 but got " ~ IntToString(stl_bit_and_s(5, 2)));
+    assert(stl_bit_and_s(5, 3) == 1, "Assertion Failed (B53) - Expected 1 but got " ~ IntToString(stl_bit_and_s(5, 3)));
+    assert(stl_bit_and_s(5, 4) == 4, "Assertion Failed (B54) - Expected 4 but got " ~ IntToString(stl_bit_and_s(5, 4)));
+    assert(stl_bit_and_s(5, 5) == 5, "Assertion Failed (B55) - Expected 5 but got " ~ IntToString(stl_bit_and_s(5, 5)));
+    assert(stl_bit_and_s(5, 6) == 4, "Assertion Failed (B56) - Expected 4 but got " ~ IntToString(stl_bit_and_s(5, 6)));
+    assert(stl_bit_and_s(5, 7) == 5, "Assertion Failed (B57) - Expected 5 but got " ~ IntToString(stl_bit_and_s(5, 7)));
+    assert(stl_bit_and_s(6, 0) == 0, "Assertion Failed (B60) - Expected 0 but got " ~ IntToString(stl_bit_and_s(6, 0)));
+    assert(stl_bit_and_s(6, 1) == 0, "Assertion Failed (B61) - Expected 0 but got " ~ IntToString(stl_bit_and_s(6, 1)));
+    assert(stl_bit_and_s(6, 2) == 2, "Assertion Failed (B62) - Expected 2 but got " ~ IntToString(stl_bit_and_s(6, 2)));
+    assert(stl_bit_and_s(6, 3) == 2, "Assertion Failed (B63) - Expected 2 but got " ~ IntToString(stl_bit_and_s(6, 3)));
+    assert(stl_bit_and_s(6, 4) == 4, "Assertion Failed (B64) - Expected 4 but got " ~ IntToString(stl_bit_and_s(6, 4)));
+    assert(stl_bit_and_s(6, 5) == 4, "Assertion Failed (B65) - Expected 4 but got " ~ IntToString(stl_bit_and_s(6, 5)));
+    assert(stl_bit_and_s(6, 6) == 6, "Assertion Failed (B66) - Expected 6 but got " ~ IntToString(stl_bit_and_s(6, 6)));
+    assert(stl_bit_and_s(6, 7) == 6, "Assertion Failed (B67) - Expected 6 but got " ~ IntToString(stl_bit_and_s(6, 7)));
+    assert(stl_bit_and_s(7, 0) == 0, "Assertion Failed (B70) - Expected 0 but got " ~ IntToString(stl_bit_and_s(7, 0)));
+    assert(stl_bit_and_s(7, 1) == 1, "Assertion Failed (B71) - Expected 1 but got " ~ IntToString(stl_bit_and_s(7, 1)));
+    assert(stl_bit_and_s(7, 2) == 2, "Assertion Failed (B72) - Expected 2 but got " ~ IntToString(stl_bit_and_s(7, 2)));
+    assert(stl_bit_and_s(7, 3) == 3, "Assertion Failed (B73) - Expected 3 but got " ~ IntToString(stl_bit_and_s(7, 3)));
+    assert(stl_bit_and_s(7, 4) == 4, "Assertion Failed (B74) - Expected 4 but got " ~ IntToString(stl_bit_and_s(7, 4)));
+    assert(stl_bit_and_s(7, 5) == 5, "Assertion Failed (B75) - Expected 5 but got " ~ IntToString(stl_bit_and_s(7, 5)));
+    assert(stl_bit_and_s(7, 6) == 6, "Assertion Failed (B76) - Expected 6 but got " ~ IntToString(stl_bit_and_s(7, 6)));
+    assert(stl_bit_and_s(7, 7) == 7, "Assertion Failed (B77) - Expected 7 but got " ~ IntToString(stl_bit_and_s(7, 7)));
+
 }

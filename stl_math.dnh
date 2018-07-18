@@ -19,8 +19,9 @@
 * stl_bit_not(), stl_bit_not_s()
 * stl_lshift(), stl_lshift_s()
 * stl_rshift(), stl_rshift_s()
-* stl_tobinary(), stl_tobinary_s()
-* stl_todecimal(), stl_todecimal_s()
+* stl_dectobin(), stl_dectobin_s()
+* stl_bintodec(), stl_bintodec_s()
+* stl_bit_and(), stl_bit_and_s()
 ************************************************************************* */
 
 /* *************************************************************************
@@ -51,6 +52,33 @@ function stl_parseInt(e, fxn) {
         }
     }
     return ator(e2);
+}
+
+/* *************************************************************************
+* stl_padbinstrings() -- Return the input strings with length standardized
+* Param: earr (free []) - Array of binary strings to standardize length of
+* Return: earr with 0-padded lengths
+************************************************************************* */
+function stl_padbinstrings(earr) {
+    // First, get max length
+    let maxlen = -1;
+    ascent(i in 0..length(earr)) {
+        if (length(earr[i]) > maxlen) {
+            maxlen = length(earr[i]);
+        }
+    }
+    // Now, pad strings
+    ascent(i in 0..length(earr)) {
+        let currstr = earr[i];
+        let newstr = "";
+        let diff = maxlen - length(currstr);
+        ascent(j in 0..diff) {
+            newstr = newstr ~ "0";
+        }
+        newstr = newstr ~ currstr;
+        earr[i] = newstr;
+    }
+    return earr;
 }
 
 /* *************************************************************************
@@ -160,16 +188,16 @@ function stl_rshift_s(e, n) {
 }
 
 /* *************************************************************************
-* stl_tobinary() -- Return the input as a binary string.
+* stl_dectobin() -- Return the input as a binary string.
 * Param: e (free) - Value (parsable to Integer) to return as binary string
 * Return: e as a binary string
 * Notes:
 *   -- Use stl_tobinary_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
 *   -- This function stops working correctly past 9999999999999998? due to Danmakufu's internals defaulting to scientific notation? (verification needed)
 ************************************************************************* */
-function stl_tobinary(e) {
+function stl_dectobin(e) {
     if (e < 0) {
-        RaiseError("stl_tobinary: Negative values are not supported.");
+        RaiseError("stl_dectobin: Negative values are not supported.");
     }
     // This case tends to mess things up
     if (e == 0) {
@@ -197,22 +225,22 @@ function stl_tobinary(e) {
 }
 
 /* *************************************************************************
-* stl_tobinary_s() -- Return the input as a binary string.
+* stl_dectobin_s() -- Return the input as a binary string.
 * Param: e (free) - Value (parsable to Integer) to return as binary string
 * Return: e as a binary string
 ************************************************************************* */
-function stl_tobinary_s(e) {
-    return stl_tobinary(stl_parseInt(e, "stl_tobinary_s"));
+function stl_dectobin_s(e) {
+    return stl_dectobin(stl_parseInt(e, "stl_dectobin_s"));
 }
 
 /* *************************************************************************
-* stl_todecimal() -- Return the input as a decimal integer.
+* stl_bintodec() -- Return the input as a decimal integer.
 * Param: e (string) - Binary string to return as decimal integer
 * Return: e as a decimal integer
 * Notes:
 *   -- Use stl_todecimal_s() [SAFE] for error checking on input
 ************************************************************************* */
-function stl_todecimal(e) {
+function stl_bintodec(e) {
     let strlen = length(e);
     let output = 0;
     ascent (i in 0..strlen) {
@@ -226,17 +254,54 @@ function stl_todecimal(e) {
 }
 
 /* *************************************************************************
-* stl_todecimal_s() -- Return the input as a decimal integer.
+* stl_bintodec_s() -- Return the input as a decimal integer.
 * Param: e (free) - Binary string to return as decimal integer
 * Return: e as a decimal integer
 ************************************************************************* */
-function stl_todecimal_s(e) {
+function stl_bintodec_s(e) {
     // Ensure every character in the string is one of '0'..'9' using character comparison
     // The "" vs '' distinction is important here
     ascent(i in 0..length(e)) {
         if (e[i] < '0' || e[i] > '1') {
-            RaiseError("stl_todecimal_s: Provided value not a Binary String.");
+            RaiseError("stl_bintodec_s: Provided value not a Binary String.");
         }
     }
-    return stl_todecimal(e);
+    return stl_bintodec(e);
+}
+
+/* *************************************************************************
+* stl_bit_and() -- Return the bitwise AND of the inputs as an Integer.
+* Param: e1 (free) - Value (parsable to Integer) to obtain bitwise AND of
+* Param: e2 (free) - Value (parsable to Integer) to obtain bitwise AND of
+* Return: Bitwise AND of e1 and e2
+* Notes:
+*   -- Use stl_bit_and_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+************************************************************************* */
+function stl_bit_and(e1, e2) {
+    // First, convert to Binary String
+    let arr = [stl_dectobin(e1), stl_dectobin(e2)];
+    // Next, pad lengths
+    arr = stl_padbinstrings(arr);
+    // Finally, perform binary AND
+    let binout = "";
+    ascent(i in 0..length(arr[0])) {
+        if (arr[0][i] == arr[1][i] && arr[0][i] == '1' && arr[1][i] == '1') {
+            binout = binout ~ "1";
+        } else {
+            binout = binout ~ "0";
+        }
+    }
+    return stl_bintodec_s(binout);
+}
+
+/* *************************************************************************
+* stl_bit_and_s() [SAFE] -- Return the bitwise AND of the inputs as an Integer.
+* Param: e1 (free) - Value (parsable to Integer) to obtain bitwise AND of
+* Param: e2 (free) - Value (parsable to Integer) to obtain bitwise AND of
+* Return: Bitwise AND of e1 and e2
+* Exception:
+*   -- If e1 or e2 is not parsable to an Integer
+************************************************************************* */
+function stl_bit_and_s(e1, e2) {
+    return stl_bit_and(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
 }

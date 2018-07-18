@@ -22,6 +22,7 @@
 * stl_dectobin(), stl_dectobin_s()
 * stl_bintodec(), stl_bintodec_s()
 * stl_bit_and(), stl_bit_and_s()
+* stl_bit_or(), stl_bit_or_s()
 ************************************************************************* */
 
 /* *************************************************************************
@@ -285,7 +286,7 @@ function stl_bit_and(e1, e2) {
     // Finally, perform binary AND
     let binout = "";
     ascent(i in 0..length(arr[0])) {
-        if (arr[0][i] == arr[1][i] && arr[0][i] == '1' && arr[1][i] == '1') {
+        if (arr[0][i] == '1' && arr[1][i] == '1') {
             binout = binout ~ "1";
         } else {
             binout = binout ~ "0";
@@ -304,4 +305,41 @@ function stl_bit_and(e1, e2) {
 ************************************************************************* */
 function stl_bit_and_s(e1, e2) {
     return stl_bit_and(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
+}
+
+/* *************************************************************************
+* stl_bit_or() -- Return the bitwise OR of the inputs as an Integer.
+* Param: e1 (free) - Value (parsable to Integer) to obtain bitwise OR of
+* Param: e2 (free) - Value (parsable to Integer) to obtain bitwise OR of
+* Return: Bitwise OR of e1 and e2
+* Notes:
+*   -- Use stl_bit_and_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+************************************************************************* */
+function stl_bit_or(e1, e2) {
+    // First, convert to Binary String
+    let arr = [stl_dectobin(e1), stl_dectobin(e2)];
+    // Next, pad lengths
+    arr = stl_padbinstrings(arr);
+    // Finally, perform binary OR
+    let binout = "";
+    ascent(i in 0..length(arr[0])) {
+        if (arr[0][i] == '1' || arr[1][i] == '1') {
+            binout = binout ~ "1";
+        } else {
+            binout = binout ~ "0";
+        }
+    }
+    return stl_bintodec_s(binout);
+}
+
+/* *************************************************************************
+* stl_bit_or_s() [SAFE] -- Return the bitwise OR of the inputs as an Integer.
+* Param: e1 (free) - Value (parsable to Integer) to obtain bitwise OR of
+* Param: e2 (free) - Value (parsable to Integer) to obtain bitwise OR of
+* Return: Bitwise OR of e1 and e2
+* Exception:
+*   -- If e1 or e2 is not parsable to an Integer
+************************************************************************* */
+function stl_bit_or_s(e1, e2) {
+    return stl_bit_or(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
 }

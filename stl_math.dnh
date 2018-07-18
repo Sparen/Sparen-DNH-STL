@@ -20,6 +20,7 @@
 * stl_lshift(), stl_lshift_s()
 * stl_rshift(), stl_rshift_s()
 * stl_tobinary(), stl_tobinary_s()
+* stl_todecimal(), stl_todecimal_s()
 ************************************************************************* */
 
 /* *************************************************************************
@@ -202,4 +203,40 @@ function stl_tobinary(e) {
 ************************************************************************* */
 function stl_tobinary_s(e) {
     return stl_tobinary(stl_parseInt(e, "stl_tobinary_s"));
+}
+
+/* *************************************************************************
+* stl_todecimal() -- Return the input as a decimal integer.
+* Param: e (string) - Binary string to return as decimal integer
+* Return: e as a decimal integer
+* Notes:
+*   -- Use stl_todecimal_s() [SAFE] for error checking on input
+************************************************************************* */
+function stl_todecimal(e) {
+    let strlen = length(e);
+    let output = 0;
+    ascent (i in 0..strlen) {
+        let component = 2^(strlen-1-i);
+        if (e[i] == '1') {
+            output += component;
+        }
+        // Otherwise nothing happens
+    }
+    return output;
+}
+
+/* *************************************************************************
+* stl_todecimal_s() -- Return the input as a decimal integer.
+* Param: e (free) - Binary string to return as decimal integer
+* Return: e as a decimal integer
+************************************************************************* */
+function stl_todecimal_s(e) {
+    // Ensure every character in the string is one of '0'..'9' using character comparison
+    // The "" vs '' distinction is important here
+    ascent(i in 0..length(e)) {
+        if (e[i] < '0' || e[i] > '9') {
+            RaiseError("stl_todecimal_s: Provided value not parsable to an Integer.");
+        }
+    }
+    return stl_todecimal(e);
 }

@@ -12,6 +12,7 @@
     RShiftTest;
 
     ToBinaryTest;
+    ToDecimalTest;
 }
 
 @MainLoop {
@@ -152,21 +153,65 @@ task ToBinaryTest {
     assert(stl_tobinary(9999999999999998) == "100011100001101111001001101111110000001111111111111110", "Assertion Failed (A4X) - Expected 100011100001101111001001101111110000001111111111111110 but got " ~ stl_tobinary(9999999999999998));
 
     WriteLog("ToBinaryTest: Part 2");
-    assert(stl_tobinary_s(0) == "0", "Assertion Failed (A0) - Expected 0 but got " ~ stl_tobinary_s(0));
-    assert(stl_tobinary_s(1) == "1", "Assertion Failed (A1) - Expected 1 but got " ~ stl_tobinary_s(1));
-    assert(stl_tobinary_s(2) == "10", "Assertion Failed (A2) - Expected 10 but got " ~ stl_tobinary_s(2));
-    assert(stl_tobinary_s(3) == "11", "Assertion Failed (A3) - Expected 11 but got " ~ stl_tobinary_s(3));
-    assert(stl_tobinary_s(4) == "100", "Assertion Failed (A4) - Expected 100 but got " ~ stl_tobinary_s(4));
-    assert(stl_tobinary_s(5) == "101", "Assertion Failed (A5) - Expected 101 but got " ~ stl_tobinary_s(5));
-    assert(stl_tobinary_s(6) == "110", "Assertion Failed (A6) - Expected 110 but got " ~ stl_tobinary_s(6));
-    assert(stl_tobinary_s(7) == "111", "Assertion Failed (A7) - Expected 111 but got " ~ stl_tobinary_s(7));
-    assert(stl_tobinary_s(8) == "1000", "Assertion Failed (A8) - Expected 1000 but got " ~ stl_tobinary_s(8));
-    assert(stl_tobinary_s(9) == "1001", "Assertion Failed (A9) - Expected 1001 but got " ~ stl_tobinary_s(9));
-    assert(stl_tobinary_s(10) == "1010", "Assertion Failed (A10) - Expected 1010 but got " ~ stl_tobinary_s(10));
-    assert(stl_tobinary_s(11) == "1011", "Assertion Failed (A11) - Expected 1011 but got " ~ stl_tobinary_s(11));
-    assert(stl_tobinary_s(12) == "1100", "Assertion Failed (A12) - Expected 1100 but got " ~ stl_tobinary_s(12));
-    assert(stl_tobinary_s(13) == "1101", "Assertion Failed (A13) - Expected 1101 but got " ~ stl_tobinary_s(13));
-    assert(stl_tobinary_s(14) == "1110", "Assertion Failed (A14) - Expected 1110 but got " ~ stl_tobinary_s(14));
-    assert(stl_tobinary_s(15) == "1111", "Assertion Failed (A15) - Expected 1111 but got " ~ stl_tobinary_s(15));
-    assert(stl_tobinary_s(16) == "10000", "Assertion Failed (A16) - Expected 10000 but got " ~ stl_tobinary_s(16));
+    assert(stl_tobinary_s(0) == "0", "Assertion Failed (B0) - Expected 0 but got " ~ stl_tobinary_s(0));
+    assert(stl_tobinary_s(1) == "1", "Assertion Failed (B1) - Expected 1 but got " ~ stl_tobinary_s(1));
+    assert(stl_tobinary_s(2) == "10", "Assertion Failed (B2) - Expected 10 but got " ~ stl_tobinary_s(2));
+    assert(stl_tobinary_s(3) == "11", "Assertion Failed (B3) - Expected 11 but got " ~ stl_tobinary_s(3));
+    assert(stl_tobinary_s(4) == "100", "Assertion Failed (B4) - Expected 100 but got " ~ stl_tobinary_s(4));
+    assert(stl_tobinary_s(5) == "101", "Assertion Failed (B5) - Expected 101 but got " ~ stl_tobinary_s(5));
+    assert(stl_tobinary_s(6) == "110", "Assertion Failed (B6) - Expected 110 but got " ~ stl_tobinary_s(6));
+    assert(stl_tobinary_s(7) == "111", "Assertion Failed (B7) - Expected 111 but got " ~ stl_tobinary_s(7));
+    assert(stl_tobinary_s(8) == "1000", "Assertion Failed (B8) - Expected 1000 but got " ~ stl_tobinary_s(8));
+    assert(stl_tobinary_s(9) == "1001", "Assertion Failed (B9) - Expected 1001 but got " ~ stl_tobinary_s(9));
+    assert(stl_tobinary_s(10) == "1010", "Assertion Failed (B10) - Expected 1010 but got " ~ stl_tobinary_s(10));
+    assert(stl_tobinary_s(11) == "1011", "Assertion Failed (B11) - Expected 1011 but got " ~ stl_tobinary_s(11));
+    assert(stl_tobinary_s(12) == "1100", "Assertion Failed (B12) - Expected 1100 but got " ~ stl_tobinary_s(12));
+    assert(stl_tobinary_s(13) == "1101", "Assertion Failed (B13) - Expected 1101 but got " ~ stl_tobinary_s(13));
+    assert(stl_tobinary_s(14) == "1110", "Assertion Failed (B14) - Expected 1110 but got " ~ stl_tobinary_s(14));
+    assert(stl_tobinary_s(15) == "1111", "Assertion Failed (B15) - Expected 1111 but got " ~ stl_tobinary_s(15));
+    assert(stl_tobinary_s(16) == "10000", "Assertion Failed (B16) - Expected 10000 but got " ~ stl_tobinary_s(16));
+}
+
+task ToDecimalTest {
+    WriteLog("ToDecimalTest: Initializing");
+
+    WriteLog("ToDecimalTest: Part 1");
+    assert(stl_todecimal("0") == 0, "Assertion Failed (A0) - Expected 0 but got " ~ IntToString(stl_todecimal("0")));
+    assert(stl_todecimal("1") == 1, "Assertion Failed (A1) - Expected 1 but got " ~ IntToString(stl_todecimal("1")));
+    assert(stl_todecimal("10") == 2, "Assertion Failed (A2) - Expected 2 but got " ~ IntToString(stl_todecimal("10")));
+    assert(stl_todecimal("11") == 3, "Assertion Failed (A3) - Expected 3 but got " ~ IntToString(stl_todecimal("11")));
+    assert(stl_todecimal("100") == 4, "Assertion Failed (A4) - Expected 4 but got " ~ IntToString(stl_todecimal("100")));
+    assert(stl_todecimal("101") == 5, "Assertion Failed (A5) - Expected 5 but got " ~ IntToString(stl_todecimal("101")));
+    assert(stl_todecimal("110") == 6, "Assertion Failed (A6) - Expected 6 but got " ~ IntToString(stl_todecimal("110")));
+    assert(stl_todecimal("111") == 7, "Assertion Failed (A7) - Expected 7 but got " ~ IntToString(stl_todecimal("111")));
+    assert(stl_todecimal("1000") == 8, "Assertion Failed (A8) - Expected 8 but got " ~ IntToString(stl_todecimal("1000")));
+    assert(stl_todecimal("1001") == 9, "Assertion Failed (A9) - Expected 9 but got " ~ IntToString(stl_todecimal("1001")));
+    assert(stl_todecimal("1010") == 10, "Assertion Failed (A10) - Expected 10 but got " ~ IntToString(stl_todecimal("1010")));
+    assert(stl_todecimal("1011") == 11, "Assertion Failed (A11) - Expected 11 but got " ~ IntToString(stl_todecimal("1011")));
+    assert(stl_todecimal("1100") == 12, "Assertion Failed (A12) - Expected 12 but got " ~ IntToString(stl_todecimal("1100")));
+    assert(stl_todecimal("1101") == 13, "Assertion Failed (A13) - Expected 13 but got " ~ IntToString(stl_todecimal("1101")));
+    assert(stl_todecimal("1110") == 14, "Assertion Failed (A14) - Expected 14 but got " ~ IntToString(stl_todecimal("1110")));
+    assert(stl_todecimal("1111") == 15, "Assertion Failed (A15) - Expected 15 but got " ~ IntToString(stl_todecimal("1111")));
+    assert(stl_todecimal("10000") == 16, "Assertion Failed (A16) - Expected 16 but got " ~ IntToString(stl_todecimal("10000")));
+    assert(stl_todecimal("1111111111111111111111111111111") == 2147483647, "Assertion Failed (A1X) - Expected 2147483647 but got " ~ IntToString(stl_todecimal("1111111111111111111111111111111")));
+    assert(stl_todecimal("111111111111111111111111111111111111111111111111") == 281474976710655, "Assertion Failed (AX2) - Expected 281474976710655 but got " ~ IntToString(stl_todecimal("111111111111111111111111111111111111111111111111")));
+
+    WriteLog("ToBinaryTest: Part 2");
+    assert(stl_todecimal_s("0") == 0, "Assertion Failed (B0) - Expected 0 but got " ~ IntToString(stl_todecimal_s("0")));
+    assert(stl_todecimal_s("1") == 1, "Assertion Failed (B1) - Expected 1 but got " ~ IntToString(stl_todecimal_s("1")));
+    assert(stl_todecimal_s("10") == 2, "Assertion Failed (B2) - Expected 2 but got " ~ IntToString(stl_todecimal_s("10")));
+    assert(stl_todecimal_s("11") == 3, "Assertion Failed (B3) - Expected 3 but got " ~ IntToString(stl_todecimal_s("11")));
+    assert(stl_todecimal_s("100") == 4, "Assertion Failed (B4) - Expected 4 but got " ~ IntToString(stl_todecimal_s("100")));
+    assert(stl_todecimal_s("101") == 5, "Assertion Failed (B5) - Expected 5 but got " ~ IntToString(stl_todecimal_s("101")));
+    assert(stl_todecimal_s("110") == 6, "Assertion Failed (B6) - Expected 6 but got " ~ IntToString(stl_todecimal_s("110")));
+    assert(stl_todecimal_s("111") == 7, "Assertion Failed (B7) - Expected 7 but got " ~ IntToString(stl_todecimal_s("111")));
+    assert(stl_todecimal_s("1000") == 8, "Assertion Failed (B8) - Expected 8 but got " ~ IntToString(stl_todecimal_s("1000")));
+    assert(stl_todecimal_s("1001") == 9, "Assertion Failed (B9) - Expected 9 but got " ~ IntToString(stl_todecimal_s("1001")));
+    assert(stl_todecimal_s("1010") == 10, "Assertion Failed (B10) - Expected 10 but got " ~ IntToString(stl_todecimal_s("1010")));
+    assert(stl_todecimal_s("1011") == 11, "Assertion Failed (B11) - Expected 11 but got " ~ IntToString(stl_todecimal_s("1011")));
+    assert(stl_todecimal_s("1100") == 12, "Assertion Failed (B12) - Expected 12 but got " ~ IntToString(stl_todecimal_s("1100")));
+    assert(stl_todecimal_s("1101") == 13, "Assertion Failed (B13) - Expected 13 but got " ~ IntToString(stl_todecimal_s("1101")));
+    assert(stl_todecimal_s("1110") == 14, "Assertion Failed (B14) - Expected 14 but got " ~ IntToString(stl_todecimal_s("1110")));
+    assert(stl_todecimal_s("1111") == 15, "Assertion Failed (B15) - Expected 15 but got " ~ IntToString(stl_todecimal_s("1111")));
+    assert(stl_todecimal_s("10000") == 16, "Assertion Failed (B16) - Expected 16 but got " ~ IntToString(stl_todecimal_s("10000")));
 }

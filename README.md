@@ -25,6 +25,7 @@ The following general libraries are provided in this distribution. These are lib
     - `stl_lshift()`: Return the input left shifted n times.
     - `stl_rshift()`: Return the input right shifted n times.
     - `stl_tobinary()`: Return the input as a binary string.
+    - `stl_todecimal()`: Return the input binary string as an integer.
 
 The following data structure libraries are provided in this distribution. These are data structure libraries custom-made for the STL distribution.
 
@@ -32,6 +33,7 @@ The following data structure libraries are provided in this distribution. These 
 * `stl_stack.dnh`
 
 The following miscellaneous libraries are provided in this distribution. These are libraries for specific tasks that were typically made independently of the STL distribution.
+
 * `lib_autoformat.dnh`: Provides automatic line breaking in text based on render width.
 
 ### Running Unit Tests

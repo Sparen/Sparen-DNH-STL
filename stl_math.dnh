@@ -23,6 +23,7 @@
 * stl_bintodec(), stl_bintodec_s()
 * stl_bit_and(), stl_bit_and_s()
 * stl_bit_or(), stl_bit_or_s()
+* stl_bit_xor(), stl_bit_xor_s()
 ************************************************************************* */
 
 /* *************************************************************************
@@ -195,6 +196,7 @@ function stl_rshift_s(e, n) {
 * Notes:
 *   -- Use stl_tobinary_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
 *   -- This function stops working correctly past 9999999999999998? due to Danmakufu's internals defaulting to scientific notation? (verification needed)
+*   -- Only designed for usage on Whole Numbers
 ************************************************************************* */
 function stl_dectobin(e) {
     if (e < 0) {
@@ -240,6 +242,7 @@ function stl_dectobin_s(e) {
 * Return: e as a decimal integer
 * Notes:
 *   -- Use stl_todecimal_s() [SAFE] for error checking on input
+*   -- Only designed for usage on Whole Numbers
 ************************************************************************* */
 function stl_bintodec(e) {
     let strlen = length(e);
@@ -342,4 +345,42 @@ function stl_bit_or(e1, e2) {
 ************************************************************************* */
 function stl_bit_or_s(e1, e2) {
     return stl_bit_or(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
+}
+
+
+/* *************************************************************************
+* stl_bit_xor() -- Return the bitwise XOR of the inputs as an Integer.
+* Param: e1 (free) - Value (parsable to Integer) to obtain bitwise XOR of
+* Param: e2 (free) - Value (parsable to Integer) to obtain bitwise XOR of
+* Return: Bitwise XOR of e1 and e2
+* Notes:
+*   -- Use stl_bit_and_s() [SAFE] for error checking on input or for floating point inputs that need to be truncated
+************************************************************************* */
+function stl_bit_xor(e1, e2) {
+    // First, convert to Binary String
+    let arr = [stl_dectobin(e1), stl_dectobin(e2)];
+    // Next, pad lengths
+    arr = stl_padbinstrings(arr);
+    // Finally, perform binary XOR
+    let binout = "";
+    ascent(i in 0..length(arr[0])) {
+        if ((arr[0][i] == '1' || arr[1][i] == '1') && arr[0][i] != arr[1][i]) {
+            binout = binout ~ "1";
+        } else {
+            binout = binout ~ "0";
+        }
+    }
+    return stl_bintodec_s(binout);
+}
+
+/* *************************************************************************
+* stl_bit_xor_s() [SAFE] -- Return the bitwise XOR of the inputs as an Integer.
+* Param: e1 (free) - Value (parsable to Integer) to obtain bitwise XOR of
+* Param: e2 (free) - Value (parsable to Integer) to obtain bitwise XOR of
+* Return: Bitwise XOR of e1 and e2
+* Exception:
+*   -- If e1 or e2 is not parsable to an Integer
+************************************************************************* */
+function stl_bit_xor_s(e1, e2) {
+    return stl_bit_xor(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
 }

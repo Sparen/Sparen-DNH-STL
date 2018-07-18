@@ -15,7 +15,8 @@
     BinaryToDecimalTest;
 
     BitAndTest;
-    BitOrTest
+    BitOrTest;
+    BitXorTest
 }
 
 @MainLoop {
@@ -60,7 +61,7 @@ task LShiftTest {
     let x = 1; //Left shift by 1 per loop
     let y = 1; //Set to 1 left shifted by i per loop
     ascent(i in 0..64) {
-        WriteLog("LShiftTest: i, x, y: " ~ ToString(i) ~ "; " ~ ToString(x) ~ "; " ~ ToString(y));
+        //WriteLog("LShiftTest: i, x, y: " ~ ToString(i) ~ "; " ~ ToString(x) ~ "; " ~ ToString(y));
         assert(x == 1 * 2^i, "Assertion Failed (A1X) - Expected " ~ IntToString(1 * 2^i) ~ " but got " ~ IntToString(x));
         assert(y == 1 * 2^i, "Assertion Failed (A1Y) - Expected " ~ IntToString(1 * 2^i) ~ " but got " ~ IntToString(y));
         x = stl_lshift(x, 1);
@@ -70,7 +71,7 @@ task LShiftTest {
     let x2 = 1; //Left shift by 1 per loop
     let y2 = 1; //Set to 1 left shifted by j per loop
     ascent(j in 0..64) {
-        WriteLog("LShiftTest: j, x2, y2: " ~ ToString(j) ~ "; " ~ ToString(x2) ~ "; " ~ ToString(y2));
+        //WriteLog("LShiftTest: j, x2, y2: " ~ ToString(j) ~ "; " ~ ToString(x2) ~ "; " ~ ToString(y2));
         assert(x2 == 1 * 2^j, "Assertion Failed (A2X) - Expected " ~ IntToString(1 * 2^j) ~ " but got " ~ IntToString(x2));
         assert(y2 == 1 * 2^j, "Assertion Failed (A2Y) - Expected " ~ IntToString(1 * 2^j) ~ " but got " ~ IntToString(y2));
         x2 = stl_lshift_s(x2, 1);
@@ -87,7 +88,7 @@ task RShiftTest {
     let x = 1024; //Right shift by 1 per loop
     let y = 1024; //Set to 1 right shifted by i per loop
     ascent(i in 0..10) {
-        WriteLog("RShiftTest: i, x, y: " ~ ToString(i) ~ "; " ~ ToString(x) ~ "; " ~ ToString(y));
+        //WriteLog("RShiftTest: i, x, y: " ~ ToString(i) ~ "; " ~ ToString(x) ~ "; " ~ ToString(y));
         assert(x == 1024 / 2^i, "Assertion Failed (A1X) - Expected " ~ IntToString(1024 / 2^i) ~ " but got " ~ IntToString(x));
         assert(y == 1024 / 2^i, "Assertion Failed (A1Y) - Expected " ~ IntToString(1024 / 2^i) ~ " but got " ~ IntToString(y));
         x = stl_rshift(x, 1);
@@ -97,7 +98,7 @@ task RShiftTest {
     let x2 = 1024; //Right shift by 1 per loop
     let y2 = 1024; //Set to 1 right shifted by j per loop
     ascent(j in 0..10) {
-        WriteLog("RShiftTest: j, x2, y2: " ~ ToString(j) ~ "; " ~ ToString(x2) ~ "; " ~ ToString(y2));
+        //WriteLog("RShiftTest: j, x2, y2: " ~ ToString(j) ~ "; " ~ ToString(x2) ~ "; " ~ ToString(y2));
         assert(x2 == 1024 / 2^j, "Assertion Failed (A2X) - Expected " ~ IntToString(1024 / 2^j) ~ " but got " ~ IntToString(x2));
         assert(y2 == 1024 / 2^j, "Assertion Failed (A2Y) - Expected " ~ IntToString(1024 / 2^j) ~ " but got " ~ IntToString(y2));
         x2 = stl_rshift_s(x2, 1);
@@ -109,7 +110,7 @@ task RShiftTest {
     let x3 = 63; //Right shift by 1 per loop
     let y3 = 63; //Set to 1 right shifted by j per loop
     ascent(k in 0..6) {
-        WriteLog("RShiftTest: k, x3, y3: " ~ ToString(k) ~ "; " ~ ToString(x3) ~ "; " ~ ToString(y3));
+        //WriteLog("RShiftTest: k, x3, y3: " ~ ToString(k) ~ "; " ~ ToString(x3) ~ "; " ~ ToString(y3));
         assert(x3 == 64 / 2^k - 1, "Assertion Failed (B1X) - Expected " ~ IntToString(64 / 2^k) ~ " but got " ~ IntToString(x3));
         assert(y3 == 64 / 2^k - 1, "Assertion Failed (B1Y) - Expected " ~ IntToString(64 / 2^k) ~ " but got " ~ IntToString(y3));
         x3 = stl_rshift_s(x3, 1);
@@ -489,4 +490,140 @@ task BitOrTest {
     assert(stl_bit_or_s(7, 5) == 7, "Assertion Failed (A75) - Expected 7 but got " ~ IntToString(stl_bit_or_s(7, 5)));
     assert(stl_bit_or_s(7, 6) == 7, "Assertion Failed (A76) - Expected 7 but got " ~ IntToString(stl_bit_or_s(7, 6)));
     assert(stl_bit_or_s(7, 7) == 7, "Assertion Failed (A77) - Expected 7 but got " ~ IntToString(stl_bit_or_s(7, 7)));
+}
+
+task BitXorTest {
+    WriteLog("BitXorTest: Initializing");
+
+    WriteLog("BitXorTest: Part 1");
+    assert(stl_bit_xor(0, 0) == 0, "Assertion Failed (A00) - Expected 0 but got " ~ IntToString(stl_bit_xor(0, 0)));
+    assert(stl_bit_xor(0, 1) == 1, "Assertion Failed (A01) - Expected 1 but got " ~ IntToString(stl_bit_xor(0, 1)));
+    assert(stl_bit_xor(0, 2) == 2, "Assertion Failed (A02) - Expected 2 but got " ~ IntToString(stl_bit_xor(0, 2)));
+    assert(stl_bit_xor(0, 3) == 3, "Assertion Failed (A03) - Expected 3 but got " ~ IntToString(stl_bit_xor(0, 3)));
+    assert(stl_bit_xor(0, 4) == 4, "Assertion Failed (A04) - Expected 4 but got " ~ IntToString(stl_bit_xor(0, 4)));
+    assert(stl_bit_xor(0, 5) == 5, "Assertion Failed (A05) - Expected 5 but got " ~ IntToString(stl_bit_xor(0, 5)));
+    assert(stl_bit_xor(0, 6) == 6, "Assertion Failed (A06) - Expected 6 but got " ~ IntToString(stl_bit_xor(0, 6)));
+    assert(stl_bit_xor(0, 7) == 7, "Assertion Failed (A07) - Expected 7 but got " ~ IntToString(stl_bit_xor(0, 7)));
+    assert(stl_bit_xor(1, 0) == 1, "Assertion Failed (A10) - Expected 1 but got " ~ IntToString(stl_bit_xor(1, 0)));
+    assert(stl_bit_xor(1, 1) == 0, "Assertion Failed (A11) - Expected 0 but got " ~ IntToString(stl_bit_xor(1, 1)));
+    assert(stl_bit_xor(1, 2) == 3, "Assertion Failed (A12) - Expected 3 but got " ~ IntToString(stl_bit_xor(1, 2)));
+    assert(stl_bit_xor(1, 3) == 2, "Assertion Failed (A13) - Expected 2 but got " ~ IntToString(stl_bit_xor(1, 3)));
+    assert(stl_bit_xor(1, 4) == 5, "Assertion Failed (A14) - Expected 5 but got " ~ IntToString(stl_bit_xor(1, 4)));
+    assert(stl_bit_xor(1, 5) == 4, "Assertion Failed (A15) - Expected 4 but got " ~ IntToString(stl_bit_xor(1, 5)));
+    assert(stl_bit_xor(1, 6) == 7, "Assertion Failed (A16) - Expected 7 but got " ~ IntToString(stl_bit_xor(1, 6)));
+    assert(stl_bit_xor(1, 7) == 6, "Assertion Failed (A17) - Expected 6 but got " ~ IntToString(stl_bit_xor(1, 7)));
+    assert(stl_bit_xor(2, 0) == 2, "Assertion Failed (A20) - Expected 2 but got " ~ IntToString(stl_bit_xor(2, 0)));
+    assert(stl_bit_xor(2, 1) == 3, "Assertion Failed (A21) - Expected 3 but got " ~ IntToString(stl_bit_xor(2, 1)));
+    assert(stl_bit_xor(2, 2) == 0, "Assertion Failed (A22) - Expected 0 but got " ~ IntToString(stl_bit_xor(2, 2)));
+    assert(stl_bit_xor(2, 3) == 1, "Assertion Failed (A23) - Expected 1 but got " ~ IntToString(stl_bit_xor(2, 3)));
+    assert(stl_bit_xor(2, 4) == 6, "Assertion Failed (A24) - Expected 6 but got " ~ IntToString(stl_bit_xor(2, 4)));
+    assert(stl_bit_xor(2, 5) == 7, "Assertion Failed (A25) - Expected 7 but got " ~ IntToString(stl_bit_xor(2, 5)));
+    assert(stl_bit_xor(2, 6) == 4, "Assertion Failed (A26) - Expected 4 but got " ~ IntToString(stl_bit_xor(2, 6)));
+    assert(stl_bit_xor(2, 7) == 5, "Assertion Failed (A27) - Expected 5 but got " ~ IntToString(stl_bit_xor(2, 7)));
+    assert(stl_bit_xor(3, 0) == 3, "Assertion Failed (A30) - Expected 3 but got " ~ IntToString(stl_bit_xor(3, 0)));
+    assert(stl_bit_xor(3, 1) == 2, "Assertion Failed (A31) - Expected 2 but got " ~ IntToString(stl_bit_xor(3, 1)));
+    assert(stl_bit_xor(3, 2) == 1, "Assertion Failed (A32) - Expected 1 but got " ~ IntToString(stl_bit_xor(3, 2)));
+    assert(stl_bit_xor(3, 3) == 0, "Assertion Failed (A33) - Expected 0 but got " ~ IntToString(stl_bit_xor(3, 3)));
+    assert(stl_bit_xor(3, 4) == 7, "Assertion Failed (A34) - Expected 7 but got " ~ IntToString(stl_bit_xor(3, 4)));
+    assert(stl_bit_xor(3, 5) == 6, "Assertion Failed (A35) - Expected 6 but got " ~ IntToString(stl_bit_xor(3, 5)));
+    assert(stl_bit_xor(3, 6) == 5, "Assertion Failed (A36) - Expected 5 but got " ~ IntToString(stl_bit_xor(3, 6)));
+    assert(stl_bit_xor(3, 7) == 4, "Assertion Failed (A37) - Expected 4 but got " ~ IntToString(stl_bit_xor(3, 7)));
+    assert(stl_bit_xor(4, 0) == 4, "Assertion Failed (A40) - Expected 4 but got " ~ IntToString(stl_bit_xor(4, 0)));
+    assert(stl_bit_xor(4, 1) == 5, "Assertion Failed (A41) - Expected 5 but got " ~ IntToString(stl_bit_xor(4, 1)));
+    assert(stl_bit_xor(4, 2) == 6, "Assertion Failed (A42) - Expected 6 but got " ~ IntToString(stl_bit_xor(4, 2)));
+    assert(stl_bit_xor(4, 3) == 7, "Assertion Failed (A43) - Expected 7 but got " ~ IntToString(stl_bit_xor(4, 3)));
+    assert(stl_bit_xor(4, 4) == 0, "Assertion Failed (A44) - Expected 0 but got " ~ IntToString(stl_bit_xor(4, 4)));
+    assert(stl_bit_xor(4, 5) == 1, "Assertion Failed (A45) - Expected 1 but got " ~ IntToString(stl_bit_xor(4, 5)));
+    assert(stl_bit_xor(4, 6) == 2, "Assertion Failed (A46) - Expected 2 but got " ~ IntToString(stl_bit_xor(4, 6)));
+    assert(stl_bit_xor(4, 7) == 3, "Assertion Failed (A47) - Expected 3 but got " ~ IntToString(stl_bit_xor(4, 7)));
+    assert(stl_bit_xor(5, 0) == 5, "Assertion Failed (A50) - Expected 5 but got " ~ IntToString(stl_bit_xor(5, 0)));
+    assert(stl_bit_xor(5, 1) == 4, "Assertion Failed (A51) - Expected 4 but got " ~ IntToString(stl_bit_xor(5, 1)));
+    assert(stl_bit_xor(5, 2) == 7, "Assertion Failed (A52) - Expected 7 but got " ~ IntToString(stl_bit_xor(5, 2)));
+    assert(stl_bit_xor(5, 3) == 6, "Assertion Failed (A53) - Expected 6 but got " ~ IntToString(stl_bit_xor(5, 3)));
+    assert(stl_bit_xor(5, 4) == 1, "Assertion Failed (A54) - Expected 1 but got " ~ IntToString(stl_bit_xor(5, 4)));
+    assert(stl_bit_xor(5, 5) == 0, "Assertion Failed (A55) - Expected 0 but got " ~ IntToString(stl_bit_xor(5, 5)));
+    assert(stl_bit_xor(5, 6) == 3, "Assertion Failed (A56) - Expected 3 but got " ~ IntToString(stl_bit_xor(5, 6)));
+    assert(stl_bit_xor(5, 7) == 2, "Assertion Failed (A57) - Expected 2 but got " ~ IntToString(stl_bit_xor(5, 7)));
+    assert(stl_bit_xor(6, 0) == 6, "Assertion Failed (A60) - Expected 6 but got " ~ IntToString(stl_bit_xor(6, 0)));
+    assert(stl_bit_xor(6, 1) == 7, "Assertion Failed (A61) - Expected 7 but got " ~ IntToString(stl_bit_xor(6, 1)));
+    assert(stl_bit_xor(6, 2) == 4, "Assertion Failed (A62) - Expected 4 but got " ~ IntToString(stl_bit_xor(6, 2)));
+    assert(stl_bit_xor(6, 3) == 5, "Assertion Failed (A63) - Expected 5 but got " ~ IntToString(stl_bit_xor(6, 3)));
+    assert(stl_bit_xor(6, 4) == 2, "Assertion Failed (A64) - Expected 2 but got " ~ IntToString(stl_bit_xor(6, 4)));
+    assert(stl_bit_xor(6, 5) == 3, "Assertion Failed (A65) - Expected 3 but got " ~ IntToString(stl_bit_xor(6, 5)));
+    assert(stl_bit_xor(6, 6) == 0, "Assertion Failed (A66) - Expected 0 but got " ~ IntToString(stl_bit_xor(6, 6)));
+    assert(stl_bit_xor(6, 7) == 1, "Assertion Failed (A67) - Expected 1 but got " ~ IntToString(stl_bit_xor(6, 7)));
+    assert(stl_bit_xor(7, 0) == 7, "Assertion Failed (A70) - Expected 7 but got " ~ IntToString(stl_bit_xor(7, 0)));
+    assert(stl_bit_xor(7, 1) == 6, "Assertion Failed (A71) - Expected 6 but got " ~ IntToString(stl_bit_xor(7, 1)));
+    assert(stl_bit_xor(7, 2) == 5, "Assertion Failed (A72) - Expected 5 but got " ~ IntToString(stl_bit_xor(7, 2)));
+    assert(stl_bit_xor(7, 3) == 4, "Assertion Failed (A73) - Expected 4 but got " ~ IntToString(stl_bit_xor(7, 3)));
+    assert(stl_bit_xor(7, 4) == 3, "Assertion Failed (A74) - Expected 3 but got " ~ IntToString(stl_bit_xor(7, 4)));
+    assert(stl_bit_xor(7, 5) == 2, "Assertion Failed (A75) - Expected 2 but got " ~ IntToString(stl_bit_xor(7, 5)));
+    assert(stl_bit_xor(7, 6) == 1, "Assertion Failed (A76) - Expected 1 but got " ~ IntToString(stl_bit_xor(7, 6)));
+    assert(stl_bit_xor(7, 7) == 0, "Assertion Failed (A77) - Expected 0 but got " ~ IntToString(stl_bit_xor(7, 7)));
+
+    WriteLog("BitXxorTest: Part 2");
+    assert(stl_bit_xor_s(0, 0) == 0, "Assertion Failed (A00) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(0, 0)));
+    assert(stl_bit_xor_s(0, 1) == 1, "Assertion Failed (A01) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(0, 1)));
+    assert(stl_bit_xor_s(0, 2) == 2, "Assertion Failed (A02) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(0, 2)));
+    assert(stl_bit_xor_s(0, 3) == 3, "Assertion Failed (A03) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(0, 3)));
+    assert(stl_bit_xor_s(0, 4) == 4, "Assertion Failed (A04) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(0, 4)));
+    assert(stl_bit_xor_s(0, 5) == 5, "Assertion Failed (A05) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(0, 5)));
+    assert(stl_bit_xor_s(0, 6) == 6, "Assertion Failed (A06) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(0, 6)));
+    assert(stl_bit_xor_s(0, 7) == 7, "Assertion Failed (A07) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(0, 7)));
+    assert(stl_bit_xor_s(1, 0) == 1, "Assertion Failed (A10) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(1, 0)));
+    assert(stl_bit_xor_s(1, 1) == 0, "Assertion Failed (A11) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(1, 1)));
+    assert(stl_bit_xor_s(1, 2) == 3, "Assertion Failed (A12) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(1, 2)));
+    assert(stl_bit_xor_s(1, 3) == 2, "Assertion Failed (A13) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(1, 3)));
+    assert(stl_bit_xor_s(1, 4) == 5, "Assertion Failed (A14) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(1, 4)));
+    assert(stl_bit_xor_s(1, 5) == 4, "Assertion Failed (A15) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(1, 5)));
+    assert(stl_bit_xor_s(1, 6) == 7, "Assertion Failed (A16) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(1, 6)));
+    assert(stl_bit_xor_s(1, 7) == 6, "Assertion Failed (A17) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(1, 7)));
+    assert(stl_bit_xor_s(2, 0) == 2, "Assertion Failed (A20) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(2, 0)));
+    assert(stl_bit_xor_s(2, 1) == 3, "Assertion Failed (A21) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(2, 1)));
+    assert(stl_bit_xor_s(2, 2) == 0, "Assertion Failed (A22) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(2, 2)));
+    assert(stl_bit_xor_s(2, 3) == 1, "Assertion Failed (A23) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(2, 3)));
+    assert(stl_bit_xor_s(2, 4) == 6, "Assertion Failed (A24) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(2, 4)));
+    assert(stl_bit_xor_s(2, 5) == 7, "Assertion Failed (A25) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(2, 5)));
+    assert(stl_bit_xor_s(2, 6) == 4, "Assertion Failed (A26) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(2, 6)));
+    assert(stl_bit_xor_s(2, 7) == 5, "Assertion Failed (A27) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(2, 7)));
+    assert(stl_bit_xor_s(3, 0) == 3, "Assertion Failed (A30) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(3, 0)));
+    assert(stl_bit_xor_s(3, 1) == 2, "Assertion Failed (A31) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(3, 1)));
+    assert(stl_bit_xor_s(3, 2) == 1, "Assertion Failed (A32) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(3, 2)));
+    assert(stl_bit_xor_s(3, 3) == 0, "Assertion Failed (A33) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(3, 3)));
+    assert(stl_bit_xor_s(3, 4) == 7, "Assertion Failed (A34) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(3, 4)));
+    assert(stl_bit_xor_s(3, 5) == 6, "Assertion Failed (A35) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(3, 5)));
+    assert(stl_bit_xor_s(3, 6) == 5, "Assertion Failed (A36) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(3, 6)));
+    assert(stl_bit_xor_s(3, 7) == 4, "Assertion Failed (A37) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(3, 7)));
+    assert(stl_bit_xor_s(4, 0) == 4, "Assertion Failed (A40) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(4, 0)));
+    assert(stl_bit_xor_s(4, 1) == 5, "Assertion Failed (A41) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(4, 1)));
+    assert(stl_bit_xor_s(4, 2) == 6, "Assertion Failed (A42) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(4, 2)));
+    assert(stl_bit_xor_s(4, 3) == 7, "Assertion Failed (A43) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(4, 3)));
+    assert(stl_bit_xor_s(4, 4) == 0, "Assertion Failed (A44) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(4, 4)));
+    assert(stl_bit_xor_s(4, 5) == 1, "Assertion Failed (A45) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(4, 5)));
+    assert(stl_bit_xor_s(4, 6) == 2, "Assertion Failed (A46) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(4, 6)));
+    assert(stl_bit_xor_s(4, 7) == 3, "Assertion Failed (A47) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(4, 7)));
+    assert(stl_bit_xor_s(5, 0) == 5, "Assertion Failed (A50) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(5, 0)));
+    assert(stl_bit_xor_s(5, 1) == 4, "Assertion Failed (A51) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(5, 1)));
+    assert(stl_bit_xor_s(5, 2) == 7, "Assertion Failed (A52) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(5, 2)));
+    assert(stl_bit_xor_s(5, 3) == 6, "Assertion Failed (A53) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(5, 3)));
+    assert(stl_bit_xor_s(5, 4) == 1, "Assertion Failed (A54) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(5, 4)));
+    assert(stl_bit_xor_s(5, 5) == 0, "Assertion Failed (A55) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(5, 5)));
+    assert(stl_bit_xor_s(5, 6) == 3, "Assertion Failed (A56) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(5, 6)));
+    assert(stl_bit_xor_s(5, 7) == 2, "Assertion Failed (A57) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(5, 7)));
+    assert(stl_bit_xor_s(6, 0) == 6, "Assertion Failed (A60) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(6, 0)));
+    assert(stl_bit_xor_s(6, 1) == 7, "Assertion Failed (A61) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(6, 1)));
+    assert(stl_bit_xor_s(6, 2) == 4, "Assertion Failed (A62) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(6, 2)));
+    assert(stl_bit_xor_s(6, 3) == 5, "Assertion Failed (A63) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(6, 3)));
+    assert(stl_bit_xor_s(6, 4) == 2, "Assertion Failed (A64) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(6, 4)));
+    assert(stl_bit_xor_s(6, 5) == 3, "Assertion Failed (A65) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(6, 5)));
+    assert(stl_bit_xor_s(6, 6) == 0, "Assertion Failed (A66) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(6, 6)));
+    assert(stl_bit_xor_s(6, 7) == 1, "Assertion Failed (A67) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(6, 7)));
+    assert(stl_bit_xor_s(7, 0) == 7, "Assertion Failed (A70) - Expected 7 but got " ~ IntToString(stl_bit_xor_s(7, 0)));
+    assert(stl_bit_xor_s(7, 1) == 6, "Assertion Failed (A71) - Expected 6 but got " ~ IntToString(stl_bit_xor_s(7, 1)));
+    assert(stl_bit_xor_s(7, 2) == 5, "Assertion Failed (A72) - Expected 5 but got " ~ IntToString(stl_bit_xor_s(7, 2)));
+    assert(stl_bit_xor_s(7, 3) == 4, "Assertion Failed (A73) - Expected 4 but got " ~ IntToString(stl_bit_xor_s(7, 3)));
+    assert(stl_bit_xor_s(7, 4) == 3, "Assertion Failed (A74) - Expected 3 but got " ~ IntToString(stl_bit_xor_s(7, 4)));
+    assert(stl_bit_xor_s(7, 5) == 2, "Assertion Failed (A75) - Expected 2 but got " ~ IntToString(stl_bit_xor_s(7, 5)));
+    assert(stl_bit_xor_s(7, 6) == 1, "Assertion Failed (A76) - Expected 1 but got " ~ IntToString(stl_bit_xor_s(7, 6)));
+    assert(stl_bit_xor_s(7, 7) == 0, "Assertion Failed (A77) - Expected 0 but got " ~ IntToString(stl_bit_xor_s(7, 7)));
 }

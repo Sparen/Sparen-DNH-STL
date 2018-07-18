@@ -13,13 +13,13 @@ To utilize these libraries, include them using the standard Danmakufu ph3 `#incl
 
 Each library must be included individually.
 
-The libraries in this repository are all standalone and have no dependencies.
+The libraries in this repository are all standalone and have no dependencies unless otherwise stated.
 
 ### Libraries
 
 The following general libraries are provided in this distribution. These are libraries custom-made for the STL distribution.
 
-* `stl_math.dnh`
+* `stl_math.dnh` [Dependencies: None]
     - `stl_complement()`: Return the one's complement of the input as an Integer.
     - `stl_bit_not()`: Return the bitwise NOT of the input as an Integer.
     - `stl_lshift()`: Return the input left shifted n times.
@@ -28,6 +28,7 @@ The following general libraries are provided in this distribution. These are lib
     - `stl_bintodec()`: Return the input binary string as an Integer.
     - `stl_bit_and()`: Return the bitwise AND of the inputs as an Integer.
     - `stl_bit_or()`: Return the bitwise OR of the inputs as an Integer.
+    - `stl_bit_xor()`: Return the bitwise XOR of the inputs as an Integer.
 
 The following data structure libraries are provided in this distribution. These are data structure libraries custom-made for the STL distribution.
 

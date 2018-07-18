@@ -234,8 +234,8 @@ function stl_todecimal_s(e) {
     // Ensure every character in the string is one of '0'..'9' using character comparison
     // The "" vs '' distinction is important here
     ascent(i in 0..length(e)) {
-        if (e[i] < '0' || e[i] > '9') {
-            RaiseError("stl_todecimal_s: Provided value not parsable to an Integer.");
+        if (e[i] < '0' || e[i] > '1') {
+            RaiseError("stl_todecimal_s: Provided value not a Binary String.");
         }
     }
     return stl_todecimal(e);

@@ -16,8 +16,16 @@
 * Do note that there is significant overhead incurred by running these functions.
 * It is not recommended that you use these functions on short snippets of text
 * or text where you want to have manual line breaks.
-* Only use these functions on larger blocks of text.
+* Only use autoformLineInsertion functions when manual line breaks are too labor intensive.
 ****************************************************************** */
+
+/* ******************************************************************
+* Functions:
+* autoformLineInsertionA1()
+* autoformLineInsertionA2()
+* autoformWordClipA1()
+* autoformCharClipA1()
+************************************************************************* */
 
 /* *************************************************************************
 * void autoformLineInsertionA1(string, int, string, int, int, constant) -- Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required.
@@ -133,11 +141,10 @@ function autoformWordClipA1(input, maxwidth, font, fontsize, borderwidth, border
     let output = "";
     let tokenized = SplitString(input, " "); // Split the string into an array using the space " " as a delimiter
     while (length(tokenized) > 0) { // While there remain tokens to be processed
-        // First, add the next token to the new line
         let backup = output; // Used to restore output in case of overflow
         output = output ~ tokenized[0]; // Space is used as a buffer
 
-        // Check if the new line is in bounds
+        // Check if the string is in bounds
         let tempobj = ObjText_Create();
         ObjText_SetText(tempobj, output ~ " ");
         if (ellipsis) { // If using ellipsis, need to test WITH ... added
@@ -152,7 +159,7 @@ function autoformWordClipA1(input, maxwidth, font, fontsize, borderwidth, border
         let width = ObjText_GetTotalWidth(tempobj);
 
         // If in bounds, proceed with next token and erase the used token from the token array
-        // Otherwise, the current line is complete. Exit loop.
+        // Otherwise, complete. Exit loop.
         if (width < maxwidth) {
             tokenized = erase(tokenized, 0);
             output = output ~ " "; // re-add space
@@ -190,11 +197,10 @@ function autoformCharClipA1(input, maxwidth, font, fontsize, borderwidth, border
     let output = "";
     let inputcopy = input;
     while (length(inputcopy) > 0) { // While there remain tokens to be processed
-        // First, add the next token to the new line
         let backup = output; // Used to restore output in case of overflow
         output = output ~ ToString(inputcopy[0]); // Space is used as a buffer
 
-        // Check if the new line is in bounds
+        // Check if the string is in bounds
         let tempobj = ObjText_Create();
         ObjText_SetText(tempobj, output);
         if (ellipsis) { // If using ellipsis, need to test WITH ... added
@@ -209,7 +215,7 @@ function autoformCharClipA1(input, maxwidth, font, fontsize, borderwidth, border
         let width = ObjText_GetTotalWidth(tempobj);
 
         // If in bounds, proceed with next token and erase the used token from the token array
-        // Otherwise, the current line is complete. Exit loop.
+        // Otherwise, complete. Exit loop.
         if (width < maxwidth) {
             inputcopy = erase(inputcopy, 0);
             output = output; // re-add space

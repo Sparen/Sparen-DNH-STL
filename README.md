@@ -37,7 +37,11 @@ The following data structure libraries are provided in this distribution. These 
 
 The following miscellaneous libraries are provided in this distribution. These are libraries for specific tasks that were typically made independently of the STL distribution.
 
-* `lib_autoformat.dnh`: Provides automatic line breaking in text based on render width.
+* `lib_autoformat.dnh`: Provides automatic line breaking in text and text clipping functionality based on render width.
+    - `autoformLineInsertionA1()`: Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required.
+    - `autoformLineInsertionA2()`: Same as A1 but also assigns to the provided Text Object.
+    - `autoformWordClipA1()`: Tokenizes the input string and outputs the same string but clipped by word to the max width.
+    - `autoformCharClipA1()`: Tokenizes the input string and outputs the same string but clipped by character to the max width.
 
 ### Running Tests
 

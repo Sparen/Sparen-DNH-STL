@@ -113,3 +113,60 @@ function autoformLineInsertionA2(input, parent, maxwidth) {
     ObjText_SetText(parent, output);
     return output;
 }
+
+/* *************************************************************************
+* void autoformWordClipA1(string, int, string, int, int, constant, bool) -- Tokenizes the input string and outputs the same string but clipped by word to the max width.
+    Essentially, this function provides proper word clipping in Danmakufu.
+    This function will freeze Danmakufu if maxwidth is shorter than the longest space delimited token (when rendered).
+    This function (A1 variant) assumes all text to be boldfaced for safety concerns. No side pitch changes are assumed.
+* Param: input (string) - String to format
+* Param: maxwidth (int) - Maximum width of a line, must be larger than the longest space delimited token.
+* Param: font (string) - Font being used; all fonts render at different widths
+* Param: fontsize (int) - Size of the font being used
+* Param: borderwidth (int) - Size of the font border being used
+* Param: bordertype (constant) - Which border type is being used
+* Param: ellipsis (bool) - Whether or not to append ellipsis to the end of the string
+*
+* Usage: ObjText_SetText(objText, autoformWordClipA1("I'll cryo-freeze you together with some English beef! --Cirno", 344, "Helvetica", 14, 1, BORDER_FULL, true));
+************************************************************************* */
+function autoformWordClipA1(input, maxwidth, font, fontsize, borderwidth, bordertype, ellipsis) {
+    let output = "";
+    let tokenized = SplitString(input, " "); // Split the string into an array using the space " " as a delimiter
+    while (length(tokenized) > 0) { // While there remain tokens to be processed
+        // First, add the next token to the new line
+        let backup = output; // Used to restore output in case of overflow
+        output = output ~ tokenized[0]; // Space is used as a buffer
+
+        // Check if the new line is in bounds
+        let tempobj = ObjText_Create();
+        ObjText_SetText(tempobj, output ~ " ");
+        if (ellipsis) { // If using ellipsis, need to test WITH ... added
+            ObjText_SetText(tempobj, output ~ "...");
+        }
+        ObjText_SetFontType(tempobj, font);
+        ObjText_SetFontSize(tempobj, fontsize);
+        ObjText_SetFontBold(tempobj, true);
+        ObjText_SetFontBorderWidth(tempobj, borderwidth);
+        ObjText_SetFontBorderType(tempobj, bordertype);
+
+        let width = ObjText_GetTotalWidth(tempobj);
+
+        // If in bounds, proceed with next token and erase the used token from the token array
+        // Otherwise, the current line is complete. Exit loop.
+        if (width < maxwidth) {
+            tokenized = erase(tokenized, 0);
+            output = output ~ " "; // re-add space
+        } else {
+            output = backup; // Restore backup
+            Obj_Delete(tempobj); // Loop will exit and the deletion will not run due to break.
+            break;
+        }
+
+        Obj_Delete(tempobj);
+    }
+    if (ellipsis) {
+        return output ~ "...";
+    } else {
+        return output;
+    }
+}

@@ -39,9 +39,9 @@ The following miscellaneous libraries are provided in this distribution. These a
 
 * `lib_autoformat.dnh`: Provides automatic line breaking in text based on render width.
 
-### Running Unit Tests
+### Running Tests
 
-Each of the unit tests (*_test.dnh) are Stage scripts that can be run by Danmakufu.
+Each of the unit and integration tests (*_test.dnh) are Stage scripts that can be run by Danmakufu.
 
 If one of the assertions fails, please note so on GitHub Issues. If there are compatability issues between this library and others, please let me know so that the libraries in this distribution can be adjusted.
 

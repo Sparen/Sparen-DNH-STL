@@ -307,7 +307,7 @@ function stl_bit_and(e1, e2) {
 *   -- If e1 or e2 is not parsable to an Integer
 ************************************************************************* */
 function stl_bit_and_s(e1, e2) {
-    return stl_bit_and(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
+    return stl_bit_and(stl_parseInt(e1, "stl_bit_and_s"), stl_parseInt(e2, "stl_bit_and_s"));
 }
 
 /* *************************************************************************
@@ -344,7 +344,7 @@ function stl_bit_or(e1, e2) {
 *   -- If e1 or e2 is not parsable to an Integer
 ************************************************************************* */
 function stl_bit_or_s(e1, e2) {
-    return stl_bit_or(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
+    return stl_bit_or(stl_parseInt(e1, "stl_bit_or_s"), stl_parseInt(e2, "stl_bit_or_s"));
 }
 
 
@@ -382,5 +382,5 @@ function stl_bit_xor(e1, e2) {
 *   -- If e1 or e2 is not parsable to an Integer
 ************************************************************************* */
 function stl_bit_xor_s(e1, e2) {
-    return stl_bit_xor(stl_parseInt(e1, "stl_bit_not_s"), stl_parseInt(e2, "stl_bit_not_s"));
+    return stl_bit_xor(stl_parseInt(e1, "stl_bit_xor_s"), stl_parseInt(e2, "stl_bit_xor_s"));
 }

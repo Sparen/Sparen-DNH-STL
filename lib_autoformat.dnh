@@ -1,7 +1,7 @@
 /* ******************************************************************
 * Sparen's Text AutoFormat Library
 * For use with Touhou Danmakufu ph3
-* (C) Sparen of Iria 2017
+* (C) Sparen of Iria 2017-2018
 *
 * Code in this library is under the MIT License and may be 
 * redistributed/modified without express permission
@@ -14,8 +14,7 @@
 
 /* ******************************************************************
 * Do note that there is significant overhead incurred by running these functions.
-* It is not recommended that you use these functions on short snippets of text
-* or text where you want to have manual line breaks.
+* It is not recommended that you use autoformLineInsertion functions on short snippets of text or text where you want to have manual line breaks.
 * Only use autoformLineInsertion functions when manual line breaks are too labor intensive.
 ****************************************************************** */
 
@@ -24,7 +23,9 @@
 * autoformLineInsertionA1()
 * autoformLineInsertionA2()
 * autoformWordClipA1()
+* autoformWordClipA2()
 * autoformCharClipA1()
+* autoformCharClipA2()
 ************************************************************************* */
 
 /* *************************************************************************

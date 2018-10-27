@@ -41,7 +41,9 @@ The following miscellaneous libraries are provided in this distribution. These a
     - `autoformLineInsertionA1()`: Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required.
     - `autoformLineInsertionA2()`: Same as A1 but also assigns to the provided Text Object.
     - `autoformWordClipA1()`: Tokenizes the input string and outputs the same string but clipped by word to the max width.
+    - `autoformWordClipA2()`: Same as A1 but also assigns to the provided Text Object.
     - `autoformCharClipA1()`: Tokenizes the input string and outputs the same string but clipped by character to the max width.
+    - `autoformCharClipA2()`: Same as A1 but also assigns to the provided Text Object.
 
 ### Running Tests
 

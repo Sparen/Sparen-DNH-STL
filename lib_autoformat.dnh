@@ -220,10 +220,11 @@ function autoformWordClipA2(input, parent, maxwidth, ellipsis) {
     // Only add ellipsis if it is toggled and NECESSARY. Note that the output adds a space at the end by default.
     if (ellipsis && TrimString(output) != TrimString(input)) {
         ObjText_SetText(parent, output ~ "...");
+        return output ~ "...";
     } else {
         ObjText_SetText(parent, output);
+        return output;
     }
-    return output;
 }
 
 /* *************************************************************************
@@ -246,7 +247,7 @@ function autoformCharClipA1(input, maxwidth, font, fontsize, borderwidth, border
     let inputcopy = input;
     while (length(inputcopy) > 0) { // While there remain tokens to be processed
         let backup = output; // Used to restore output in case of overflow
-        output = output ~ ToString(inputcopy[0]); // Space is used as a buffer
+        output = output ~ ToString(inputcopy[0]);
 
         // Check if the string is in bounds
         let tempobj = ObjText_Create();
@@ -266,7 +267,6 @@ function autoformCharClipA1(input, maxwidth, font, fontsize, borderwidth, border
         // Otherwise, complete. Exit loop.
         if (width < maxwidth) {
             inputcopy = erase(inputcopy, 0);
-            output = output; // re-add space
         } else {
             output = backup; // Restore backup
             Obj_Delete(tempobj); // Loop will exit and the deletion will not run due to break.
@@ -279,6 +279,53 @@ function autoformCharClipA1(input, maxwidth, font, fontsize, borderwidth, border
     if (ellipsis && TrimString(output) != TrimString(input)) {
         return output ~ "...";
     } else {
+        return output;
+    }
+}
+
+/* *************************************************************************
+* string autoformCharClipA2(string, obj, int, bool) -- Tokenizes the input string and outputs the same string but clipped by character to the max width.
+    Also assigns the string to the provided object.
+    Essentially, this function provides proper word clipping in Danmakufu.
+    This function will freeze Danmakufu if maxwidth is shorter than the widest possible character (when rendered).
+    The A2 variant performs checks and calculations directly on the provided parent object.
+* Param: input (string) - String to format
+* Param: parent (obj) - Parent object that will display the text. The function uses this parent as a template (for font size, etc.).
+* Param: maxwidth (int) - Maximum width of a line, must be larger than the widest possible character.
+* Param: ellipsis (bool) - Whether or not to append ellipsis to the end of the string
+*
+* Usage: autoformCharClipA2("Aah! The cat turned into a cat! --Reimu", objText, 344, true);
+************************************************************************* */
+function autoformCharClipA2(input, parent, maxwidth, ellipsis) {
+    let output = "";
+    let inputcopy = input;
+    while (length(inputcopy) > 0) { // While there remain tokens to be processed
+        let backup = output; // Used to restore output in case of overflow
+        output = output ~ ToString(inputcopy[0]);
+
+        // Check if the string is in bounds
+        ObjText_SetText(parent, output);
+        if (ellipsis) { // If using ellipsis, need to test WITH ... added
+            ObjText_SetText(parent, output ~ "...");
+        }
+
+        let width = ObjText_GetTotalWidth(parent);
+
+        // If in bounds, proceed with next token and erase the used token from the token array
+        // Otherwise, complete. Exit loop.
+        if (width < maxwidth) {
+            inputcopy = erase(inputcopy, 0);
+        } else {
+            output = backup; // Restore backup
+            break;
+        }
+    }
+    // Only add ellipsis if it is toggled and NECESSARY.
+    if (ellipsis && TrimString(output) != TrimString(input)) {
+        ObjText_SetText(parent, output ~ "...");
+        return output ~ "...";
+    } else {
+        ObjText_SetText(parent, output);
         return output;
     }
 }

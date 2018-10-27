@@ -8,7 +8,7 @@
 @Initialize {
     autoformLineInsertionA2test;
     autoformWordClipA2test;
-    autoformCharClipA1test;
+    autoformCharClipA2test;
 
     let obj1 = ObjText_Create();
     ObjText_SetText(obj1, "autoformLineInsertionA2test");
@@ -31,7 +31,7 @@
     ObjText_SetFontColorBottom(obj2, 0, 128, 255);
 
     let obj3 = ObjText_Create();
-    ObjText_SetText(obj3, "autoformCharClipA1test");
+    ObjText_SetText(obj3, "autoformCharClipA2test");
     ObjText_SetFontType(obj3, "Helvetica");
     ObjText_SetFontSize(obj3, 20);
     ObjText_SetFontBold(obj3, true);
@@ -182,8 +182,8 @@ task autoformWordClipA2test {
     autoformWordClipA2("WIDTH - 184; I'll cryo-freeze you together with some English beef! --Cirno", obj3b, 184, false);
 }
 
-task autoformCharClipA1test {
-    WriteLog("autoformCharClipA1test: Initializing Boxes");
+task autoformCharClipA2test {
+    WriteLog("autoformCharClipA2test: Initializing Boxes");
     let obj1BG = ObjPrim_Create(OBJ_SPRITE_2D);
     ObjSprite2D_SetSourceRect(obj1BG, 0, 0, 1, 1);
     ObjSprite2D_SetDestRect(obj1BG, 8, 324, 368+8, 356);
@@ -199,9 +199,8 @@ task autoformCharClipA1test {
     ObjSprite2D_SetDestRect(obj3BG, 8, 388, 184+8, 420);
     ObjRender_SetColor(obj3BG, 96, 96, 96);
 
-    WriteLog("autoformCharClipA1test: Initializing Text");
+    WriteLog("autoformCharClipA2test: Initializing Text");
     let obj1 = ObjText_Create();
-    ObjText_SetText(obj1, autoformCharClipA1("WIDTH - 368; I'll cryo-freeze you together with some English beef! --Cirno", 368, "Helvetica", 14, 1, BORDER_FULL, true));
     ObjText_SetFontType(obj1, "Helvetica");
     ObjText_SetFontSize(obj1, 14);
     ObjText_SetFontBold(obj1, true);
@@ -210,9 +209,9 @@ task autoformCharClipA1test {
     ObjRender_SetPosition(obj1, 8, 324, 1);
     ObjText_SetFontColorTop(obj1, 255, 0, 0);
     ObjText_SetFontColorBottom(obj1, 0, 0, 255);
+    autoformCharClipA2("WIDTH - 368; I'll cryo-freeze you together with some English beef! --Cirno", obj1, 368, true);
 
     let obj2 = ObjText_Create();
-    ObjText_SetText(obj2, autoformCharClipA1("WIDTH - 320; I'll cryo-freeze you together with some English beef! --Cirno", 320, "Helvetica", 14, 1, BORDER_FULL, true));
     ObjText_SetFontType(obj2, "Helvetica");
     ObjText_SetFontSize(obj2, 14);
     ObjText_SetFontBold(obj2, true);
@@ -221,9 +220,9 @@ task autoformCharClipA1test {
     ObjRender_SetPosition(obj2, 8, 356, 1);
     ObjText_SetFontColorTop(obj2, 255, 0, 0);
     ObjText_SetFontColorBottom(obj2, 0, 0, 255);
+    autoformCharClipA2("WIDTH - 320; I'll cryo-freeze you together with some English beef! --Cirno", obj2, 320, true);
 
     let obj3 = ObjText_Create();
-    ObjText_SetText(obj3, autoformCharClipA1("WIDTH - 184; I'll cryo-freeze you together with some English beef! --Cirno", 184, "Helvetica", 14, 1, BORDER_FULL, true));
     ObjText_SetFontType(obj3, "Helvetica");
     ObjText_SetFontSize(obj3, 14);
     ObjText_SetFontBold(obj3, true);
@@ -232,9 +231,9 @@ task autoformCharClipA1test {
     ObjRender_SetPosition(obj3, 8, 388, 1);
     ObjText_SetFontColorTop(obj3, 255, 0, 0);
     ObjText_SetFontColorBottom(obj3, 0, 0, 255);
+    autoformCharClipA2("WIDTH - 184; I'll cryo-freeze you together with some English beef! --Cirno", obj3, 184, true);
 
     let obj1b = ObjText_Create();
-    ObjText_SetText(obj1b, autoformCharClipA1("WIDTH - 368; I'll cryo-freeze you together with some English beef! --Cirno", 368, "Helvetica", 14, 1, BORDER_FULL, false));
     ObjText_SetFontType(obj1b, "Helvetica");
     ObjText_SetFontSize(obj1b, 14);
     ObjText_SetFontBold(obj1b, true);
@@ -243,9 +242,9 @@ task autoformCharClipA1test {
     ObjRender_SetPosition(obj1b, 8, 340, 1);
     ObjText_SetFontColorTop(obj1b, 255, 0, 0);
     ObjText_SetFontColorBottom(obj1b, 0, 0, 255);
+    autoformCharClipA2("WIDTH - 368; I'll cryo-freeze you together with some English beef! --Cirno", obj1b, 368, false);
 
     let obj2b = ObjText_Create();
-    ObjText_SetText(obj2b, autoformCharClipA1("WIDTH - 320; I'll cryo-freeze you together with some English beef! --Cirno", 320, "Helvetica", 14, 1, BORDER_FULL, false));
     ObjText_SetFontType(obj2b, "Helvetica");
     ObjText_SetFontSize(obj2b, 14);
     ObjText_SetFontBold(obj2b, true);
@@ -254,9 +253,9 @@ task autoformCharClipA1test {
     ObjRender_SetPosition(obj2b, 8, 372, 1);
     ObjText_SetFontColorTop(obj2b, 255, 0, 0);
     ObjText_SetFontColorBottom(obj2b, 0, 0, 255);
+    autoformCharClipA2("WIDTH - 320; I'll cryo-freeze you together with some English beef! --Cirno", obj2b, 320, false);
 
     let obj3b = ObjText_Create();
-    ObjText_SetText(obj3b, autoformCharClipA1("WIDTH - 184; I'll cryo-freeze you together with some English beef! --Cirno", 184, "Helvetica", 14, 1, BORDER_FULL, false));
     ObjText_SetFontType(obj3b, "Helvetica");
     ObjText_SetFontSize(obj3b, 14);
     ObjText_SetFontBold(obj3b, true);
@@ -265,4 +264,5 @@ task autoformCharClipA1test {
     ObjRender_SetPosition(obj3b, 8, 404, 1);
     ObjText_SetFontColorTop(obj3b, 255, 0, 0);
     ObjText_SetFontColorBottom(obj3b, 0, 0, 255);
+    autoformCharClipA2("WIDTH - 184; I'll cryo-freeze you together with some English beef! --Cirno", obj3b, 184, false);
 }

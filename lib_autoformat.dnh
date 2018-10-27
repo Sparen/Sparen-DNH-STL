@@ -171,7 +171,8 @@ function autoformWordClipA1(input, maxwidth, font, fontsize, borderwidth, border
 
         Obj_Delete(tempobj);
     }
-    if (ellipsis) {
+    // Only add ellipsis if it is toggled and NECESSARY. Note that the output adds a space at the end by default.
+    if (ellipsis && TrimString(output) != TrimString(input)) {
         return output ~ "...";
     } else {
         return output;
@@ -227,7 +228,8 @@ function autoformCharClipA1(input, maxwidth, font, fontsize, borderwidth, border
 
         Obj_Delete(tempobj);
     }
-    if (ellipsis) {
+    // Only add ellipsis if it is toggled and NECESSARY.
+    if (ellipsis && TrimString(output) != TrimString(input)) {
         return output ~ "...";
     } else {
         return output;

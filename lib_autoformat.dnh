@@ -28,7 +28,7 @@
 ************************************************************************* */
 
 /* *************************************************************************
-* void autoformLineInsertionA1(string, int, string, int, int, constant) -- Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required.
+* string autoformLineInsertionA1(string, int, string, int, int, constant) -- Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required.
     Essentially, this function provides proper word wrapping in Danmakufu.
     This function will freeze Danmakufu if maxwidth is shorter than the longest space delimited token (when rendered).
     This function (A1 variant) assumes all text to be boldfaced for safety concerns. No side pitch changes are assumed.
@@ -80,7 +80,7 @@ function autoformLineInsertionA1(input, maxwidth, font, fontsize, borderwidth, b
 }
 
 /* *************************************************************************
-* void autoformLineInsertionA2(string, obj, int) -- Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required. 
+* string autoformLineInsertionA2(string, obj, int) -- Tokenizes the input string and outputs the same string but with spaces replaced by [r] newlines when required. 
     Also assigns the string to the provided object.
     Essentially, this function provides proper word wrapping in Danmakufu.
     This function will freeze Danmakufu if maxwidth is shorter than the longest space delimited token (when rendered).
@@ -123,7 +123,7 @@ function autoformLineInsertionA2(input, parent, maxwidth) {
 }
 
 /* *************************************************************************
-* void autoformWordClipA1(string, int, string, int, int, constant, bool) -- Tokenizes the input string and outputs the same string but clipped by word to the max width.
+* string autoformWordClipA1(string, int, string, int, int, constant, bool) -- Tokenizes the input string and outputs the same string but clipped by word to the max width.
     Essentially, this function provides proper word clipping in Danmakufu.
     This function will freeze Danmakufu if maxwidth is shorter than the longest space delimited token (when rendered).
     This function (A1 variant) assumes all text to be boldfaced for safety concerns. No side pitch changes are assumed.
@@ -180,7 +180,54 @@ function autoformWordClipA1(input, maxwidth, font, fontsize, borderwidth, border
 }
 
 /* *************************************************************************
-* void autoformCharClipA1(string, int, string, int, int, constant, bool) -- Tokenizes the input string and outputs the same string but clipped by character to the max width.
+* string autoformWordClipA2(string, obj, int, bool) -- Tokenizes the input string and outputs the same string but clipped by word to the max width.
+    Also assigns the string to the provided object.
+    Essentially, this function provides proper word clipping in Danmakufu.
+    This function will freeze Danmakufu if maxwidth is shorter than the longest space delimited token (when rendered).
+    The A2 variant performs checks and calculations directly on the provided parent object.
+* Param: input (string) - String to format
+* Param: parent (obj) - Parent object that will display the text. The function uses this parent as a template (for font size, etc.).
+* Param: maxwidth (int) - Maximum width of a line, must be larger than the longest space delimited token.
+* Param: ellipsis (bool) - Whether or not to append ellipsis to the end of the string
+*
+* Usage: autoformWordClipA2("Aah! The cat turned into a cat! --Reimu", objText, 344, true);
+************************************************************************* */
+function autoformWordClipA2(input, parent, maxwidth, ellipsis) {
+    let output = "";
+    let tokenized = SplitString(input, " "); // Split the string into an array using the space " " as a delimiter
+    while (length(tokenized) > 0) { // While there remain tokens to be processed
+        // First, add the next token to the output
+        let backup = output; // Used to restore output in case of overflow
+        output = output ~ tokenized[0] ~ " "; // Space is used as a buffer
+
+        // Check if the string is in bounds
+        ObjText_SetText(parent, output);
+        if (ellipsis) { // If using ellipsis, need to test WITH ... added
+            ObjText_SetText(parent, output ~ "...");
+        }
+
+        let width = ObjText_GetTotalWidth(parent);
+
+        // If in bounds, proceed with next token and erase the used token from the token array
+        // Otherwise, complete. Exit loop.
+        if (width < maxwidth) {
+            tokenized = erase(tokenized, 0);
+        } else {
+            output = backup; // Restore backup
+            break;
+        }
+    }
+    // Only add ellipsis if it is toggled and NECESSARY. Note that the output adds a space at the end by default.
+    if (ellipsis && TrimString(output) != TrimString(input)) {
+        ObjText_SetText(parent, output ~ "...");
+    } else {
+        ObjText_SetText(parent, output);
+    }
+    return output;
+}
+
+/* *************************************************************************
+* string autoformCharClipA1(string, int, string, int, int, constant, bool) -- Tokenizes the input string and outputs the same string but clipped by character to the max width.
     Essentially, this function provides proper word clipping in Danmakufu.
     This function will freeze Danmakufu if maxwidth is shorter than the widest possible character (when rendered).
     This function (A1 variant) assumes all text to be boldfaced for safety concerns. No side pitch changes are assumed.

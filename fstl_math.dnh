@@ -182,7 +182,7 @@ function fstl_bit_xor(e1, e2) {
 }
 
 /* *************************************************************************
-* fstl_bit_xor() -- Check whether any of the values in the array is 0
+* fstl_any_zero() -- Check whether any of the values in the array is 0
 * Param: arr (array of ints) - Values to check
 * Return: true if any of the array values is 0, false if none of them is 0
 ************************************************************************* */
@@ -197,7 +197,7 @@ function fstl_any_zero(arr) {
 }
 
 /* *************************************************************************
-* fstl_bit_xor() -- Check whether all of the values in the array is 0
+* fstl_all_zero() -- Check whether all of the values in the array is 0
 * Param: arr (array of ints) - Values to check
 * Return: true if all of the array values is 0, false if any of them is not 0
 ************************************************************************* */

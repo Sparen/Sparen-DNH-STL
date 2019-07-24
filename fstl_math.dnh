@@ -1,0 +1,212 @@
+/* ******************************************************************
+* Falsepattern's FastMath Library
+* For use with Touhou Danmakufu ph3
+* (C) FalsePattern 2019
+*
+* Code in this library is under the MIT License and may be 
+* redistributed/modified without express permission
+****************************************************************** */
+
+/* ******************************************************************
+* This library contains e1 variety of mathematical operators and functions
+* For speed, this library only contains 'unsafe' versions of operations
+* Functions in this library work on Integers (e.g. 5)
+* Compared to fstl_math, this one does not operate on binary strings,
+* but rather direcly with integers. Negative and decimal numbers
+* cause undefined behaviour. It is up to the user to pass in valid values
+* 
+* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* !DOES NOT WORK WITH NEGATIVE VALUES!
+* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* Notes:
+* there isn't any integer validation for maximum speed
+* the f in fstl stands for Fast
+****************************************************************** */
+
+/* ******************************************************************
+* Functions:
+* fstl_bit_not()
+* fstl_lshift()
+* fstl_rshift()
+* fstl_bit_and()
+* fstl_bit_and_arr()
+* fstl_bit_or()
+* fstl_bit_or_arr()
+* fstl_bit_xor()
+* fstl_any_zero()
+* fstl_all_zero()
+************************************************************************* */
+
+
+/* *************************************************************************
+* fstl_bit_not() -- Return the bitwise NOT of the input as an Integer.
+* Param: e (int) - Value to obtain bitwise NOT of
+* Return: Bitwise NOT of e
+************************************************************************* */
+function fstl_bit_not(e) {
+  return -e - 1;
+}
+
+/* *************************************************************************
+* fstl_lshift() -- Return the input left shifted n times.
+* Param: e (int) - Value to left shift
+* Param: n (int) - Number of times to left shift
+* Return: e << n
+************************************************************************* */
+function fstl_lshift(e, n) {
+  ascent(i in 0 .. n) {
+    e *= 2;
+  }
+  return e;
+}
+
+/* *************************************************************************
+* fstl_rshift() -- Return the input right shifted n times.
+* Param: e (int) - Value to right shift
+* Param: n (int) - Number of times to right shift
+* Return: e >> n
+************************************************************************* */
+function fstl_rshift(e, n) {
+  ascent(i in 0 .. n) {
+    e /= 2;
+  }
+  return truncate(e);
+}
+
+/* *************************************************************************
+* fstl_bit_and() -- Return the bitwise AND of the inputs as an Integer.
+* Param: e1 (int) - Value to obtain bitwise AND of
+* Param: e2 (int) - Value to obtain bitwise AND of
+* Return: Bitwise AND of e1 and e2
+************************************************************************* */
+function fstl_bit_and(e1, e2) {
+  let byteVal = 1;
+  let output = 0;
+  while (e1 > 0 || e2 > 0) {
+    if (e1 % 2 > 0 && e2 % 2 > 0) {
+      output += byteVal;
+    }
+    e1 = floor(e1 / 2);
+    e2 = floor(e2 / 2);
+    byteVal *= 2;
+  }
+  return output;
+}
+
+
+/* *************************************************************************
+* fstl_bit_and_arr() -- Return the bitwise AND of the inputs as an Integer.
+* Param: arr (array of ints) - Values to obtain bitwise AND of
+* Return: Bitwise AND of arr[0] ... arr[n] (n is length(arr) - 1)
+************************************************************************* */
+function fstl_bit_and_arr(arr) {
+  let byteVal = 1;
+  let output = 0;
+  let len = length(arr);
+  while (!fstl_all_zero(arr)) {
+    let bit = 1;
+    ascent(i in 0..len) {
+      if (arr[i] % 2 == 0) {
+        bit = 0;
+      }
+      arr[i] = floor(arr[i] / 2);
+    }
+    output += bit * byteVal;
+    byteVal *= 2;
+  }
+  return output;
+}
+
+
+/* *************************************************************************
+* fstl_bit_or() -- Return the bitwise OR of the inputs as an Integer.
+* Param: e1 (int) - Value to obtain bitwise OR of
+* Param: e2 (int) - Value to obtain bitwise OR of
+* Return: Bitwise OR of e1 and e2
+************************************************************************* */
+function fstl_bit_or(e1, e2) {
+  let byteVal = 1;
+  let output = 0;
+  while (e1 > 0 || e2 > 0) {
+    if (e1 % 2 > 0 || e2 % 2 > 0) {
+      output += byteVal;
+    }
+    e1 = floor(e1 / 2);
+    e2 = floor(e2 / 2);
+    byteVal *= 2;
+  }
+  return output;
+}
+
+/* *************************************************************************
+* fstl_bit_or_arr() -- Return the bitwise OR of the inputs as an Integer.
+* Param: arr (array of ints) - Values to obtain bitwise OR of
+* Return: Bitwise OR of arr[0] ... arr[n] (n is length(arr) - 1)
+************************************************************************* */
+function fstl_bit_or_arr(arr) {
+  let byteVal = 1;
+  let output = 0;
+  let len = length(arr);
+  while (!fstl_all_zero(arr)) {
+    let bit = 0;
+    ascent(i in 0..len) {
+      if (arr[i] % 2 > 0) {
+        bit = 1;
+      }
+      arr[i] = floor(arr[i] / 2);
+    }
+    output += bit * byteVal;
+    byteVal *= 2;
+  }
+  return output;
+}
+
+/* *************************************************************************
+* fstl_bit_xor() -- Return the bitwise XOR of the inputs as an Integer.
+* Param: e1 (int) - Value to obtain bitwise XOR of
+* Param: e2 (int) - Value to obtain bitwise XOR of
+* Return: Bitwise XOR of e1 and e2
+************************************************************************* */
+function fstl_bit_xor(e1, e2) {
+  let byteVal = 1;
+  let output = 0;
+  while (e1 > 0 || e2 > 0) {
+    if ((e1 % 2 > 0) != (e2 % 2 > 0)) {
+      output += byteVal;
+    }
+    e1 = floor(e1 / 2);
+    e2 = floor(e2 / 2);
+    byteVal *= 2;
+  }
+  return output;
+}
+
+/* *************************************************************************
+* fstl_bit_xor() -- Check whether any of the values in the array is 0
+* Param: arr (array of ints) - Values to check
+* Return: true if any of the array values is 0, false if none of them is 0
+************************************************************************* */
+function fstl_any_zero(arr) {
+  let len = length(arr);
+  ascent(i in 0..len) {
+    if (arr[i] == 0) {
+        return true;
+    }
+  }
+  return false;
+}
+
+/* *************************************************************************
+* fstl_bit_xor() -- Check whether all of the values in the array is 0
+* Param: arr (array of ints) - Values to check
+* Return: true if all of the array values is 0, false if any of them is not 0
+************************************************************************* */
+function fstl_all_zero(arr) {
+  let len = length(arr);
+  ascent(i in 0..len) {
+    if (arr[i] != 0) {
+        return false;
+    }
+  }
+  return true;
+}

@@ -44,7 +44,7 @@
 * Return: Bitwise NOT of e
 ************************************************************************* */
 function fstl_bit_not(e) {
-  return -e - 1;
+    return -e - 1;
 }
 
 /* *************************************************************************
@@ -54,10 +54,10 @@ function fstl_bit_not(e) {
 * Return: e << n
 ************************************************************************* */
 function fstl_lshift(e, n) {
-  ascent(i in 0 .. n) {
-    e *= 2;
-  }
-  return e;
+    ascent(i in 0 .. n) {
+        e *= 2;
+    }
+    return e;
 }
 
 /* *************************************************************************
@@ -67,10 +67,10 @@ function fstl_lshift(e, n) {
 * Return: e >> n
 ************************************************************************* */
 function fstl_rshift(e, n) {
-  ascent(i in 0 .. n) {
-    e /= 2;
-  }
-  return truncate(e);
+    ascent(i in 0 .. n) {
+        e /= 2;
+    }
+    return truncate(e);
 }
 
 /* *************************************************************************
@@ -80,17 +80,17 @@ function fstl_rshift(e, n) {
 * Return: Bitwise AND of e1 and e2
 ************************************************************************* */
 function fstl_bit_and(e1, e2) {
-  let byteVal = 1;
-  let output = 0;
-  while (e1 > 0 || e2 > 0) {
-    if (e1 % 2 > 0 && e2 % 2 > 0) {
-      output += byteVal;
+    let byteVal = 1;
+    let output = 0;
+    while (e1 > 0 || e2 > 0) {
+        if (e1 % 2 > 0 && e2 % 2 > 0) {
+            output += byteVal;
+        }
+        e1 = floor(e1 / 2);
+        e2 = floor(e2 / 2);
+        byteVal *= 2;
     }
-    e1 = floor(e1 / 2);
-    e2 = floor(e2 / 2);
-    byteVal *= 2;
-  }
-  return output;
+    return output;
 }
 
 
@@ -100,21 +100,21 @@ function fstl_bit_and(e1, e2) {
 * Return: Bitwise AND of arr[0] ... arr[n] (n is length(arr) - 1)
 ************************************************************************* */
 function fstl_bit_and_arr(arr) {
-  let byteVal = 1;
-  let output = 0;
-  let len = length(arr);
-  while (!fstl_all_zero(arr)) {
-    let bit = 1;
-    ascent(i in 0..len) {
-      if (arr[i] % 2 == 0) {
-        bit = 0;
-      }
-      arr[i] = floor(arr[i] / 2);
+    let byteVal = 1;
+    let output = 0;
+    let len = length(arr);
+    while (!fstl_all_zero(arr)) {
+        let bit = 1;
+        ascent(i in 0..len) {
+            if (arr[i] % 2 == 0) {
+                bit = 0;
+            }
+            arr[i] = floor(arr[i] / 2);
+        }
+        output += bit * byteVal;
+        byteVal *= 2;
     }
-    output += bit * byteVal;
-    byteVal *= 2;
-  }
-  return output;
+    return output;
 }
 
 
@@ -125,17 +125,17 @@ function fstl_bit_and_arr(arr) {
 * Return: Bitwise OR of e1 and e2
 ************************************************************************* */
 function fstl_bit_or(e1, e2) {
-  let byteVal = 1;
-  let output = 0;
-  while (e1 > 0 || e2 > 0) {
-    if (e1 % 2 > 0 || e2 % 2 > 0) {
-      output += byteVal;
+    let byteVal = 1;
+    let output = 0;
+    while (e1 > 0 || e2 > 0) {
+        if (e1 % 2 > 0 || e2 % 2 > 0) {
+            output += byteVal;
+        }
+        e1 = floor(e1 / 2);
+        e2 = floor(e2 / 2);
+        byteVal *= 2;
     }
-    e1 = floor(e1 / 2);
-    e2 = floor(e2 / 2);
-    byteVal *= 2;
-  }
-  return output;
+    return output;
 }
 
 /* *************************************************************************
@@ -144,21 +144,21 @@ function fstl_bit_or(e1, e2) {
 * Return: Bitwise OR of arr[0] ... arr[n] (n is length(arr) - 1)
 ************************************************************************* */
 function fstl_bit_or_arr(arr) {
-  let byteVal = 1;
-  let output = 0;
-  let len = length(arr);
-  while (!fstl_all_zero(arr)) {
-    let bit = 0;
-    ascent(i in 0..len) {
-      if (arr[i] % 2 > 0) {
-        bit = 1;
-      }
-      arr[i] = floor(arr[i] / 2);
+    let byteVal = 1;
+    let output = 0;
+    let len = length(arr);
+    while (!fstl_all_zero(arr)) {
+        let bit = 0;
+        ascent(i in 0..len) {
+            if (arr[i] % 2 > 0) {
+                bit = 1;
+            }
+            arr[i] = floor(arr[i] / 2);
+        }
+        output += bit * byteVal;
+        byteVal *= 2;
     }
-    output += bit * byteVal;
-    byteVal *= 2;
-  }
-  return output;
+    return output;
 }
 
 /* *************************************************************************
@@ -168,17 +168,17 @@ function fstl_bit_or_arr(arr) {
 * Return: Bitwise XOR of e1 and e2
 ************************************************************************* */
 function fstl_bit_xor(e1, e2) {
-  let byteVal = 1;
-  let output = 0;
-  while (e1 > 0 || e2 > 0) {
-    if ((e1 % 2 > 0) != (e2 % 2 > 0)) {
-      output += byteVal;
+    let byteVal = 1;
+    let output = 0;
+    while (e1 > 0 || e2 > 0) {
+        if ((e1 % 2 > 0) != (e2 % 2 > 0)) {
+            output += byteVal;
+        }
+        e1 = floor(e1 / 2);
+        e2 = floor(e2 / 2);
+        byteVal *= 2;
     }
-    e1 = floor(e1 / 2);
-    e2 = floor(e2 / 2);
-    byteVal *= 2;
-  }
-  return output;
+    return output;
 }
 
 /* *************************************************************************
@@ -187,13 +187,13 @@ function fstl_bit_xor(e1, e2) {
 * Return: true if any of the array values is 0, false if none of them is 0
 ************************************************************************* */
 function fstl_any_zero(arr) {
-  let len = length(arr);
-  ascent(i in 0..len) {
-    if (arr[i] == 0) {
-        return true;
+    let len = length(arr);
+    ascent(i in 0..len) {
+        if (arr[i] == 0) {
+            return true;
+        }
     }
-  }
-  return false;
+    return false;
 }
 
 /* *************************************************************************
@@ -202,11 +202,11 @@ function fstl_any_zero(arr) {
 * Return: true if all of the array values is 0, false if any of them is not 0
 ************************************************************************* */
 function fstl_all_zero(arr) {
-  let len = length(arr);
-  ascent(i in 0..len) {
-    if (arr[i] != 0) {
-        return false;
+    let len = length(arr);
+    ascent(i in 0..len) {
+        if (arr[i] != 0) {
+                return false;
+        }
     }
-  }
-  return true;
+    return true;
 }

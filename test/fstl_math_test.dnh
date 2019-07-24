@@ -7,14 +7,14 @@
 #include "./../fstl_math.dnh"
 
 @Initialize {
-  BitNotTest;
-  LShiftTest;
-  RShiftTest;
-  BitAndTest;
-  BitAndArrTest;
-  BitOrTest;
-  BitOrArrTest;
-  BitXorTest;
+    BitNotTest;
+    LShiftTest;
+    RShiftTest;
+    BitAndTest;
+    BitAndArrTest;
+    BitOrTest;
+    BitOrArrTest;
+    BitXorTest;
 }
 
 @MainLoop {
@@ -22,69 +22,69 @@
 }
 
 task BitNotTest {
-  ascent (i in -128 .. 128) {
-    DoTestA(stl_bit_not(i), fstl_bit_not(i), i, "fstl_bit_not");
-  }
+    ascent (i in -128 .. 128) {
+        DoTestA(stl_bit_not(i), fstl_bit_not(i), i, "fstl_bit_not");
+    }
 }
 
 task LShiftTest {
-  ascent(i in 0 .. 32) {
-    ascent(j in -1024 .. 1024) {
-      DoTestB(stl_lshift(j, i), fstl_lshift(j, i), j, i, "fstl_lshift");
+    ascent(i in 0 .. 32) {
+        ascent(j in -1024 .. 1024) {
+            DoTestB(stl_lshift(j, i), fstl_lshift(j, i), j, i, "fstl_lshift");
+        }
     }
-  }
 }
 
 task RShiftTest {
-  ascent(i in 0 .. 32) {
-    ascent(j in -1024 .. 1024) {
-      DoTestB(stl_rshift(j, i), fstl_rshift(j, i), j, i, "fstl_rshift");
+    ascent(i in 0 .. 32) {
+        ascent(j in -1024 .. 1024) {
+            DoTestB(stl_rshift(j, i), fstl_rshift(j, i), j, i, "fstl_rshift");
+        }
     }
-  }
 }
 
 task BitAndTest {
-  ascent(i in 0 .. 256) {
-    ascent(j in 0 .. 256) {
-      DoTestB(stl_bit_and(i, j), fstl_bit_and(i, j), i, j, "fstl_bit_and");
+    ascent(i in 0 .. 256) {
+        ascent(j in 0 .. 256) {
+            DoTestB(stl_bit_and(i, j), fstl_bit_and(i, j), i, j, "fstl_bit_and");
+        }
     }
-  }
 }
 
 task BitAndArrTest {
-  ascent(i in 0 .. 32) {
-    ascent(j in 0 .. 32) {
-      ascent(k in 0 .. 32) {
-      DoTestArr(fstl_bit_and(fstl_bit_and(i, j), k), fstl_bit_and_arr([i, j, k]), i, j, k, "fstl_bit_and_arr");
-      }
+    ascent(i in 0 .. 32) {
+        ascent(j in 0 .. 32) {
+            ascent(k in 0 .. 32) {
+                DoTestArr(fstl_bit_and(fstl_bit_and(i, j), k), fstl_bit_and_arr([i, j, k]), i, j, k, "fstl_bit_and_arr");
+            }
+        }
     }
-  }
 }
 
 task BitOrTest {
-  ascent(i in 0 .. 256) {
-    ascent(j in 0 .. 256) {
-      DoTestB(stl_bit_or(i, j), fstl_bit_or(i, j), i, j, "fstl_bit_or");
+    ascent(i in 0 .. 256) {
+        ascent(j in 0 .. 256) {
+            DoTestB(stl_bit_or(i, j), fstl_bit_or(i, j), i, j, "fstl_bit_or");
+        }
     }
-  }
 }
 
 task BitOrArrTest {
-  ascent(i in 0 .. 32) {
-    ascent(j in 0 .. 32) {
-      ascent(k in 0 .. 32) {
-      DoTestArr(fstl_bit_or(fstl_bit_or(i, j), k), fstl_bit_or_arr([i, j, k]), i, j, k, "fstl_bit_or_arr");
-      }
+    ascent(i in 0 .. 32) {
+        ascent(j in 0 .. 32) {
+            ascent(k in 0 .. 32) {
+                DoTestArr(fstl_bit_or(fstl_bit_or(i, j), k), fstl_bit_or_arr([i, j, k]), i, j, k, "fstl_bit_or_arr");
+            }
+        }
     }
-  }
 }
 
 task BitXorTest {
-  ascent(i in 0 .. 256) {
-    ascent(j in 0 .. 256) {
-      DoTestB(stl_bit_xor(i, j), fstl_bit_xor(i, j), i, j, "fstl_bit_xor");
+    ascent(i in 0 .. 256) {
+        ascent(j in 0 .. 256) {
+            DoTestB(stl_bit_xor(i, j), fstl_bit_xor(i, j), i, j, "fstl_bit_xor");
+        }
     }
-  }
 }
 
 /*
@@ -93,17 +93,19 @@ task BitXorTest {
 * only builds the string when an inequality occurs.
 */
 function DoTestA(stlValue, fstlValue, inputValueA, functionName) {
-  if (stlValue == fstlValue) {return;} else {
-    RaiseError(functionName ~ " error! STL result: " ~ itoa(stlValue) ~ ", FSTL result: " ~ itoa(fstlValue) ~ ", at value " ~ itoa(inputValueA));
-  }
+    if (stlValue == fstlValue) {return;} else {
+        RaiseError(functionName ~ " error! STL result: " ~ itoa(stlValue) ~ ", FSTL result: " ~ itoa(fstlValue) ~ ", at value " ~ itoa(inputValueA));
+    }
 }
+
 function DoTestB(stlValue, fstlValue, inputValueA, inputValueB, functionName) {
-  if (stlValue == fstlValue) {return;} else {
-    RaiseError(functionName ~ " error! STL result: " ~ itoa(stlValue) ~ ", FSTL result: " ~ itoa(fstlValue) ~ ", at values A:" ~ itoa(inputValueA) ~ ", B:" ~ itoa(inputValueB));
-  }
+    if (stlValue == fstlValue) {return;} else {
+        RaiseError(functionName ~ " error! STL result: " ~ itoa(stlValue) ~ ", FSTL result: " ~ itoa(fstlValue) ~ ", at values A:" ~ itoa(inputValueA) ~ ", B:" ~ itoa(inputValueB));
+    }
 }
+
 function DoTestArr(stlValue, fstlValue, inputValueA, inputValueB, inputValueC, functionName) {
-  if (stlValue == fstlValue) {return;} else {
-    RaiseError(functionName ~ " error! FSTL result: " ~ itoa(stlValue) ~ ", FSTL_ARR result: " ~ itoa(fstlValue) ~ ", at values A:" ~ itoa(inputValueA) ~ ", B:" ~ itoa(inputValueB) ~ ", C:" ~ itoa(inputValueC));
-  }
+    if (stlValue == fstlValue) {return;} else {
+        RaiseError(functionName ~ " error! FSTL result: " ~ itoa(stlValue) ~ ", FSTL_ARR result: " ~ itoa(fstlValue) ~ ", at values A:" ~ itoa(inputValueA) ~ ", B:" ~ itoa(inputValueB) ~ ", C:" ~ itoa(inputValueC));
+    }
 }

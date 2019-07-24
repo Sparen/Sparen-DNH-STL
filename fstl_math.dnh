@@ -82,8 +82,8 @@ function fstl_rshift(e, n) {
 function fstl_bit_and(e1, e2) {
     let byteVal = 1;
     let output = 0;
-    while (e1 > 0 || e2 > 0) {
-        if (e1 % 2 > 0 && e2 % 2 > 0) {
+    while (e1 + e2 > 0) {
+        if ((e1 % 2) + (e2 % 2) == 2) {
             output += byteVal;
         }
         e1 = floor(e1 / 2);
@@ -127,8 +127,8 @@ function fstl_bit_and_arr(arr) {
 function fstl_bit_or(e1, e2) {
     let byteVal = 1;
     let output = 0;
-    while (e1 > 0 || e2 > 0) {
-        if (e1 % 2 > 0 || e2 % 2 > 0) {
+    while (e1 + e2 > 0) {
+        if ((e1 % 2) + (e2 % 2) > 0) {
             output += byteVal;
         }
         e1 = floor(e1 / 2);
@@ -170,8 +170,8 @@ function fstl_bit_or_arr(arr) {
 function fstl_bit_xor(e1, e2) {
     let byteVal = 1;
     let output = 0;
-    while (e1 > 0 || e2 > 0) {
-        if ((e1 % 2 > 0) != (e2 % 2 > 0)) {
+    while (e1 + e2 > 0) {
+        if ((e1 % 2) != (e2 % 2)) {
             output += byteVal;
         }
         e1 = floor(e1 / 2);

@@ -1,0 +1,111 @@
+#TouhouDanmakufu[Stage]
+#Title["FSTL Math Test"]
+#Text["Unit Testing for fstl_math.dnh[r]Test stl_math.dnh first![r]This test compares the FSTL[r] implementation to the[r] STL implementation!"]
+#ScriptVersion[3]
+
+#include "./../stl_math.dnh"
+#include "./../fstl_math.dnh"
+
+@Initialize {
+    BitNotTest;
+    LShiftTest;
+    RShiftTest;
+    BitAndTest;
+    BitAndArrTest;
+    BitOrTest;
+    BitOrArrTest;
+    BitXorTest;
+}
+
+@MainLoop {
+    yield;
+}
+
+task BitNotTest {
+    ascent (i in -128 .. 128) {
+        DoTestA(stl_bit_not(i), fstl_bit_not(i), i, "fstl_bit_not");
+    }
+}
+
+task LShiftTest {
+    ascent(i in 0 .. 32) {
+        ascent(j in -1024 .. 1024) {
+            DoTestB(stl_lshift(j, i), fstl_lshift(j, i), j, i, "fstl_lshift");
+        }
+    }
+}
+
+task RShiftTest {
+    ascent(i in 0 .. 32) {
+        ascent(j in -1024 .. 1024) {
+            DoTestB(stl_rshift(j, i), fstl_rshift(j, i), j, i, "fstl_rshift");
+        }
+    }
+}
+
+task BitAndTest {
+    ascent(i in 0 .. 256) {
+        ascent(j in 0 .. 256) {
+            DoTestB(stl_bit_and(i, j), fstl_bit_and(i, j), i, j, "fstl_bit_and");
+        }
+    }
+}
+
+task BitAndArrTest {
+    ascent(i in 0 .. 32) {
+        ascent(j in 0 .. 32) {
+            ascent(k in 0 .. 32) {
+                DoTestArr(fstl_bit_and(fstl_bit_and(i, j), k), fstl_bit_and_arr([i, j, k]), i, j, k, "fstl_bit_and_arr");
+            }
+        }
+    }
+}
+
+task BitOrTest {
+    ascent(i in 0 .. 256) {
+        ascent(j in 0 .. 256) {
+            DoTestB(stl_bit_or(i, j), fstl_bit_or(i, j), i, j, "fstl_bit_or");
+        }
+    }
+}
+
+task BitOrArrTest {
+    ascent(i in 0 .. 32) {
+        ascent(j in 0 .. 32) {
+            ascent(k in 0 .. 32) {
+                DoTestArr(fstl_bit_or(fstl_bit_or(i, j), k), fstl_bit_or_arr([i, j, k]), i, j, k, "fstl_bit_or_arr");
+            }
+        }
+    }
+}
+
+task BitXorTest {
+    ascent(i in 0 .. 256) {
+        ascent(j in 0 .. 256) {
+            DoTestB(stl_bit_xor(i, j), fstl_bit_xor(i, j), i, j, "fstl_bit_xor");
+        }
+    }
+}
+
+/*
+* We use if/else instead of assertions, because assert
+* always builds the error string, but the if/else RaiseError
+* only builds the string when an inequality occurs.
+*/
+function DoTestA(stlValue, fstlValue, inputValueA, functionName) {
+    if (stlValue == fstlValue) {return;} else {
+        RaiseError(functionName ~ " error! STL result: " ~ itoa(stlValue) ~ ", FSTL result: " ~ itoa(fstlValue) ~ ", at value " ~ itoa(inputValueA));
+    }
+}
+
+function DoTestB(stlValue, fstlValue, inputValueA, inputValueB, functionName) {
+    if (stlValue == fstlValue) {return;} else {
+        RaiseError(functionName ~ " error! STL result: " ~ itoa(stlValue) ~ ", FSTL result: " ~ itoa(fstlValue) ~ ", at values A:" ~ itoa(inputValueA) ~ ", B:" ~ itoa(inputValueB));
+    }
+}
+
+function DoTestArr(stlValue, fstlValue, inputValueA, inputValueB, inputValueC, functionName) {
+    if (stlValue == fstlValue) {return;} else {
+        RaiseError(functionName ~ " error! FSTL result: " ~ itoa(stlValue) ~ ", FSTL_ARR result: " ~ itoa(fstlValue) ~ ", at values A:" ~ itoa(inputValueA) ~ ", B:" ~ itoa(inputValueB) ~ ", C:" ~ itoa(inputValueC));
+    }
+}

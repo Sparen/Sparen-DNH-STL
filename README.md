@@ -30,6 +30,18 @@ The following general libraries are provided in this distribution. These are lib
     - `stl_bit_or()`: Return the bitwise OR of the inputs as an Integer.
     - `stl_bit_xor()`: Return the bitwise XOR of the inputs as an Integer.
 
+* `fstl_math.dnh` [Dependencies: None]
+    - `fstl_bit_not()`: Return the bitwise NOT of the input as an Integer.
+    - `fstl_lshift()`: Return the input left shifted n times.
+    - `fstl_rshift()`: Return the input right shifted n times.
+    - `fstl_bit_and()`: Return the bitwise AND of the inputs as an Integer.
+    - `fstl_bit_and_arr()`: Return the bitwise AND of the values of the input array as an Integer.
+    - `fstl_bit_or()`: Return the bitwise OR of the inputs as an Integer.
+    - `fstl_bit_or_arr()`: Return the bitwise OR of the values of the input array as an Integer.
+    - `fstl_bit_xor()`: Return the bitwise XOR of the inputs as an Integer.
+    - `fstl_any_zero()`: Returns true if any of the values in the input array is 0.
+    - `fstl_all_zero()`: Returns true if all of the values in the input array are 0.
+
 The following data structure libraries are provided in this distribution. These are data structure libraries custom-made for the STL distribution.
 
 * `stl_queue.dnh`

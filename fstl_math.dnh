@@ -8,10 +8,10 @@
 ****************************************************************** */
 
 /* ******************************************************************
-* This library contains e1 variety of mathematical operators and functions
+* This library contains bitwise operators and functions
 * For speed, this library only contains 'unsafe' versions of operations
 * Functions in this library work on Integers (e.g. 5)
-* Compared to fstl_math, this one does not operate on binary strings,
+* Compared to stl_math, this one does not operate on binary strings,
 * but rather direcly with integers. Negative and decimal numbers
 * cause undefined behaviour. It is up to the user to pass in valid values
 * 

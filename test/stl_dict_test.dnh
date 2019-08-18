@@ -1,0 +1,42 @@
+#TouhouDanmakufu[Stage]
+#Title["Dict Test"]
+#Text["Unit Testing for stl_dict.dnh"]
+#ScriptVersion[3]
+
+#include "./../stl_dict.dnh"
+    
+@Initialize {
+    ObjDict_Test;
+}
+
+@MainLoop {
+    yield;
+}
+
+task ObjDict_Test {
+    WriteLog("ObjDict_Test: Initializing");
+    let objDict = ObjDict_Create();
+    WriteLog("ObjDict_Test: Part 1");
+    assert(!ObjDict_Contains(objDict, 1), "Assertion Failed (1)");
+    assert(!ObjDict_Contains(objDict, []), "Assertion Failed (2)");
+    assert(!ObjDict_Contains(objDict, "a"), "Assertion Failed (3)");
+
+    ObjDict_Set(objDict, 1, "a");
+    assert(ObjDict_Contains(objDict, 1), "Assertion Failed (4)");
+    assert(ObjDict_Get(objDict, 1) == "a", "Assertion Failed (5)");
+    ObjDict_Set(objDict, [], 420);
+    assert(ObjDict_Contains(objDict, []), "Assertion Failed (6)");
+    assert(ObjDict_Get(objDict, []) == 420, "Assertion Failed (7)");
+    ObjDict_Set(objDict, "key", ["v1", "v2", "v3"]);
+    assert(ObjDict_Contains(objDict, "key"), "Assertion Failed (8)");
+    assert(ObjDict_Get(objDict, "key") == ["v1", "v2", "v3"], "Assertion Failed (9)");
+
+    ObjDict_Set(objDict, "test", "abcde");
+    assert(ObjDict_Contains(objDict, "test"), "Assertion Failed (10)");
+    assert(ObjDict_Get(objDict, "test") == "abcde", "Assertion Failed (11)");
+    ObjDict_Set(objDict, "test", "fghij");
+    assert(ObjDict_Contains(objDict, "test"), "Assertion Failed (12)");
+    assert(ObjDict_Get(objDict, "test") == "fghij", "Assertion Failed (13)");
+
+    WriteLog("ObjDict_Test: All Tests Passed");
+}

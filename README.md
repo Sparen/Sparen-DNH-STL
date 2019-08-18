@@ -44,6 +44,7 @@ The following general libraries are provided in this distribution. These are lib
 
 The following data structure libraries are provided in this distribution. These are data structure libraries custom-made for the STL distribution.
 
+* `stl_dict.dnh`
 * `stl_queue.dnh`
 * `stl_stack.dnh`
 

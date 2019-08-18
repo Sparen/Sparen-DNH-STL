@@ -1,0 +1,91 @@
+/* ******************************************************************
+* Sparen's Dictionary Library
+* For use with Touhou Danmakufu ph3
+* (C) Sparen of Iria 2019
+*
+* Code in this library is under the MIT License and may be 
+* redistributed/modified without express permission
+****************************************************************** */
+
+/* ******************************************************************
+* This library is meant to implement a basic dictionary for key-value pairs
+* The goal is to abstract away complicated Obj_Set/GetValue calls
+* 
+****************************************************************** */
+
+/* ******************************************************************
+* Methods:
+* ObjDict_Create()
+* ObjDict_Set()
+* ObjDict_Get()
+* ObjDict_Contains()
+************************************************************************* */
+
+/* *************************************************************************
+* ObjDict_Create() -- Creates a new Dict Object using ObjPrim as a wrapper.
+* Return: New Dict Object
+************************************************************************* */
+function ObjDict_Create() {
+    // Create a new Dict Object using a primitive object as a wrapper
+    let objDict = ObjPrim_Create(OBJ_SPRITE_2D);
+    // Create a field storing the container
+    Obj_SetValue(objDict, "dnh_dict_def", 1);
+    return objDict;
+}
+
+/* *************************************************************************
+* ObjDict_Set(obj, k, v) -- Sets the specified key to the specified value.
+* Param: obj (obj) - Dict Object to add element to
+* Param: k (free) - Key
+* Param: v (free) - Value
+* Exception: 
+*   - If obj does not refer to a Dict Object
+************************************************************************* */
+function ObjDict_Set(obj, k, v) {
+    // If the object is not a dict, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_dict_def")) {
+        RaiseError("ObjDict_Set: Provided Object ID did not refer to a Dict Object.");
+    }
+    Obj_SetValue(obj, "dnhdict_" ~ ToString(k), v);
+}
+
+/* *************************************************************************
+* ObjDict_Set(obj, k) -- Gets the value associated with the specified key
+* Param: obj (obj) - Dict Object to add element to
+* Param: k (free) - Key to get associated value from
+* Return: Value associated with the key
+* Exception: 
+*   - If obj does not refer to a Dict Object
+*   - If k is not found in the Dict Object
+************************************************************************* */
+function ObjDict_Get(obj, k) {
+    // If the object is not a dict, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_dict_def")) {
+        RaiseError("ObjDict_Get: Provided Object ID did not refer to a Dict Object.");
+    }
+    // If the key does not exist, then raise an exception
+    if (!Obj_IsValueExists(obj,  "dnhdict_" ~ ToString(k))) {
+        RaiseError("ObjDict_Get: Provided Dict does not have the key " ~ ToString(k));
+    }
+    return Obj_GetValue(obj, "dnhdict_" ~ ToString(k));
+}
+
+/* *************************************************************************
+* ObjDict_Contains(obj, k) -- Returns true if the Dict Object contains the specified key.
+* Param: obj (obj) - Dict Object to check occurrences in
+* Param: k (free) - Key to check occurrences of 
+* Return: True if dict contains key, false otherwise
+* Exception: 
+*   - If obj does not refer to a Dict Object
+************************************************************************* */
+function ObjDict_Contains(obj, k) {
+    // If the object is not a dict, then raise an exception
+    if (!Obj_IsValueExists(obj, "dnh_dict_def")) {
+        RaiseError("ObjDict_Contains: Provided Object ID did not refer to a Dict Object.");
+    }
+    // If the key does not exist, then return false
+    if (!Obj_IsValueExists(obj,  "dnhdict_" ~ ToString(k))) {
+        return false;
+    }
+    return true;
+}
